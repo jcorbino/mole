@@ -3,7 +3,7 @@
 % STAR (D2*STAR*G2) operator has dimensions: m+1 by m+1
 % Where STAR = RKD*LKG
 
-addpath('../mole_matlab')
+addpath('../mole_MATLAB')
 
 k = 4;
 m = 2*k+1;
@@ -28,4 +28,3 @@ RKG = full(G2\GK);
 LKG = full(GK/G2);
 
 STAR = RKD*LKG
-

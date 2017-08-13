@@ -30,7 +30,7 @@ LICENSE.txt and GPLv3.txt files for more information on this.
 ---------------
 
 In order to install MOLE (C++ version), you need to have Armadillo C++ 
-Linear Algebra Library. YOu can easily download Armadillo from: 
+Linear Algebra Library. You can easily download Armadillo from: 
 <http://arma.sourceforge.net/download.html>, we suggest to use the 
 latest stable version that is available. Also, we recommend to use 
 the qmake tool to generate the Makefile of the project.

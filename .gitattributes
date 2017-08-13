@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+doc_html_MATLAB/* linguist-documentation
+doc_html_C++/* linguist-documentation

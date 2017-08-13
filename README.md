@@ -1,0 +1,59 @@
+============================================
+| MOLE: Mimetic Operators Library Enhanced |
+============================================
+
+
+1: Description
+--------------
+
+MOLE is a high quality C++ library that implements mimetic methods to 
+numerically solve partial differential equations. It provides discrete 
+analogs of the most common vector calulus operators: Gradient, 
+Divergence, Laplacian and Curl.
+
+The mathematics is based on the work of [Corbino and Castillo 2017, 
+to be published]. However the user may find useful previous publications 
+such as [Castillo and Grone 2003], in which similar operators are 
+derived using a matrix analysis approach.
+
+
+2: Licensing
+------------
+
+MOLE is distributed under a dual-licensing model, please refer to the 
+LICENSE.txt and GPLv3.txt files for more information on this.
+
+
+3: Installation
+---------------
+
+In order to install MOLE (C++ version), you need to have Armadillo C++ 
+Linear Algebra Library. YOu can easily download Armadillo from: 
+<http://arma.sourceforge.net/download.html>, we suggest to use the 
+latest stable version that is available. Also, we recommend to use 
+the qmake tool to generate the Makefile of the project.
+
+You need to set the ARMA variable on "mole.pro" with the location of 
+Armadillo in your computer. e.g. ARMA = /home/johnny/armadillo-7.950.1
+
+Then open a terminal and execute the following commands,
+
+qmake
+make
+
+a static library named "libmole.a" will be created.
+If you do not have qmake installed, you can simply modify the original 
+Makefile provided. From this point you just need to include "mole.h" 
+in your projects and specify the location of "libmole.a" to the linker.
+
+
+4: Citations
+------------
+
+Please cite our work if you use MOLE in your research and/or software. 
+Citations are useful for the continued development and maintenance of 
+the library.
+
+  Johnny Corbino and Jose Castillo.
+  MOLE: Mimetic Operators Library Enhanced.
+  Computational Science Research Center at San Diego State University.

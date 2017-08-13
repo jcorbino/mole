@@ -8,7 +8,7 @@
 
 MOLE is a high quality C++ library that implements mimetic methods to 
 numerically solve partial differential equations. It provides discrete 
-analogs of the most common vector calulus operators: Gradient, 
+analogs of the most common vector calculus operators: Gradient, 
 Divergence, Laplacian and Curl.
 
 The mathematics is based on the work of [Corbino and Castillo 2017, 

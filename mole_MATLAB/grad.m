@@ -65,7 +65,11 @@ function G = grad(k, m, dx, varargin)
     for i = 1 : p % For each row of A
         neighbors = zeros(1, q); % k+1 points are used for the boundaries
         neighbors(1) = 1-i; % Shifting the stencil to the right
-        neighbors(2) = neighbors(1)+1/2;
+        if ~nodal
+            neighbors(2) = neighbors(1)+1/2;
+        else
+            neighbors(2) = neighbors(1)+1;
+        end
         for j = 3 : q
             neighbors(j) = neighbors(j-1)+1;
         end

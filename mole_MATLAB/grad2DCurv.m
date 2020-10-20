@@ -27,8 +27,8 @@ function G = grad2DCurv(k, X, Y)
     Cx = [Cx; [X(end, 1) Vx(end, :) X(end, end)]];
     Cy = [Cy; [Y(end, 1) Vy(end, :) Y(end, end)]];
     
-    Cx_ = reshape(Cx.', [], 1);
-    Cy_ = reshape(Cy.', [], 1);
+    Cx_ = reshape(Cx', [], 1);
+    Cy_ = reshape(Cy', [], 1);
     
     G_ = grad2D(k, m, 1, n, 1);
     Ge = G_(1:n*m+n, :);

@@ -32,8 +32,8 @@ Cn = Gn*C_;
 Gx = 1./J.*(Yn.*Ce-Ye.*Cn);
 Gy = 1./J.*(-Xn.*Ce+Xe.*Cn);
 
-Gx = reshape(Gx.', m, n)';
-Gy = reshape(Gy.', m, n)';
+Gx = reshape(Gx, m, n)';
+Gy = reshape(Gy, m, n)';
 
 figure
 subplot(3, 1, 1)
@@ -44,6 +44,7 @@ ylabel('y')
 title('C')
 axis equal
 view([0 90])
+set(gcf, 'Color', 'w')
 subplot(3, 1, 2)
 surf(X, Y, Gx, 'EdgeColor', 'none');
 colorbar

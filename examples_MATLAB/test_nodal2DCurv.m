@@ -18,22 +18,22 @@ set(gcf, 'Color', 'w')
 
 [J, Xe, Xn, Ye, Yn] = jacobian2D(k, X, Y);
 
-G = nodal2D(k, m, 1, n, 1);
-Ge = G(1:m*n, :);
-Gn = G(m*n+1:end, :);
+N = nodal2D(k, m, 1, n, 1);
+Ne = N(1:m*n, :);
+Nn = N(m*n+1:end, :);
 
 C = X.^2+Y.^2;
 
 C_ = reshape(C.', [], 1);
 
-Ce = Ge*C_;
-Cn = Gn*C_;
+Ce = Ne*C_;
+Cn = Nn*C_;
 
-Gx = 1./J.*(Yn.*Ce-Ye.*Cn);
-Gy = 1./J.*(-Xn.*Ce+Xe.*Cn);
+Nx = 1./J.*(Yn.*Ce-Ye.*Cn);
+Ny = 1./J.*(-Xn.*Ce+Xe.*Cn);
 
-Gx = reshape(Gx, m, n)';
-Gy = reshape(Gy, m, n)';
+Nx = reshape(Nx, m, n)';
+Ny = reshape(Ny, m, n)';
 
 figure
 set(gcf, 'Color', 'w')
@@ -47,7 +47,7 @@ axis equal
 view([0 90])
 set(gcf, 'Color', 'w')
 subplot(3, 1, 2)
-surf(X, Y, Gx, 'EdgeColor', 'none');
+surf(X, Y, Nx, 'EdgeColor', 'none');
 colorbar
 xlabel('x')
 ylabel('y')
@@ -55,7 +55,7 @@ title('U')
 axis equal
 view([0 90])
 subplot(3, 1, 3)
-surf(X, Y, Gy, 'EdgeColor', 'none');
+surf(X, Y, Ny, 'EdgeColor', 'none');
 colorbar
 xlabel('x')
 ylabel('y')

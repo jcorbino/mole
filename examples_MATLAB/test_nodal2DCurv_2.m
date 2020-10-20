@@ -17,7 +17,7 @@ axis equal
 set(gcf, 'Color', 'w')
 
 C = X.^2+Y.^2; % Given scalar field (on a nodal grid)
-C_ = reshape(C.', [], 1);
+C_ = reshape(C', [], 1);
 
 [J, Xe, Xn, Ye, Yn] = jacobian2D(k, X, Y);
 mn = numel(J);

@@ -24,7 +24,7 @@ Nn = N(m*n+1:end, :);
 
 C = X.^2+Y.^2;
 
-C_ = reshape(C.', [], 1);
+C_ = reshape(C', [], 1);
 
 Ce = Ne*C_;
 Cn = Nn*C_;

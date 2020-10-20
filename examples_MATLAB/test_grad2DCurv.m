@@ -66,7 +66,7 @@ toc
 
 Cgiven = Cx.^2 + Cy.^2;
 
-UV = G*reshape(Cgiven.', [], 1);
+UV = G*reshape(Cgiven', [], 1);
 
 U = UV(1:n*(m+1));
 U = reshape(U, m+1, n)';

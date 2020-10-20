@@ -21,12 +21,12 @@ function [J, Xe, Xn, Ye, Yn] = jacobian2D(k, X, Y)
     X = N*X;
     Y = N*Y;
     
-    half = m*n;
+    mn = m*n;
     
-    Xe = X(1:half);
-    Xn = X(half+1:end);
-    Ye = Y(1:half);
-    Yn = Y(half+1:end);
+    Xe = X(1:mn);
+    Xn = X(mn+1:end);
+    Ye = Y(1:mn);
+    Yn = Y(mn+1:end);
     
     J = Xe.*Yn-Xn.*Ye;
 end

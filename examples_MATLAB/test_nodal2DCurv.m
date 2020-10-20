@@ -36,6 +36,7 @@ Gx = reshape(Gx.', m, n)';
 Gy = reshape(Gy.', m, n)';
 
 figure
+set(gcf, 'Color', 'w')
 subplot(3, 1, 1)
 surf(X, Y, C, 'EdgeColor', 'none');
 colorbar

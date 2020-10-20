@@ -5,10 +5,11 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;
-m = 5; % Number of nodes along x-axis
-n = 6; % Number of nodes along y-axis
+m = 50; % Number of nodes along x-axis
+n = 50; % Number of nodes along y-axis
 
 [X, Y] = genCurvGrid(n, m);
+% [X, Y] = meshgrid(1:m, 1:n);
 [Xl, Yl] = meshgrid(1:m, 1:n); % Logical grids
 
 mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10)
@@ -17,7 +18,9 @@ axis equal
 set(gcf, 'Color', 'w')
 
 C = X.^2+Y.^2; % Given scalar field (on a nodal grid)
-C_ = reshape(C', [], 1);
+[Xs, Ys] = meshgrid([1 1.5 : 1 : m-0.5 m], [1 1.5 : 1 : n-0.5 n]);
+Cs = interp2(Xl, Yl, C, Xs, Ys);
+C_ = reshape(Cs', [], 1);
 
 % Get the determinant of the jacobian and the metrics
 [J, Xe, Xn, Ye, Yn] = jacobian2D(k, X, Y);
@@ -53,8 +56,8 @@ Ynv = interp2(Xl, Yl, Yn, (Xl(:, 1:end-1)+Xl(:, 2:end))/2,...
 
 % Convert metrics to diagonal matrices so they can be multiplied by the logical
 % operators
-Ju = spdiags(reshape(Ju', [], 1), 0, numel(Ju), numel(Ju));
-Jv = spdiags(reshape(Jv', [], 1), 0, numel(Jv), numel(Jv));
+Ju = spdiags(1./reshape(Ju', [], 1), 0, numel(Ju), numel(Ju));
+Jv = spdiags(1./reshape(Jv', [], 1), 0, numel(Jv), numel(Jv));
 Xeu = spdiags(reshape(Xeu', [], 1), 0, numel(Xeu), numel(Xeu));
 Xev = spdiags(reshape(Xev', [], 1), 0, numel(Xev), numel(Xev));
 Xnu = spdiags(reshape(Xnu', [], 1), 0, numel(Xnu), numel(Xnu));
@@ -63,7 +66,22 @@ Yeu = spdiags(reshape(Yeu', [], 1), 0, numel(Yeu), numel(Yeu));
 Yev = spdiags(reshape(Yev', [], 1), 0, numel(Yev), numel(Yev));
 Ynu = spdiags(reshape(Ynu', [], 1), 0, numel(Ynu), numel(Ynu));
 Ynv = spdiags(reshape(Ynv', [], 1), 0, numel(Ynv), numel(Ynv));
-asd
+
+G = grad2D(k, m-1, 1, n-1, 1);
+Ge = G(1:m*(n-1), :);
+Gn = G(m*(n-1)+1:end, :);
+
+Gx = Ju*(Ynu*Ge-Yeu*Gn);
+Gy = Jv*(-Xnv*Ge+Xev*Gn);
+
+G = [Gx; Gy];
+
+TMP = G*C_;
+Gx = TMP(1:m*(n-1));
+Gy = TMP(m*(n-1)+1:end);
+
+Gx = reshape(Gx, m, n-1)';
+Gy = reshape(Gy, m-1, n)';
 
 figure
 set(gcf, 'Color', 'w')
@@ -75,9 +93,9 @@ ylabel('y')
 title('C')
 axis equal
 view([0 90])
-set(gcf, 'Color', 'w')
 subplot(3, 1, 2)
-surf(X, Y, Nx, 'EdgeColor', 'none');
+surf((X(1:end-1, :)+X(2:end, :))/2, (Y(1:end-1, :)+Y(2:end, :))/2, Gx,...
+    'EdgeColor', 'none');
 colorbar
 xlabel('x')
 ylabel('y')
@@ -85,7 +103,8 @@ title('U')
 axis equal
 view([0 90])
 subplot(3, 1, 3)
-surf(X, Y, Ny, 'EdgeColor', 'none');
+surf((X(:, 1:end-1)+X(:, 2:end))/2, (Y(:, 1:end-1)+Y(:, 2:end))/2, Gy,...
+    'EdgeColor', 'none');
 colorbar
 xlabel('x')
 ylabel('y')

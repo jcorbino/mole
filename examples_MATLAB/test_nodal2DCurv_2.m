@@ -49,7 +49,6 @@ ylabel('y')
 title('C')
 axis equal
 view([0 90])
-set(gcf, 'Color', 'w')
 subplot(3, 1, 2)
 surf(X, Y, Nx, 'EdgeColor', 'none');
 colorbar

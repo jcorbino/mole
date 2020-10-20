@@ -6,8 +6,8 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;
-m = 10;
-n = 10;
+m = 50;
+n = 50;
 
 [X, Y] = genCurvGrid(n, m);
 %[X, Y] = meshgrid(1:m, 1:n);
@@ -22,16 +22,16 @@ hold on
 n = n-1;
 m = m-1;
 
-Ux = (X(1:end-1, :) + X(2:end, :))/2;
-Uy = (Y(1:end-1, :) + Y(2:end, :))/2;
+Ux = (X(1:end-1, :)+X(2:end, :))/2;
+Uy = (Y(1:end-1, :)+Y(2:end, :))/2;
 scatter3(Ux(:), Uy(:), zeros(n*(m+1), 1), '+', 'MarkerEdgeColor', 'k')
 
-Vx = (X(:, 1:end-1) + X(:, 2:end))/2;
-Vy = (Y(:, 1:end-1) + Y(:, 2:end))/2;
+Vx = (X(:, 1:end-1)+X(:, 2:end))/2;
+Vy = (Y(:, 1:end-1)+Y(:, 2:end))/2;
 scatter3(Vx(:), Vy(:), zeros((n+1)*m, 1), '*', 'MarkerEdgeColor', 'k')
 
-Cx = (Vx(1:end-1, :) + Vx(2:end, :))/2;
-Cy = (Uy(:, 1:end-1) + Uy(:, 2:end))/2;
+Cx = (Vx(1:end-1, :)+Vx(2:end, :))/2;
+Cy = (Uy(:, 1:end-1)+Uy(:, 2:end))/2;
 scatter3(Cx(:), Cy(:), zeros(n*m, 1), '.', 'MarkerEdgeColor', 'r')
 
 % West-East sides
@@ -64,7 +64,7 @@ tic
 G = grad2DCurv(k, X, Y);
 toc
 
-Cgiven = Cx.^2 + Cy.^2;
+Cgiven = Cx.^2+Cy.^2;
 
 UV = G*reshape(Cgiven', [], 1);
 
@@ -74,49 +74,47 @@ V = UV(n*(m+1)+1:end);
 V = reshape(V, m, n+1)';
 
 figure
-subplot(5, 1, 4)
+set(gcf, 'Color', 'w')
+subplot(3, 1, 3)
 surf(Vx, Vy, V, 'EdgeColor', 'none');
 colorbar
-view([0 90])
 xlabel('x')
 ylabel('y')
-title('Numerical V')
+title('V')
 axis equal
-subplot(5, 1, 2)
+view([0 90])
+subplot(3, 1, 2)
 surf(Ux, Uy, U, 'EdgeColor', 'none');
 colorbar
-view([0 90])
 xlabel('x')
 ylabel('y')
-title('Numerical U')
+title('U')
 axis equal
-subplot(5, 1, 3)
-surf(Vx, Vy, 2*Vy, 'EdgeColor', 'none');
+view([0 90])
+% subplot(5, 1, 3)
+% surf(Vx, Vy, 2*Vy, 'EdgeColor', 'none');
+% colorbar
+% view([0 90])
+% xlabel('x')
+% ylabel('y')
+% title('Analytical V')
+% axis equal
+% subplot(5, 1, 1)
+% surf(Ux, Uy, 2*Ux, 'EdgeColor', 'none');
+% colorbar
+% view([0 90])
+% xlabel('x')
+% ylabel('y')
+% title('Analytical U')
+% axis equal
+subplot(3, 1, 1)
+surf(X, Y, X.^2+Y.^2, 'EdgeColor', 'none');
 colorbar
-view([0 90])
 xlabel('x')
 ylabel('y')
-title('Analytical V')
+title('C')
 axis equal
-set(gcf, 'Color', 'w')
-subplot(5, 1, 1)
-surf(Ux, Uy, 2*Ux, 'EdgeColor', 'none');
-colorbar
 view([0 90])
-xlabel('x')
-ylabel('y')
-title('Analytical U')
-axis equal
-set(gcf, 'Color', 'w')
-subplot(5, 1, 5)
-surf(Cx, Cy, Cgiven, 'EdgeColor', 'none');
-colorbar
-view([0 90])
-xlabel('x')
-ylabel('y')
-title('Scalar field')
-axis equal
-set(gcf, 'Color', 'w')
 
-max(max(abs(2*Ux - U)))
-max(max(abs(2*Vy - V)))
+max(max(abs(2*Ux-U)))
+max(max(abs(2*Vy-V)))

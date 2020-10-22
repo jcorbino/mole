@@ -1,5 +1,5 @@
 function I = I(M, m, n, type)
-    if type == 'Gn'
+    if strcmp(type, 'Gn')
         I = sparse((m+1)*n, size(M, 2));
         offset = m-1;
         j = 1;

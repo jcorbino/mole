@@ -12,10 +12,10 @@ n = 50; % Number of nodes along y-axis
 % [X, Y] = meshgrid(1:m, 1:n);
 [Xl, Yl] = meshgrid(1:m, 1:n); % Logical grids
 
-% mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10)
-% view([0 90])
-% axis equal
-% set(gcf, 'Color', 'w')
+mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10)
+view([0 90])
+axis equal
+set(gcf, 'Color', 'w')
 
 C = X.^2+Y.^2; % Given scalar field (on a nodal grid)
 [Xs, Ys] = meshgrid([1 1.5 : 1 : m-0.5 m], [1 1.5 : 1 : n-0.5 n]);

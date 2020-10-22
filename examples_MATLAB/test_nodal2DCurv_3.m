@@ -19,8 +19,11 @@ axis equal
 set(gcf, 'Color', 'w')
 
 C = X.^2+Y.^2; % Given scalar field (on a nodal grid)
+% Staggered logical grid
 [Xs, Ys] = meshgrid([1 1.5 : 1 : m-0.5 m], [1 1.5 : 1 : n-0.5 n]);
+% Interpolate scalar field from nodal logical to staggered logical
 Cs = interp2(Xl, Yl, C, Xs, Ys);
+% Reshape the fiels so it can be multiplied by the operator later on
 C_ = reshape(Cs', [], 1);
 
 % Get the determinant of the jacobian and the metrics

@@ -71,9 +71,9 @@ G = grad2D(k, m-1, 1, n-1, 1);
 Ge = G(1:m*(n-1), :);
 Gn = G(m*(n-1)+1:end, :);
 
-Gx = Ju*(Ynu*Ge-Yeu*I(Gn, m-1, n-1, 'Gn'));
-Gy = Jv*(-Xnv*I(Ge, m-1, n-1, 'Ge')+Xev*Gn);
-
+Gx = Ju*(Ynu*Ge-Yeu*I2(Gn, m-1, n-1, 'Gn'));
+Gy = Jv*(-Xnv*I2(Ge, m-1, n-1, 'Ge')+Xev*Gn);
+ 
 % Gx = Ju*(Ynu*Ge);
 % Gy = Jv*(Xev*Gn);
 

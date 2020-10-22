@@ -12,6 +12,7 @@ n = 40; % Number of nodes along y-axis
 % [X, Y] = meshgrid(1:m, 1:n);
 [Xl, Yl] = meshgrid(1:m, 1:n); % Logical grids
 
+% Plot the physical grid
 mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10)
 view([0 90])
 axis equal
@@ -67,25 +68,28 @@ Yev = spdiags(reshape(Yev', [], 1), 0, numel(Yev), numel(Yev));
 Ynu = spdiags(reshape(Ynu', [], 1), 0, numel(Ynu), numel(Ynu));
 Ynv = spdiags(reshape(Ynv', [], 1), 0, numel(Ynv), numel(Ynv));
 
+% Construct 2D uniform mimetic gradient operator (d/de, d/dn)
 G = grad2D(k, m-1, 1, n-1, 1);
 Ge = G(1:m*(n-1), :);
 Gn = G(m*(n-1)+1:end, :);
 
+% Apply transformation
 Gx = Ju*(Ynu*Ge-Yeu*I2(Gn, m-1, n-1, 'Gn'));
 Gy = Jv*(-Xnv*I2(Ge, m-1, n-1, 'Ge')+Xev*Gn);
- 
-% Gx = Ju*(Ynu*Ge);
-% Gy = Jv*(Xev*Gn);
 
+% Final 2D curvilinear mimetic gradient operator (d/dx, d/dy)
 G = [Gx; Gy];
 
+% Apply the operator to the field
 TMP = G*C_;
 Gx = TMP(1:m*(n-1));
 Gy = TMP(m*(n-1)+1:end);
 
+% Reshape for visualization
 Gx = reshape(Gx, m, n-1)';
 Gy = reshape(Gy, m-1, n)';
 
+% Plot results
 figure
 set(gcf, 'Color', 'w')
 subplot(3, 1, 1)

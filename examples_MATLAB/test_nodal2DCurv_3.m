@@ -4,7 +4,7 @@ close all
 addpath('../mole_MATLAB')
 
 % Parameters
-k = 2;
+k = 2;  % Order of accuracy
 m = 40; % Number of nodes along x-axis
 n = 40; % Number of nodes along y-axis
 

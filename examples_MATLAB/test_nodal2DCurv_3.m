@@ -5,8 +5,8 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;
-m = 40; % Number of nodes along x-axis
-n = 40; % Number of nodes along y-axis
+m = 1000; % Number of nodes along x-axis
+n = 1000; % Number of nodes along y-axis
 
 [X, Y] = genCurvGrid(n, m);
 % [X, Y] = meshgrid(1:m, 1:n);

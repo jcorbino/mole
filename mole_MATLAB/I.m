@@ -1,4 +1,4 @@
-function I = I1(M, m, n, type)
+function I = I(M, m, n, type)
     if strcmp(type, 'Gn')
         I = speye(n);
         I1 = speye(m+1, m);

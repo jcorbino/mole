@@ -6,9 +6,9 @@ function I = I2(M, m, n, type)
         k = 1;
         kt = 4*(m-1)-1;
         
-        for idx = 1 : n
-            i = (idx-1)*(m+1);
-            j = (idx-1)*(m);
+        for idx = 0 : n-1
+            i = idx*(m+1);
+            j = idx*m;
             
             I(k:k+kt, 1) = [i+2:i+m   i+2:i+m i+2:i+m i+2:i+m];
             J(k:k+kt, 1) = [j+1:j+m-1 j+2:j+m j+m+1:j+2*m-1 j+m+2:j+2*m];
@@ -17,9 +17,9 @@ function I = I2(M, m, n, type)
             k = k+4*(m-1);
         end
         
-        for idx = 1 : n
-            i = (idx-1)*(m+1);
-            j = (idx-1)*(m);
+        for idx = 0 : n-1
+            i = idx*(m+1);
+            j = idx*m;
             
             I(k:k+5, 1) = [i+1 i+1 i+1 i+1 i+1 i+1];
             J(k:k+5, 1) = [j+1 j+2 j+3 j+m+1 j+m+2 j+m+3];
@@ -43,7 +43,7 @@ function I = I2(M, m, n, type)
         jt = 1;
         it = m;
         
-        for idx = 1 : n-1
+        for idx = 0 : n-2
             ib = it+1;
             it = ib+m-1;
             jb = jt;

@@ -14,7 +14,7 @@ function I = I2(M, m, n, type)
             J(k:k+kt, 1) = [j+1:j+m-1 j+2:j+m j+m+1:j+2*m-1 j+m+2:j+2*m];
             V(k:k+kt, 1) = .25;
             
-            k = k+4*(m-1);
+            k = k+kt+1;
         end
         
         for idx = 0 : n-1

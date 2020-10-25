@@ -6,8 +6,8 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;
-m = 50;
-n = 50;
+m = 40;
+n = 40;
 
 [X, Y] = genCurvGrid(n, m);
 %[X, Y] = meshgrid(1:m, 1:n);
@@ -73,48 +73,30 @@ U = reshape(U, m+1, n)';
 V = UV(n*(m+1)+1:end);
 V = reshape(V, m, n+1)';
 
+% Plot results
 figure
 set(gcf, 'Color', 'w')
-subplot(3, 1, 3)
-surf(Vx, Vy, V, 'EdgeColor', 'none');
-colorbar
-xlabel('x')
-ylabel('y')
-title('V')
-axis equal
-view([0 90])
-subplot(3, 1, 2)
-surf(Ux, Uy, U, 'EdgeColor', 'none');
-colorbar
-xlabel('x')
-ylabel('y')
-title('U')
-axis equal
-view([0 90])
-% subplot(5, 1, 3)
-% surf(Vx, Vy, 2*Vy, 'EdgeColor', 'none');
-% colorbar
-% view([0 90])
-% xlabel('x')
-% ylabel('y')
-% title('Analytical V')
-% axis equal
-% subplot(5, 1, 1)
-% surf(Ux, Uy, 2*Ux, 'EdgeColor', 'none');
-% colorbar
-% view([0 90])
-% xlabel('x')
-% ylabel('y')
-% title('Analytical U')
-% axis equal
 subplot(3, 1, 1)
-surf(X, Y, X.^2+Y.^2, 'EdgeColor', 'none');
+surf(X, Y, C, 'EdgeColor', 'none');
 colorbar
 xlabel('x')
 ylabel('y')
 title('C')
 axis equal
 view([0 90])
-
-max(max(abs(2*Ux-U)))
-max(max(abs(2*Vy-V)))
+subplot(3, 1, 2)
+surf((X(1:end-1, :)+X(2:end, :))/2, (Y(1:end-1, :)+Y(2:end, :))/2, U, 'EdgeColor', 'none');
+colorbar
+xlabel('x')
+ylabel('y')
+title('U')
+axis equal
+view([0 90])
+subplot(3, 1, 3)
+surf((X(:, 1:end-1)+X(:, 2:end))/2, (Y(:, 1:end-1)+Y(:, 2:end))/2, V, 'EdgeColor', 'none');
+colorbar
+xlabel('x')
+ylabel('y')
+title('V')
+axis equal
+view([0 90])

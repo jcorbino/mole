@@ -19,7 +19,6 @@ function I = DI2(m, n, type)
         end
         
         I = [I; middle; pad1; circshift(bdry, (m+1)*(n-2), 2); padm3];
-        figure; cspy(I)
     else
         padm2 = spalloc(m+2, (n+1)*m, 0);
         pad1 = spalloc(1, (n+1)*m, 0);
@@ -37,6 +36,5 @@ function I = DI2(m, n, type)
         end
         
         I = [padm2; middle; padm2];
-        figure; cspy(I)
     end
 end

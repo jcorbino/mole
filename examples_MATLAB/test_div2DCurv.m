@@ -19,13 +19,13 @@ nT = linspace(0, 2*pi, n) ;
 X = R.*cos(T); 
 Y = R.*sin(T);
 
-%[X, Y] = meshgrid(1:m, 1:n);
-%[X, Y] = genCurvGrid(n, m);
+% [X, Y] = meshgrid(1:m, 1:n);
+% [X, Y] = genCurvGrid(n, m);
 
 mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10)
 %    Az  El
 view([0 90])
-axis tight
+axis equal
 set(gcf, 'Color', 'w')
 hold on
 
@@ -94,18 +94,20 @@ Ccomp = reshape(Ccomp, m+2, n+2);
 
 figure
 subplot(2, 1, 1)
-surf(Cx(2:end-1, 2:end-1), Cy(2:end-1, 2:end-1), C(2:end-1, 2:end-1), 'EdgeColor', 'none');
+surf(Cx(2:end-1, 2:end-1), Cy(2:end-1, 2:end-1), C(2:end-1, 2:end-1),...
+    'EdgeColor', 'none');
 view([0 90])
-axis equal
 colorbar
 title('Exact')
 xlabel('x')
 ylabel('y')
-subplot(2, 1, 2)
-surf(Cx(2:end-1, 2:end-1), Cy(2:end-1, 2:end-1), Ccomp(2:end-1, 2:end-1)', 'EdgeColor', 'none')
-view([0 90])
 axis equal
+subplot(2, 1, 2)
+surf(Cx(2:end-1, 2:end-1), Cy(2:end-1, 2:end-1), Ccomp(2:end-1, 2:end-1)',...
+    'EdgeColor', 'none')
+view([0 90])
 colorbar
 title('Approx')
 xlabel('x')
 ylabel('y')
+axis equal

@@ -19,9 +19,6 @@ function I = DI2(m, n, type)
         end
         
         I = [I; middle; pad1; circshift(top, (m+1)*(n-2), 2); padm3];
-        issparse(I)
-        figure
-        cspy(I)
     else
         I = spalloc((m+2)*(n+2), (n+1)*m, 0);
     end

@@ -6,8 +6,8 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;
-m = 100;
-n = 100;
+m = 50;
+n = 50;
 
 % Grid
 r1 = 1; % Inner radius 
@@ -85,25 +85,25 @@ scatter3(Cx(:), Cy(:), zeros((m+2)*(n+2), 1), 'o', 'MarkerEdgeColor', 'r')
 legend('Nodal points', 'u', 'v', 'Centers', 'All centers')
 hold off
 
-figure
-subplot(2, 1, 1)
-surf(Cx(2:end-1, 2:end-1), Cy(2:end-1, 2:end-1), C(2:end-1, 2:end-1), 'EdgeColor', 'none');
-view([-16 21])
-axis equal
-colorbar
-title('Exact')
-xlabel('x')
-ylabel('y')
-
 tic
 D = div2DCurv(k, X, Y);
 toc
 
 Ccomp = D*[reshape(U.', [], 1); reshape(V.', [], 1)];
 Ccomp = reshape(Ccomp, m+2, n+2);
+
+figure
+subplot(2, 1, 1)
+surf(Cx(2:end-1, 2:end-1), Cy(2:end-1, 2:end-1), C(2:end-1, 2:end-1), 'EdgeColor', 'none');
+view([0 90])
+axis equal
+colorbar
+title('Exact')
+xlabel('x')
+ylabel('y')
 subplot(2, 1, 2)
 surf(Cx(2:end-1, 2:end-1), Cy(2:end-1, 2:end-1), Ccomp(2:end-1, 2:end-1)', 'EdgeColor', 'none')
-view([-16 21])
+view([0 90])
 axis equal
 colorbar
 title('Approx')

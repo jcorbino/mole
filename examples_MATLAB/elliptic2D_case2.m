@@ -5,12 +5,12 @@ close all
 addpath('../mole_MATLAB')
 
 % Parameters
-e = 0.2; % Controls "rectangularity" of the grid, e = 0 -> completely rectangular
+e = 1; % Controls "rectangularity" of the grid, e = 0 -> completely rectangular
 k = 2;
-m = 10;
-n = 10;
+m = 50;
+n = 50;
 a = -pi;
-b = pi;
+b = 2*pi;
 c = -pi;
 d = pi;
 % Diffusion tensor
@@ -26,11 +26,11 @@ f = matlabFunction(diff(fx, X)+diff(fy, Y));
 % Grid
 dm = (b-a)/m;
 dn = (d-c)/n;
-[X_, Y] = meshgrid(a:dm:b, c:dn:d);
-X = X_+e*cos(Y);
-Y = Y+e*cos(X_);
+[X, Y] = meshgrid(a:dm:b, c:dn:d);
+Y = Y+e*cos(X);
 
 mesh(X, Y, zeros(n+1, m+1), 'Marker', '.', 'MarkerSize', 10)
+title('Grid')
 view([0 90])
 axis equal
 set(gcf, 'Color', 'w')
@@ -100,6 +100,7 @@ toc
 Robin = robinBC2D(k, m, 1, n, 1, 1, 0);
 L = L + Robin;
 figure
+set(gcf, 'Color', 'w')
 spy(L)
 title('Laplacian')
 
@@ -117,22 +118,25 @@ Comp = reshape(Comp, m+2, n+2)';
 
 % Plot results
 figure
+set(gcf, 'Color', 'w')
 subplot(2, 1, 1)
 surf(Cx, Cy, F(Cx, Cy), 'EdgeColor', 'none')
+view([0 90])
 title('Exact')
 xlabel('x')
 ylabel('y')
-set(gcf, 'Color', 'w')
+axis equal
 colorbar
 subplot(2, 1, 2)
 surf(Cx, Cy, Comp, 'EdgeColor', 'none')
+view([0 90])
 title('Approx')
 xlabel('x')
 ylabel('y')
-set(gcf, 'Color', 'w')
+axis equal
 colorbar
 
-% Show error
+% Plot error
 figure
 surf(Cx, Cy, F(Cx, Cy)-Comp, 'EdgeColor', 'none')
 title('Error')
@@ -145,4 +149,5 @@ axis equal
 
 fprintf('\nEuclidean norm: %.2f\n', norm(F(Cx, Cy)-Comp))
 fprintf('Maximum error:  %.2f\n', max(max(abs(F(Cx, Cy)-Comp))))
-fprintf('Relative error: %.2f%%\n', 100*max(max(abs(F(Cx, Cy)-Comp)))/(max(max(F(Cx, Cy)))-min(min(F(Cx, Cy)))))
+fprintf('Relative error: %.2f%%\n', 100*max(max(abs(F(Cx, Cy)-Comp)))/...
+    (max(max(F(Cx, Cy)))-min(min(F(Cx, Cy)))))

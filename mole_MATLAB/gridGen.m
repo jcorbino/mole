@@ -1,8 +1,6 @@
 % https://en.wikipedia.org/wiki/Transfinite_interpolation
-clc 
-close all
-
-addpath('grids/Horseshoe')
+function gridGen(grid_name, plot_grid)
+addpath(['grids/' grid_name])
 
 % Grid resolution
 m = 20;
@@ -28,9 +26,12 @@ for i = 1 : m
     end
 end
 
-mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10, 'EdgeColor', 'b')
-title(['Physical grid. m = ' num2str(m) ', n = ' num2str(n)])
-set(gcf, 'color', 'w')
-axis equal
-axis off
-view([0 90])
+if plot_grid
+    figure
+    mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10, 'EdgeColor', 'b')
+    title(['Physical grid. m = ' num2str(m) ', n = ' num2str(n)])
+    set(gcf, 'color', 'w')
+    axis equal
+    axis off
+    view([0 90])
+end

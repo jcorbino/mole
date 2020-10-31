@@ -32,4 +32,5 @@ mesh(X, Y, zeros(n, m), 'Marker', '.', 'MarkerSize', 10, 'EdgeColor', 'b')
 title(['Physical grid. m = ' num2str(m) ', n = ' num2str(n)])
 set(gcf, 'color', 'w')
 axis equal
+axis off
 view([0 90])

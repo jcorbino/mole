@@ -1,5 +1,5 @@
 % https://en.wikipedia.org/wiki/Transfinite_interpolation
-function gridGen(grid_name, plot_grid)
+function [X, Y] = gridGen(grid_name, plot_grid)
 addpath(['grids/' grid_name])
 
 % Grid resolution

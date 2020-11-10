@@ -43,16 +43,35 @@ function G = grad3DCurv(k, X, Y, Z)
     Jw = spdiags(1./reshape(permute(Jw, [2, 1, 3]), [], 1), 0, numel(Jw), numel(Jw));
     
     % Construct 3D uniform mimetic gradient operator (d/de, d/dn, d/dc)
-    G = grad3D(k, m-1, 1, n-1, 1, o-1, 1);
-    Ge = G(1:m*(n-1)*o, :);
-    Gn = G(m*(n-1)*o+1:m*(n-1)*o+(m-1)*n*o, :);
-    Gc = G(m*(n-1)*o+(m-1)*n*o+1:end, :);
+    Grad = grad3D(k, m-1, 1, n-1, 1, o-1, 1);
+    Ge = Grad(1:m*(n-1)*(o-1), :);
+    Gn = Grad(m*(n-1)*(o-1)+1:m*(n-1)*(o-1)+(m-1)*n*(o-1), :);
+    Gc = Grad(m*(n-1)*(o-1)+(m-1)*n*(o-1)+1:end, :);
     
     % Apply transformation
-    %Gx = ;
-    %Gy = ;
-    %Gz = ;
+    A = Yn.*Zc-Zn.*Yc;
+    A = spdiags(reshape(permute(A, [2, 1, 3]), [], 1), 0, numel(A), numel(A));
+    B = Zn.*Xc-Xn.*Zc;
+    B = spdiags(reshape(permute(B, [2, 1, 3]), [], 1), 0, numel(B), numel(B));
+    C = Xn.*Yc-Yn.*Xc;
+    C = spdiags(reshape(permute(C, [2, 1, 3]), [], 1), 0, numel(C), numel(C));
+    D = Ze.*Yc-Ye.*Zc;
+    D = spdiags(reshape(permute(D, [2, 1, 3]), [], 1), 0, numel(D), numel(D));
+    E = Xe.*Zc-Ze.*Xc;
+    E = spdiags(reshape(permute(E, [2, 1, 3]), [], 1), 0, numel(E), numel(E));
+    F = Ye.*Xc-Xe.*Yc;
+    F = spdiags(reshape(permute(F, [2, 1, 3]), [], 1), 0, numel(F), numel(F));
+    G = Ye.*Zn-Ze.*Yn;
+    G = spdiags(reshape(permute(G, [2, 1, 3]), [], 1), 0, numel(G), numel(G));
+    H = Ze.*Xn-Xe.*Zn;
+    H = spdiags(reshape(permute(H, [2, 1, 3]), [], 1), 0, numel(H), numel(H));
+    I = Xe.*Yn-Ye.*Xn;
+    I = spdiags(reshape(permute(I, [2, 1, 3]), [], 1), 0, numel(I), numel(I));
+    
+    Gx = Ju*Ge;
+    Gy = Jv*Gn;
+    Gz = Jw*Gc;
     
     % Final 3D curvilinear mimetic gradient operator (d/dx, d/dy, d/dz)
-    G = [Ge; Gn; Gc];
+    G = [Gx; Gy; Gz];
 end

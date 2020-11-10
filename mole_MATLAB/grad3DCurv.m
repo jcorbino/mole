@@ -6,27 +6,32 @@ function G = grad3DCurv(k, X, Y, Z)
     [n, m, o] = size(X);
     
     % Make them volumes so they can be interpolated
-    J = reshape(J, m, n)';
-    Xe = reshape(Xe, m, n)';
-    Xn = reshape(Xn, m, n)';
-    Ye = reshape(Ye, m, n)';
-    Yn = reshape(Yn, m, n)';
+    J = reshape(J, m, n, o)';
+    Xe = reshape(Xe, m, n, o)';
+    Xn = reshape(Xn, m, n, o)';
+    Xc = reshape(Xc, m, n, o)';
+    Ye = reshape(Ye, m, n, o)';
+    Yn = reshape(Yn, m, n, o)';
+    Yc = reshape(Yc, m, n, o)';
+    Ze = reshape(Ze, m, n, o)';
+    Zn = reshape(Zn, m, n, o)';
+    Zc = reshape(Zc, m, n, o)';
     
     % Logical grids
     [Xl, Yl, Zl] = meshgrid(1:m, 1:n, 1:o);
     
-    % Interpolate the metrics on the logical grid for positions u and v
-    Ju = interp3(Xl, Yl, J, (Xl(1:end-1, :)+Xl(2:end, :))/2,...
+    % Interpolate the metrics on the logical grid for positions u, v and w
+    Ju = interp3(Xl, Yl, Zl, J, (Xl(1:end-1, :)+Xl(2:end, :))/2,...
                                             (Yl(1:end-1, :)+Yl(2:end, :))/2);
-    Jv = interp3(Xl, Yl, J, (Xl(:, 1:end-1)+Xl(:, 2:end))/2,...
+    Jv = interp3(Xl, Yl, Zl, J, (Xl(:, 1:end-1)+Xl(:, 2:end))/2,...
                                             (Yl(:, 1:end-1)+Yl(:, 2:end))/2);
-    Xev = interp3(Xl, Yl, Xe, (Xl(:, 1:end-1)+Xl(:, 2:end))/2,...
+    Xev = interp3(Xl, Yl, Zl, Xe, (Xl(:, 1:end-1)+Xl(:, 2:end))/2,...
                                             (Yl(:, 1:end-1)+Yl(:, 2:end))/2);
-    Xnv = interp3(Xl, Yl, Xn, (Xl(:, 1:end-1)+Xl(:, 2:end))/2,...
+    Xnv = interp3(Xl, Yl, Zl, Xn, (Xl(:, 1:end-1)+Xl(:, 2:end))/2,...
                                             (Yl(:, 1:end-1)+Yl(:, 2:end))/2);
-    Yeu = interp3(Xl, Yl, Ye, (Xl(1:end-1, :)+Xl(2:end, :))/2,...
+    Yeu = interp3(Xl, Yl, Zl, Ye, (Xl(1:end-1, :)+Xl(2:end, :))/2,...
                                             (Yl(1:end-1, :)+Yl(2:end, :))/2);
-    Ynu = interp3(Xl, Yl, Yn, (Xl(1:end-1, :)+Xl(2:end, :))/2,...
+    Ynu = interp3(Xl, Yl, Zl, Yn, (Xl(1:end-1, :)+Xl(2:end, :))/2,...
                                             (Yl(1:end-1, :)+Yl(2:end, :))/2);
     
     % Convert metrics to diagonal matrices so they can be multiplied by the 

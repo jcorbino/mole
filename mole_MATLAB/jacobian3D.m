@@ -41,5 +41,5 @@ function [J, Xe, Xn, Xc, Ye, Yn, Yc, Ze, Zn, Zc] = jacobian3D(k, X, Y, Z)
     Zn = Z(mno+1:2*mno);
     Zc = Z(2*mno+1:end);
     
-    J = Xe.*(Yn.*Zc-Zn.*Yc)-Xn.*(Ye.*Zc-Ze.*Yc)+Xc.*(Ye.*Zn-Ze.*Yn);
+    J = Xe.*(Yn.*Zc-Yc.*Zn)-Ye.*(Xn.*Zc-Xc.*Zn)+Ze.*(Xn.*Yc-Xc.*Yn);
 end

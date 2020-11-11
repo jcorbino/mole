@@ -76,9 +76,9 @@ function G = grad3DCurv(k, X, Y, Z)
     Gc = Grad(m*(n-1)*(o-1)+(m-1)*n*(o-1)+1:end, :);
     
     % Apply transformation    
-    Gx = Ju*A*Ge;
-    Gy = Jv*E*Gn;
-    Gz = Jw*I*Gc;
+    Gx = Ju*(A*Ge+D*spalloc(size(D, 2), size(Gn, 1), 0)*Gn+G*spalloc(size(G, 2), size(Gc, 1), 0)*Gc);
+    Gy = Jv*(B*spalloc(size(B, 2), size(Ge, 1), 0)*Ge+E*Gn+H*spalloc(size(H, 2), size(Gc, 1), 0)*Gc);
+    Gz = Jw*(C*spalloc(size(C, 2), size(Ge, 1), 0)*Ge+F*spalloc(size(F, 2), size(Gn, 1), 0)*Gn+I*Gc);
     
     % Final 3D curvilinear mimetic gradient operator (d/dx, d/dy, d/dz)
     G = [Gx; Gy; Gz];

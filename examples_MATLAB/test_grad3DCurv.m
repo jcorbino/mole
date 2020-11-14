@@ -10,6 +10,9 @@ n = 20; % Number of nodes along y-axis
 o = 20; % Number of nodes along z-axis
 
 [X, Y, Z] = meshgrid(1:m, 1:n, 1:o);
+X = X+0.3*sin(X);
+Y = Y+0.3*sin(Y);
+Z = Z+0.3*sin(Z);
 
 C = X.^2+Y.^2+Z.^2; % Given scalar field (on a nodal grid)
 
@@ -31,6 +34,7 @@ C_ = reshape(permute(Cs, [2, 1, 3]), [], 1);
 
 % Get 3D curvilinear mimetic gradient
 G = grad3DCurv(k, X, Y, Z);
+% G = grad3D(k, m-1, 1, n-1, 1, o-1, 1); % Left this here to compare result
 
 % Apply the operator to the field
 TMP = G*C_;

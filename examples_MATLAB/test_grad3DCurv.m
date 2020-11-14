@@ -15,6 +15,7 @@ C = X.^2+Y.^2+Z.^2; % Given scalar field (on a nodal grid)
 
 % Plot the physical grid
 scatter3(X(:), Y(:), Z(:), 50, C(:), 'Filled');
+title('Given scalar field')
 axis equal
 xlabel('x')
 ylabel('y')

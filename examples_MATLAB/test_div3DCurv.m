@@ -46,15 +46,15 @@ Wz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Wz = (Wz(:, 1:end-1, :) + Wz(:, 2:end, :))/2;
 
 % Interpolate U values
-Ugiven = sin(X);
+Ugiven = X.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Ugiven(:));
 U = interpolant(Ux, Uy, Uz);
 % Interpolate V values
-Vgiven = cos(Y);
+Vgiven = Y.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Vgiven(:));
 V = interpolant(Vx, Vy, Vz);
 % Interpolate W values
-Wgiven = cos(Y);
+Wgiven = Z.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Wgiven(:));
 W = interpolant(Wx, Wy, Wz);
 
@@ -65,5 +65,20 @@ W = reshape(permute(W, [2, 1, 3]), [], 1);
 % Get 3D curvilinear mimetic divergence
 D = div3DCurv(k, X, Y, Z);
 
-spy(D-div3D(k, m-1, 1, n-1, 1, o-1, 1))
-D*[U; V; W];
+% Apply the operator to the field
+Ccomp = D*[U; V; W];
+
+% Reshape for visualization
+Ccomp = reshape(Ccomp, m+1, n+1, o+1);
+Ccomp = Ccomp(2:end-1, 2:end-1, 2:end-1);
+X = X(2:end, 2:end, 2:end);
+Y = Y(2:end, 2:end, 2:end);
+Z = Z(2:end, 2:end, 2:end);
+
+figure
+scatter3(X(:), Y(:), Z(:), 50, Ccomp(:), 'Filled');
+title('Divergence of the field')
+xlabel('x')
+ylabel('y')
+zlabel('z')
+axis equal

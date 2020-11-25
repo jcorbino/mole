@@ -5,7 +5,7 @@ close all
 addpath('../mole_MATLAB')
 
 % Parameters
-k = 4;  % Order of accuracy
+k = 2;  % Order of accuracy
 m = 40; % Number of nodes along x-axis
 n = 40; % Number of nodes along y-axis
 o = 40; % Number of nodes along z-axis
@@ -46,7 +46,7 @@ Wz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Wz = (Wz(:, 1:end-1, :) + Wz(:, 2:end, :))/2;
 
 % Interpolate U values
-Ugiven = sin(X);
+Ugiven = sin(Y);
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Ugiven(:));
 U = interpolant(Ux, Uy, Uz);
 % Interpolate V values
@@ -95,18 +95,24 @@ colorbar
 view([0 90])
 shading interp
 
-Fx = sin(X);
-Fy = 0*Y;
-Fz = 0*Z;
-
-div = divergence(X, Y, Z, Fx, Fy, Fz);
+div = 0*cos(Y);
 
 figure
 scatter3(X(:), Y(:), Z(:), 50, div(:), 'Filled');
-title('Divergence of the field according to MATLAB')
+title('Analytical')
 xlabel('x')
 ylabel('y')
 zlabel('z')
 axis equal
 colorbar
 view([140 40])
+
+figure
+surf(X(:, :, o/2), Y(:, :, o/2), div(:, :, o/2))
+title('Analytical')
+xlabel('x')
+ylabel('y')
+axis equal
+colorbar
+view([0 90])
+shading interp

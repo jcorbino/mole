@@ -5,10 +5,10 @@ close all
 addpath('../mole_MATLAB')
 
 % Parameters
-k = 2;  % Order of accuracy
-m = 20; % Number of nodes along x-axis
-n = 20; % Number of nodes along y-axis
-o = 20; % Number of nodes along z-axis
+k = 4;  % Order of accuracy
+m = 40; % Number of nodes along x-axis
+n = 40; % Number of nodes along y-axis
+o = 40; % Number of nodes along z-axis
 
 [X, Y] = genCurvGrid(n, m);
 X = repmat(X, [1 1 o]);
@@ -17,12 +17,12 @@ Y = repmat(Y, [1 1 o]);
 % [X, Y, Z] = meshgrid(1:m, 1:n, 1:o);
 
 % Plot the physical grid
-scatter3(X(:), Y(:), Z(:), 50, 'Filled');
-title('Given scalar field')
-xlabel('x')
-ylabel('y')
-zlabel('z')
-axis equal
+% scatter3(X(:), Y(:), Z(:), 50, 'Filled');
+% title('Given scalar field')
+% xlabel('x')
+% ylabel('y')
+% zlabel('z')
+% axis equal
 
 Ux = (X(1:end-1, :, :) + X(2:end, :, :))/2;
 Ux = (Ux(:, :, 1:end-1) + Ux(:, :, 2:end))/2;
@@ -46,15 +46,15 @@ Wz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Wz = (Wz(:, 1:end-1, :) + Wz(:, 2:end, :))/2;
 
 % Interpolate U values
-Ugiven = 2*X; %X.^2;
+Ugiven = sin(X);
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Ugiven(:));
 U = interpolant(Ux, Uy, Uz);
 % Interpolate V values
-Vgiven = 2*Y; %Y.^2;
+Vgiven = zeros(size(Z));%Y.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Vgiven(:));
 V = interpolant(Vx, Vy, Vz);
 % Interpolate W values
-Wgiven = 2*Z; %Z.^2;
+Wgiven = zeros(size(Z));%Z.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Wgiven(:));
 W = interpolant(Wx, Wy, Wz);
 
@@ -69,7 +69,7 @@ D = div3DCurv(k, X, Y, Z);
 Ccomp = D*[U; V; W];
 
 % Reshape for visualization
-Ccomp = reshape(Ccomp, m+1, n+1, o+1);
+Ccomp = permute(reshape(Ccomp, m+1, n+1, o+1), [2, 1, 3]);
 Ccomp = Ccomp(2:end-1, 2:end-1, 2:end-1);
 X = X(2:end, 2:end, 2:end);
 Y = Y(2:end, 2:end, 2:end);
@@ -83,3 +83,30 @@ ylabel('y')
 zlabel('z')
 axis equal
 colorbar
+view([140 40])
+
+figure
+surf(X(:, :, o/2), Y(:, :, o/2), Ccomp(:, :, o/2))
+title('Slice')
+xlabel('x')
+ylabel('y')
+axis equal
+colorbar
+view([0 90])
+shading interp
+
+Fx = sin(X);
+Fy = 0*Y;
+Fz = 0*Z;
+
+div = divergence(X, Y, Z, Fx, Fy, Fz);
+
+figure
+scatter3(X(:), Y(:), Z(:), 50, div(:), 'Filled');
+title('Divergence of the field according to MATLAB')
+xlabel('x')
+ylabel('y')
+zlabel('z')
+axis equal
+colorbar
+view([140 40])

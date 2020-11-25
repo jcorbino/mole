@@ -46,15 +46,15 @@ Wz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Wz = (Wz(:, 1:end-1, :) + Wz(:, 2:end, :))/2;
 
 % Interpolate U values
-Ugiven = X.^2;
+Ugiven = 2*X; %X.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Ugiven(:));
 U = interpolant(Ux, Uy, Uz);
 % Interpolate V values
-Vgiven = Y.^2;
+Vgiven = 2*Y; %Y.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Vgiven(:));
 V = interpolant(Vx, Vy, Vz);
 % Interpolate W values
-Wgiven = Z.^2;
+Wgiven = 2*Z; %Z.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Wgiven(:));
 W = interpolant(Wx, Wy, Wz);
 
@@ -82,3 +82,4 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 axis equal
+colorbar

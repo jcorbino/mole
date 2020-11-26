@@ -6,23 +6,15 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;  % Order of accuracy
-m = 40; % Number of nodes along x-axis
-n = 40; % Number of nodes along y-axis
-o = 40; % Number of nodes along z-axis
+m = 20; % Number of nodes along x-axis
+n = 20; % Number of nodes along y-axis
+o = 20; % Number of nodes along z-axis
 
 [X, Y] = genCurvGrid(n, m);
 X = repmat(X, [1 1 o]);
 Y = repmat(Y, [1 1 o]);
 [~, ~, Z] = meshgrid(1:m, 1:n, 1:o);
 % [X, Y, Z] = meshgrid(1:m, 1:n, 1:o);
-
-% Plot the physical grid
-% scatter3(X(:), Y(:), Z(:), 50, 'Filled');
-% title('Given scalar field')
-% xlabel('x')
-% ylabel('y')
-% zlabel('z')
-% axis equal
 
 Ux = (X(1:end-1, :, :) + X(2:end, :, :))/2;
 Ux = (Ux(:, :, 1:end-1) + Ux(:, :, 2:end))/2;
@@ -46,15 +38,15 @@ Wz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Wz = (Wz(:, 1:end-1, :) + Wz(:, 2:end, :))/2;
 
 % Interpolate U values
-Ugiven = sin(Y);
+Ugiven = sin(Y); %X.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Ugiven(:));
 U = interpolant(Ux, Uy, Uz);
 % Interpolate V values
-Vgiven = zeros(size(Z));%Y.^2;
+Vgiven = zeros(size(Y)); %Y.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Vgiven(:));
 V = interpolant(Vx, Vy, Vz);
 % Interpolate W values
-Wgiven = zeros(size(Z));%Z.^2;
+Wgiven = zeros(size(Z)); %Z.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Wgiven(:));
 W = interpolant(Wx, Wy, Wz);
 
@@ -95,7 +87,8 @@ colorbar
 view([0 90])
 shading interp
 
-div = 0*cos(Y);
+% Analytical divergence
+div = 0*cos(X);
 
 figure
 scatter3(X(:), Y(:), Z(:), 50, div(:), 'Filled');

@@ -6,9 +6,9 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;  % Order of accuracy
-m = 23; % Number of nodes along x-axis
-n = 21; % Number of nodes along y-axis
-o = 26; % Number of nodes along z-axis
+m = 20; % Number of nodes along x-axis
+n = 20; % Number of nodes along y-axis
+o = 20; % Number of nodes along z-axis
 
 [X, Y] = genCurvGrid(n, m);
 X = repmat(X, [1 1 o]);

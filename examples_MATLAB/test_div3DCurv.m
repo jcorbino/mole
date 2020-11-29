@@ -60,12 +60,22 @@ D = div3DCurv(k, X, Y, Z);
 % Apply the operator to the field
 Ccomp = D*[U; V; W];
 
-% Reshape for visualization
+% Remove outer layers
 Ccomp = permute(reshape(Ccomp, m+1, n+1, o+1), [2, 1, 3]);
 Ccomp = Ccomp(2:end-1, 2:end-1, 2:end-1);
-X = X(2:end, 2:end, 2:end);
-Y = Y(2:end, 2:end, 2:end);
-Z = Z(2:end, 2:end, 2:end);
+
+% Compute centroids
+X = (X(1:end-1, :, :)+X(2:end, :, :))/2;
+X = (X(:, 1:end-1, :)+X(:, 2:end, :))/2;
+X = (X(:, :, 1:end-1)+X(:, :, 2:end))/2;
+
+Y = (Y(1:end-1, :, :)+Y(2:end, :, :))/2;
+Y = (Y(:, 1:end-1, :)+Y(:, 2:end, :))/2;
+Y = (Y(:, :, 1:end-1)+Y(:, :, 2:end))/2;
+
+Z = (Z(1:end-1, :, :)+Z(2:end, :, :))/2;
+Z = (Z(:, 1:end-1, :)+Z(:, 2:end, :))/2;
+Z = (Z(:, :, 1:end-1)+Z(:, :, 2:end))/2;
 
 figure
 scatter3(X(:), Y(:), Z(:), 50, Ccomp(:), 'Filled');

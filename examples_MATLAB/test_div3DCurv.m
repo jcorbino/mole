@@ -22,14 +22,12 @@ Uy = (Y(1:end-1, :, :) + Y(2:end, :, :))/2;
 Uy = (Uy(:, :, 1:end-1) + Uy(:, :, 2:end))/2;
 Uz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Uz = (Uz(:, :, 1:end-1) + Uz(:, :, 2:end))/2;
-
 Vx = (X(:, 1:end-1, :) + X(:, 2:end, :))/2;
 Vx = (Vx(:, :, 1:end-1) + Vx(:, :, 2:end))/2;
 Vy = (Y(:, 1:end-1, :) + Y(:, 2:end, :))/2;
 Vy = (Vy(:, :, 1:end-1) + Vy(:, :, 2:end))/2;
 Vz = (Z(:, 1:end-1, :) + Z(:, 2:end, :))/2;
 Vz = (Vz(:, :, 1:end-1) + Vz(:, :, 2:end))/2;
-
 Wx = (X(1:end-1, :, :) + X(2:end, :, :))/2;
 Wx = (Wx(:, 1:end-1, :) + Wx(:, 2:end, :))/2;
 Wy = (Y(1:end-1, :, :) + Y(2:end, :, :))/2;
@@ -38,7 +36,7 @@ Wz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Wz = (Wz(:, 1:end-1, :) + Wz(:, 2:end, :))/2;
 
 % Interpolate U values
-Ugiven = sin(Y); %X.^2;
+Ugiven = sin(X); %X.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Ugiven(:));
 U = interpolant(Ux, Uy, Uz);
 % Interpolate V values
@@ -60,7 +58,7 @@ D = div3DCurv(k, X, Y, Z);
 % Apply the operator to the field
 Ccomp = D*[U; V; W];
 
-% Remove outer layers
+% Remove outer layers for visualization
 Ccomp = permute(reshape(Ccomp, m+1, n+1, o+1), [2, 1, 3]);
 Ccomp = Ccomp(2:end-1, 2:end-1, 2:end-1);
 
@@ -68,11 +66,9 @@ Ccomp = Ccomp(2:end-1, 2:end-1, 2:end-1);
 X = (X(1:end-1, :, :)+X(2:end, :, :))/2;
 X = (X(:, 1:end-1, :)+X(:, 2:end, :))/2;
 X = (X(:, :, 1:end-1)+X(:, :, 2:end))/2;
-
 Y = (Y(1:end-1, :, :)+Y(2:end, :, :))/2;
 Y = (Y(:, 1:end-1, :)+Y(:, 2:end, :))/2;
 Y = (Y(:, :, 1:end-1)+Y(:, :, 2:end))/2;
-
 Z = (Z(1:end-1, :, :)+Z(2:end, :, :))/2;
 Z = (Z(:, 1:end-1, :)+Z(:, 2:end, :))/2;
 Z = (Z(:, :, 1:end-1)+Z(:, :, 2:end))/2;
@@ -98,7 +94,7 @@ view([0 90])
 shading interp
 
 % Analytical divergence
-div = 0*cos(X);
+div = cos(X);
 
 figure
 scatter3(X(:), Y(:), Z(:), 50, div(:), 'Filled');

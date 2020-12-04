@@ -32,5 +32,16 @@ function I = DI3(m, n, o, type)
         bdry = [-bdry bdry spalloc(size(bdry, 1), (m+1)*n*o-2*size(bdry, 2), 0)];
         I = [spalloc((m+2)*(n+2)+m+3, size(bdry, 2), 0); bdry];
         I = [I; middle; circshift(bdry, (m+1)*n*(o-2), 2); spalloc((m+2)*(n+2)+m+1, size(bdry, 2), 0)];
+    elseif strcmp(type, 'Dcc')
+        e = ones(m, 1);
+        bdry = spdiags(0.5*e, 0, m, m);
+        bdry = [bdry; spalloc(2, m, 0)];
+        I = spdiags([ones(n, 1) ones(n, 1)], [0 1], n, n+1);
+        middle = kron(0.25*I, bdry);
+        middle = [middle; spalloc(2*(m+2), size(middle, 2), 0)];
+        middle = kron(spdiags([-ones(o-2, 1) ones(o-2, 1)], [0 2], o-2, o), middle);
+        bdry = kron(I, bdry);
+        bdry = [-bdry bdry spalloc(size(bdry, 1), m*(n+1)*o-2*size(bdry, 2), 0)];
+        I = [spalloc((m+2)*(n+2)+m+3, size(bdry, 2), 0); bdry; spalloc(2*(m+2), size(bdry, 2), 0); middle; circshift(bdry, m*(n+1)*(o-2), 2); spalloc((m+2)*(n+2)+m+1, size(bdry, 2), 0)];
     end
 end

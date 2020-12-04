@@ -6,9 +6,9 @@ addpath('../mole_MATLAB')
 
 % Parameters
 k = 2;  % Order of accuracy
-m = 20; % Number of nodes along x-axis
-n = 20; % Number of nodes along y-axis
-o = 20; % Number of nodes along z-axis
+m = 6; % Number of nodes along x-axis
+n = 7; % Number of nodes along y-axis
+o = 8; % Number of nodes along z-axis
 
 [X, Y] = genCurvGrid(n, m);
 X = repmat(X, [1 1 o]);
@@ -73,15 +73,15 @@ Z = (Z(1:end-1, :, :)+Z(2:end, :, :))/2;
 Z = (Z(:, 1:end-1, :)+Z(:, 2:end, :))/2;
 Z = (Z(:, :, 1:end-1)+Z(:, :, 2:end))/2;
 
-figure
-scatter3(X(:), Y(:), Z(:), 50, Ccomp(:), 'Filled');
-title('Divergence of the field')
-xlabel('x')
-ylabel('y')
-zlabel('z')
-axis equal
-colorbar
-view([140 40])
+% figure
+% scatter3(X(:), Y(:), Z(:), 50, Ccomp(:), 'Filled');
+% title('Divergence of the field')
+% xlabel('x')
+% ylabel('y')
+% zlabel('z')
+% axis equal
+% colorbar
+% view([140 40])
 
 figure
 surf(X(:, :, o/2), Y(:, :, o/2), Ccomp(:, :, o/2))
@@ -96,15 +96,15 @@ shading interp
 % Analytical divergence
 div = 0*cos(X);
 
-figure
-scatter3(X(:), Y(:), Z(:), 50, div(:), 'Filled');
-title('Analytical')
-xlabel('x')
-ylabel('y')
-zlabel('z')
-axis equal
-colorbar
-view([140 40])
+% figure
+% scatter3(X(:), Y(:), Z(:), 50, div(:), 'Filled');
+% title('Analytical')
+% xlabel('x')
+% ylabel('y')
+% zlabel('z')
+% axis equal
+% colorbar
+% view([140 40])
 
 figure
 surf(X(:, :, o/2), Y(:, :, o/2), div(:, :, o/2))

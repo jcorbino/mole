@@ -54,7 +54,7 @@ function D = div3DCurv(k, X, Y, Z)
     Dc = Div(:, m*(n-1)*(o-1)+(m-1)*n*(o-1)+1:end);
     
     % Apply transformation
-    Dx = J*(A*De+D*DI3(m-1, n-1, o-1, 'Dn')+G*spalloc(size(De, 1), size(De, 2), 0));
+    Dx = J*(A*De+D*DI3(m-1, n-1, o-1, 'Dn')+G*DI3(m-1, n-1, o-1, 'Dc'));
     Dy = J*(B*DI3(m-1, n-1, o-1, 'De')+E*Dn+H*spalloc(size(Dn, 1), size(Dn, 2), 0));
     Dz = J*(C*spalloc(size(Dc, 1), size(Dc, 2), 0)+F*spalloc(size(Dc, 1), size(Dc, 2), 0)+I*Dc);
     

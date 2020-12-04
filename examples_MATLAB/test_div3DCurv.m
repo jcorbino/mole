@@ -36,7 +36,7 @@ Wz = (Z(1:end-1, :, :) + Z(2:end, :, :))/2;
 Wz = (Wz(:, 1:end-1, :) + Wz(:, 2:end, :))/2;
 
 % Interpolate U values
-Ugiven = sin(X); %X.^2;
+Ugiven = sin(Y); %X.^2;
 interpolant = scatteredInterpolant([X(:) Y(:) Z(:)], Ugiven(:));
 U = interpolant(Ux, Uy, Uz);
 % Interpolate V values
@@ -94,7 +94,7 @@ view([0 90])
 shading interp
 
 % Analytical divergence
-div = cos(X);
+div = 0*cos(X);
 
 figure
 scatter3(X(:), Y(:), Z(:), 50, div(:), 'Filled');

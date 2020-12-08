@@ -56,7 +56,7 @@ function D = div3DCurv(k, X, Y, Z)
     % Apply transformation
     Dx = J*(A*De+D*DI3(m-1, n-1, o-1, 'Dn')+G*DI3(m-1, n-1, o-1, 'Dc'));
     Dy = J*(B*DI3(m-1, n-1, o-1, 'De')+E*Dn+H*DI3(m-1, n-1, o-1, 'Dcc'));
-    Dz = J*(C*spalloc(size(Dc, 1), size(Dc, 2), 0)+F*spalloc(size(Dc, 1), size(Dc, 2), 0)+I*Dc);
+    Dz = J*(C*DI3(m-1, n-1, o-1, 'Dee')+F*DI3(m-1, n-1, o-1, 'Dnn')+I*Dc);
     
     % Final 3D curvilinear mimetic divergence operator (d/dx + d/dy + d/dz)
     D = [Dx Dy Dz];

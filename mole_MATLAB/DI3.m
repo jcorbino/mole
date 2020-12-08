@@ -43,5 +43,28 @@ function I = DI3(m, n, o, type)
         bdry = kron(I, bdry);
         bdry = [-bdry bdry spalloc(size(bdry, 1), m*(n+1)*o-2*size(bdry, 2), 0)];
         I = [spalloc((m+2)*(n+2)+m+3, size(bdry, 2), 0); bdry; spalloc(2*(m+2), size(bdry, 2), 0); middle; circshift(bdry, m*(n+1)*(o-2), 2); spalloc((m+2)*(n+2)+m+1, size(bdry, 2), 0)];
+    elseif strcmp(type, 'Dee')
+        e = ones(m-2, 1);
+        block = spdiags([[-0.25*e; -0.25; 0] [0; 0.25*e; 0.25]], [-1 1], m+2, m);
+        block(1, 1) = -0.5;
+        block(1, 2) = 0.5;
+        block(m, m-1) = -0.5;
+        block(m, m) = 0.5;
+        middle = kron(speye(n), block);
+        middle = [middle; spalloc(2*(m+2), size(middle, 2), 0)];
+        I = kron(spdiags([ones(o, 1) ones(o, 1)], [0 1], o, o+1), middle);
+        I = [spalloc((m+2)*(n+2)+m+3, size(I, 2), 0); I; spalloc((m+2)*n+m+1, size(I, 2), 0)];
+    elseif strcmp(type, 'Dnn')
+        e = ones(m, 1);
+        bdry = spdiags([-0.5*e 0.5*e -0.5*e 0.5*e], [0 m m*n m*n+m], m, 2*m*n);
+        middle = 0.25*speye(m);
+        middle = [middle; spalloc(2, m, 0)];
+        middle = kron(spdiags([-ones(n-2, 1) ones(n-2, 1)], [0 2], n-2, n), middle);
+        middle = [middle middle];
+        I = [bdry; spalloc(2, size(bdry, 2), 0); middle; circshift(bdry, m*(n-2), 2)];
+        I = I(:, 1:m*n);
+        I = [I; spalloc(2*(m+2)+2, size(I, 2), 0)];
+        I = kron(spdiags([ones(o, 1) ones(o, 1)], [0 1], o, o+1), I);
+        I = [spalloc((m+2)*(n+2)+m+3, size(I, 2), 0); I; spalloc((m+2)*n+m+1, size(I, 2), 0)];
     end
 end

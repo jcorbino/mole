@@ -42,7 +42,6 @@ Psi_old = Psi_old(:);
 v_old = zeros(2*m*n+m+n, 1);
 
 for i = 0:105
-    
     % Position Verlet algorithm
     Psi_old = Psi_old + I2*v_old;
     v_new = v_old + I*H(Psi_old);

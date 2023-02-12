@@ -17,9 +17,9 @@ int main() {
 
     // Get mimetic Laplacian operator
     Laplacian L(k, m-2, dx);
-    
+
     std::transform(grid.begin(), grid.end(), grid.begin(), [](Real x){ return x*x; });
-    
+
     sp_mat V(m, m);
     V.diag(0) = grid;
 

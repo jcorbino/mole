@@ -27,4 +27,4 @@ RKG = full(G2\GK);
 
 LKG = full(GK/G2);
 
-STAR = RKD*LKG
+STAR = RKD*LKG;

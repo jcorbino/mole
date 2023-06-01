@@ -1,0 +1,9 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Johnny
+    given-names: Corbino
+    orcid: https://orcid.org/0000-0002-2638-9216
+title: jcorbino/mole: v2.0
+version: v2.0
+date-released: 2023-06-01

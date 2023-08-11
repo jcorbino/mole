@@ -55,7 +55,7 @@ Lastly, build MOLE by executing:
 `make`
 
 a static library named `libmole.a` will get created. From this point you just need to include `mole.h` 
-in your projects and specify the location of `libmole.a` to the linker.
+in your projects and specify the location of `libmole.a` to the linker. The users that are interested in building MOLE as a _shared library_, you just need to specify `make SHARED_LIB=1`, just make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
 
 **For the MATLAB version of our library, the only dependency is to have MATLAB installed**.
 The two implementations of MOLE (C++ & MATLAB) are independent, that is, you don't need
@@ -113,7 +113,6 @@ to start browsing the documentation.
 Please cite our work if you use MOLE in your research and/or software. 
 Citations are useful for the continued development and maintenance of 
 the library [![DOI](https://zenodo.org/badge/100132401.svg)](https://zenodo.org/badge/latestdoi/100132401)
-
 
 [![View mole on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/124870-mole)
 

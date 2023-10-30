@@ -11,10 +11,12 @@ authors:
     orcid: 0000-0002-2638-9216
     affiliation: 1
   - name: Jose E. Castillo
-    affiliation: 1
+    affiliation: 2
 affiliations:
- - name: Computational Science Research Center, San Diego State University, 5500 Campanile Dr, San Diego, California, 92182.
+- name: Computational Research Division, Lawrence Berkeley National Laboratory, Berkeley, California, 94720.
    index: 1
+ - name: Computational Science Research Center, San Diego State University, 5500 Campanile Dr, San Diego, California, 92182.
+   index: 2
 date: 29 December 2020
 bibliography: paper.bib
 ---

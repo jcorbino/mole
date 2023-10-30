@@ -13,7 +13,7 @@ authors:
   - name: Jose E. Castillo
     affiliation: 2
 affiliations:
-- name: Computational Research Division, Lawrence Berkeley National Laboratory, Berkeley, California, 94720.
+ - name: Computational Research Division, Lawrence Berkeley National Laboratory, Berkeley, California, 94720.
    index: 1
  - name: Computational Science Research Center, San Diego State University, 5500 Campanile Dr, San Diego, California, 92182.
    index: 2

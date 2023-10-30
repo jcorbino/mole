@@ -23,7 +23,7 @@ bibliography: paper.bib
 
 # Summary
 
-MOLE is a high quality (C++ & MATLAB) library that implements high-order mimetic operators. It provides discrete analogs of the most common vector calculus operators: Gradient, Divergence, Laplacian, and Curl. These operators (matrices) act on staggered grids (uniform and nonuniform) and they satisfy local and global conservation laws. These operators can be used to build codes to solve partial differential equations (PDEs).
+MOLE is a high-quality (C++ & MATLAB) library that implements high-order mimetic operators. It provides discrete analogs of the most common vector calculus operators: Divergence, Gradient, Curl, and Laplacian. These operators (matrices) act on staggered grids (uniform, nonuniform, and curvilinear) and they satisfy local and global conservation laws. MOLE's operators can be utilized to develop code for solving partial differential equations (PDEs).
 
 The mathematics are based on the work of [@Corbino]. In addition, the user may find useful previous publications such as [@Castillo], in which similar operators are derived using a matrix analysis approach.
 
@@ -37,7 +37,7 @@ These operators, have been used to write codes to solve PDEs of different types 
 
 # Statement of need
 
-Implementing mimetic operators is not a trivial matter, particularly in three dimensions,  this is substantially facilitated by MOLE relieving the user to devote their time to focus on the problem of interest. The user interested in solving, for example, a Poisson equation  $-\nabla^2 u = f$, will be solving a discrete analog of this equation, $-DG\bar{u} = \bar{f}$, by using MOLE with a few lines of code.
+Implementing mimetic operators is not a trivial matter, particularly in three dimensions, this is substantially facilitated by MOLE relieving the user to devote their time to focus on the problem of interest. The user interested in solving, for example, a _Poisson equation_  $-\nabla^2 u = f$, will be solving a discrete analog of this equation, $-DG\bar{u} = \bar{f}$, by using MOLE with a few lines of code.
 
 # State of the field
 

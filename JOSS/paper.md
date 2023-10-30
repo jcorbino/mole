@@ -96,4 +96,8 @@ ylabel('u(x)')
 
 In this short article we introduced MOLE, an open-source library that implements the mimetic operators from [@Corbino]. For conciseness purposes, we showed a one-dimensional Poisson problem as example, however, MOLE comes with over 30 examples that range from the one-way wave equation to highly nonlinear and computationally demanding problems such as Richard's equation for unsaturated flow in porous media. The user can find such examples in the [Examples](https://github.com/jcorbino/mole/blob/master/examples_MATLAB) folder.
 
+# Acknowledgements
+
+We acknowledge contributions from Dr. Miguel Dumett, Dr. Angel Boada, and Jared Brzenski, whose dedicated efforts and insightful discussions significantly enhanced the development of the software tool.
+
 # References

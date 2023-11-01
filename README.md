@@ -96,8 +96,8 @@ Now, just build the library and its examples by simply executing `make` from MOL
 
 4: Documentation
 ----------------
-The folder `doc_MATLAB` contains generated documentation about the MATLAB version.
-It was generated with a tool called _m2html_ which can be found here: <https://www.artefact.tk/software/matlab/m2html>.
+The folder `doc_MATLAB` contains generated documentation about the MATLAB/Octave API.
+It was generated with a tool called [_m2html_](https://www.gllmflndn.com/software/matlab/m2html). However, for a quick start on MOLE's MATLAB/Octave version, we recommend to start with this short [guide](https://github.com/jcorbino/mole/blob/master/CSRC%20Report%20on%20MOLE.pdf).
 
 To generate the C++ documentation, just execute:
 

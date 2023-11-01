@@ -25,7 +25,7 @@ bibliography: paper.bib
 
 # Summary
 
-MOLE is a high-quality (C++ & MATLAB) library that implements high-order mimetic operators. It provides discrete analogs of the most common vector calculus operators: Divergence, Gradient, Curl, and Laplacian. These operators (matrices) act on staggered grids (uniform, nonuniform, and curvilinear) and they satisfy local and global conservation laws [@R202203] [@R202305]. MOLE's operators can be utilized to develop code for solving partial differential equations (PDEs).
+MOLE is a high-quality (C++ & MATLAB) library that implements high-order mimetic operators. It provides discrete analogs of the most common vector calculus operators: Divergence, Gradient, Curl, and Laplacian. These operators (matrices) act on staggered grids (uniform, nonuniform, and curvilinear) and they satisfy local and global conservation laws [@R202203; @R202305]. MOLE's operators can be utilized to develop code for solving partial differential equations (PDEs).
 
 The mathematics are based on the work of [@Corbino]. In addition, the user may find useful previous publications such as [@Castillo], in which similar operators are derived using a matrix analysis approach.
 
@@ -35,7 +35,7 @@ Mimetic finite-difference operators, Divergence (**D**), Gradient (**G**), Curl 
 
 The basis of higher-dimensional operators, as well of more sophisticated operators such as the Laplacian or the Biharmonic operator are the one-dimensional mimetic **G** and **D** operators, together with high-order mimetic interpolation operators [@R202202], also contained in the library. These finite-dimensional operators can be reused throughout the model and they provide a higher level of abstraction at the time of solving differential equations.
 
-These operators, have been used to write codes to solve PDEs of different types [@Jared], [@Bazan], [@Boada], [@Boada2], [@Rojas], [@Jorge], [@Josep], [@Abouali]. For an overview of mimetic methods of different types see the book by Castillo and Miranda and the references there in [@Miranda].
+These operators, have been used to write codes to solve PDEs of different types [@Jared; @Bazan; @Boada; @Boada2; @Rojas; @Jorge; @Josep; @Abouali]. For an overview of mimetic methods of different types see the book by Castillo and Miranda and the references there in [@Miranda].
 
 # Statement of need
 

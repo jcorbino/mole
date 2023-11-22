@@ -1,16 +1,3 @@
-ifndef ARMA
-# Put here the path to Armadillo
-ARMA = /home/johnny/armadillo-10.2.1
-endif
-
-ifndef EIGEN
-# Put here the path to Eigen (optional)
-# You won't need it unless you have to solve a linear system in which
-# case we recommend to use SuperLU over Eigen for the sparse LU factorization
-#EIGEN = /usr/include/eigen3
-endif
-
-#----------------------------------------------------------------------
 # Compiler for C++
 CXX = g++
 
@@ -18,7 +5,7 @@ CXX = g++
 CXXFLAGS = -O3 -fopenmp
 
 # Path to header files
-INCPATH = -I. -I$(ARMA)/include
+INCPATH = -I. $(if $(ARMA),-I$(ARMA)/include)
 
 ifdef EIGEN
 CXXFLAGS += -DEIGEN

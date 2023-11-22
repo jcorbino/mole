@@ -24,23 +24,23 @@ MOLE is distributed under a GNU General Public License, please refer to the _LIC
 file for more details.
 
 
-3.1: Installation (Linux)
--------------------------
+3: Installation (Linux)
+-----------------------
 
-To use MOLE (C++ version), you need to have _Armadillo C++_ <http://arma.sourceforge.net> and _SuperLU_ 
-<https://portal.nersc.gov/project/sparse/superlu> installed on your computer.
+To use MOLE (C++ version), you need to have _Armadillo C++_ <http://arma.sourceforge.net>, _SuperLU_ 
+<https://portal.nersc.gov/project/sparse/superlu>, and _OpenBLAS_ <https://www.openblas.net> installed on your computer.
 
-Assuming a working installation of _SuperLU_ (`sudo apt install libsuperlu-dev` or `sudo yum install SuperLU-devel`), follow these steps:
+Assuming a working installation of _SuperLU_ (`sudo apt install libsuperlu-dev` or `sudo yum install SuperLU-devel`), and _OpenBLAS_ (`sudo apt install libopenblas-dev` or `sudo yum install openblas-devel`), follow these steps:
 
-`wget http://sourceforge.net/projects/arma/files/armadillo-10.2.1.tar.xz`
+`wget https://sourceforge.net/projects/arma/files/armadillo-12.6.6.tar.xz`
 
-`tar xvf armadillo-10.2.1.tar.xz`
+`tar xvf armadillo-12.6.6.tar.xz`
 
-`cd armadillo-10.2.1`
+`cd armadillo-12.6.6`
 
-**NOTE:** We suggest to use the latest stable version that is available.
+**NOTE:** We suggest to use the latest stable version.
 
-Undefine `ARMA_USE_LAPACK` and `ARMA_USE_BLAS` (in case you don't have them installed), then define `ARMA_USE_SUPERLU` and `ARMA_USE_OPENMP` in `include/armadillo_bits/config.hpp`. Make sure that you have `cmake` and `g++` installed before executing:
+Define `ARMA_USE_SUPERLU` and `ARMA_USE_OPENMP` in `include/armadillo_bits/config.hpp`. Make sure that you have `cmake` and `g++` installed before executing:
 
 `./configure`
 
@@ -48,50 +48,22 @@ Undefine `ARMA_USE_LAPACK` and `ARMA_USE_BLAS` (in case you don't have them inst
 
 this will create `libarmadillo.so`.
 
-Now go to `mole/` and set the path to _Armadillo_ in the `Makefile`, e.g. `ARMA = /home/johnny/armadillo-10.2.1`.
+Now go to `mole/` and build MOLE via:
 
-Lastly, build MOLE by executing:
+`ARMA=PATH_TO_ARMADILLO_FOLDER make`
+
+or simply:
 
 `make`
 
-a static library named `libmole.a` will get created. From this point you just need to include `mole.h` 
+if _Armadillo_ was installed via `sudo apt install libarmadillo-dev` or `sudo yum install armadillo-devel`.
+
+A static library named `libmole.a` will get created after the previous step. From this point you just need to include `mole.h` 
 in your projects and specify the location of `libmole.a` to the linker. For the users that are interested in building MOLE as a _shared library_, you just need to specify `make SHARED_LIB=1`. Make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
 
-**For the MATLAB version of our library, the only dependency is to have MATLAB installed**.
-The two implementations of MOLE (C++ & MATLAB) are independent, that is, you don't need
-to build the C++ version if you are just interested in using MOLE from MATLAB.
-
-
-3.2: Installation (MacOS)
--------------------------
-
-First, download _Eigen_ from <https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz>, and _Armadillo C++_ from <http://arma.sourceforge.net>.
-
-Extract _Eigen_ and _Armadillo_, you can use the following command for each compressed file:
-
-`tar xvf name_of_the_file_including_extension --directory target_directory`
-
-Now, proceed to download MOLE <https://github.com/jcorbino/mole/archive/refs/heads/master.zip> and extract the file:
-
-`unzip master.zip –d mole`
-
-after that, enter MOLE's directory `cd mole` and edit the following files:
-
-`mole_C++/utils.cpp` (line 4) to be simply `#include <Eigen/SparseLU>`
-
-`mole_C++/Makefile` (line 18) should be `CXXFLAGS = -O3 -std=c++11`
-
-same for (line 19) of `examples_C++/Makefile`.
-
-Lastly, (line 25) of `examples_C++/Makefile` should not include `-larmadillo`.
-
-At this point, you just need to edit the `Makefile` located in MOLE's root directory by setting the correct path to each dependency (_Eigen_ and _Armadillo_), that is:
-
-(Line 2) of that `Makefile` should look like: `ARMA = ../../armadillo-10.7.0` and (line 7) should be `EIGEN = ../../eigen-3.4.0`.
-
-Now, just build the library and its examples by simply executing `make` from MOLE's root folder.
-
-**IMPORTANT**: In order to build any of the aforementioned packages, the operating system needs to have `g++` (_GNU Compiler_) and `make` (utility) installed. Those two packages will get installed when you set up _Xcode_ on your Mac: `xcode-select --install`.
+**For the MATLAB/Octave version of our library, the only dependency is to have MATLAB/Octave installed**.
+The two implementations of MOLE (C++ & MATLAB/Octave) are independent, that is, you don't need
+to build the C++ version if you are just interested in using MOLE from MATLAB/Octave.
 
 
 4: Documentation
@@ -123,3 +95,5 @@ the library [![DOI](https://zenodo.org/badge/100132401.svg)](https://zenodo.org/
 ![Obtained with curvilinear operators](images/grid.png)
 ![Obtained with curvilinear operators](images/WavyGrid.png)
 ![Obtained with curvilinear operators](images/wave2D.png)
+![Obtained with curvilinear operators](images/burgers.png)
+

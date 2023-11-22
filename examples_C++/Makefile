@@ -1,28 +1,16 @@
-ifndef ARMA
-# Put here the path to Armadillo
-ARMA = /home/johnny/armadillo-10.2.1
-endif
-
-ifndef EIGEN
-# Put here the path to Eigen (optional)
-# We recommend SuperLU over Eigen for the sparse LU factorization
-#EIGEN = /usr/include/eigen3
-endif
-
-#----------------------------------------------------------------------
 MOLE = ../mole_C++
 
 # Compiler for C++
 CXX = g++
 
 # Flags for C++ compiler
-CXXFLAGS = -O3 -fopenmp
+CXXFLAGS = -O3 -fopenmp -DARMA_DONT_USE_WRAPPER
 
 # Path to header files
-INCPATH = -I. -I$(ARMA)/include -I$(MOLE)
+INCPATH = -I. $(if $(ARMA),-I$(ARMA)/include) -I$(MOLE)
 
 # Path to libmole.a
-LIBS = -L$(MOLE) -L$(ARMA) -lmole -larmadillo -lopenblas
+LIBS = -L$(MOLE) -lmole $(if $(ARMA),-L$(ARMA)/lib) -lopenblas
 
 ifdef EIGEN
 CXXFLAGS += -DEIGEN

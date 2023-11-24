@@ -1,18 +1,14 @@
-# Compiler for C++
 CXX ?= g++
 
-# Flags for C++ compiler
 CXXFLAGS = -O3 -fopenmp
 
-# Path to header files
-INCPATH = -I. $(if $(ARMA),-I$(ARMA)/include)
+INCPATH = -I. $(if $(ARMA), -I$(ARMA)/include)
 
 ifdef EIGEN
 CXXFLAGS += -DEIGEN
 INCPATH += -I$(EIGEN)
 endif
 
-# Rules:
 ifndef SHARED_LIB
 all: libmole.a
 else

@@ -1,16 +1,12 @@
 MOLE = ../mole_C++
 
-# Compiler for C++
 CXX ?= g++
 
-# Flags for C++ compiler
 CXXFLAGS = -O3 -fopenmp -DARMA_DONT_USE_WRAPPER
 
-# Path to header files
-INCPATH = -I. $(if $(ARMA),-I$(ARMA)/include) -I$(MOLE)
+INCPATH = -I. $(if $(ARMA), -I$(ARMA)/include) -I$(MOLE)
 
-# Path to libmole.a
-LIBS = -L$(MOLE) -lmole $(if $(ARMA),-L$(ARMA)) -larmadillo -lopenblas
+LIBS = -L$(MOLE) -lmole $(if $(ARMA), -L$(ARMA)) -larmadillo -lopenblas
 
 ifdef EIGEN
 CXXFLAGS += -DEIGEN
@@ -19,7 +15,6 @@ else
 LIBS += -lsuperlu
 endif
 
-# Rules:
 all: transport1D schrodinger1D elliptic1D elliptic2D
 
 transport1D: transport1D.cpp

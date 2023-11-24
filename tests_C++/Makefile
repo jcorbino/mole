@@ -1,18 +1,13 @@
 MOLE = ../mole_C++
 
-# Compiler for C++
 CXX ?= g++
 
-# Flags for C++ compiler
 CXXFLAGS = -O3 -fopenmp -DARMA_DONT_USE_WRAPPER
 
-# Path to header files
-INCPATH = -I. $(if $(ARMA),-I$(ARMA)/include) -I$(MOLE)
+INCPATH = -I. $(if $(ARMA), -I$(ARMA)/include) -I$(MOLE)
 
-# Path to libmole.a
-LIBS = -L$(MOLE) -lmole $(if $(ARMA),-L$(ARMA)) -larmadillo -lopenblas
+LIBS = -L$(MOLE) -lmole $(if $(ARMA), -L$(ARMA)) -larmadillo -lopenblas
 
-# Rules:
 all: test1 test2 test3 test4 run
 
 test1: test1.cpp

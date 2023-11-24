@@ -1,5 +1,5 @@
 # Compiler for C++
-CXX = g++
+CXX ?= g++
 
 # Flags for C++ compiler
 CXXFLAGS = -O3 -fopenmp

@@ -2,17 +2,33 @@ MOLE = ../mole_C++
 
 CXX ?= g++
 
-CXXFLAGS = -O3 -fopenmp -DARMA_DONT_USE_WRAPPER
+ifeq ($(DEBUG),1)
+CXXFLAGS = -O0 -g
+else
+CXXFLAGS = -O3
+endif
+CXXFLAGS += -fopenmp -DARMA_DONT_USE_WRAPPER
 
 INCPATH = -I. $(if $(ARMA), -I$(ARMA)/include) -I$(MOLE)
 
-LIBS = -L$(MOLE) -lmole $(if $(ARMA), -L$(ARMA)) -larmadillo -lopenblas
+#LIBS = -L$(MOLE) -lmole $(if $(ARMA),-L$(ARMA)/lib -Wl,-rpath,$(ARMA)/lib) -larmadillo -lopenblas
+LIBS = -L$(MOLE) -lmole
+
+ifdef ARMA
+LIBS += -L$(ARMA)/lib -Wl,-rpath,$(ARMA)/lib -larmadillo -lopenblas
+else
+$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library.)
+endif
 
 ifdef EIGEN
 CXXFLAGS += -DEIGEN
 INCPATH += -I$(EIGEN)
 else
+ifdef SUPERLU
+LIBS += -L$(SUPERLU)/lib -Wl,-rpath,$(SUPERLU)/lib -lsuperlu
+else
 LIBS += -lsuperlu
+endif
 endif
 
 all: transport1D schrodinger1D elliptic1D elliptic2D

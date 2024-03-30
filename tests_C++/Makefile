@@ -4,9 +4,13 @@ CXX ?= g++
 
 CXXFLAGS = -O3 -fopenmp -DARMA_DONT_USE_WRAPPER
 
-INCPATH = -I. $(if $(ARMA), -I$(ARMA)/include) -I$(MOLE)
+ifdef ARMA
+INCPATH = -I. -I$(ARMA)/include -I$(MOLE)
+else
+$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library.)
+endif
 
-LIBS = -L$(MOLE) -lmole $(if $(ARMA), -L$(ARMA)) -larmadillo -lopenblas
+LIBS = -L$(MOLE) -lmole -lopenblas
 
 all: test1 test2 test3 test4 run
 

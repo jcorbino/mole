@@ -1,6 +1,11 @@
 CXX ?= g++
 
-CXXFLAGS = -O3 -fopenmp
+ifeq ($(DEBUG),1)
+CXXFLAGS = -O0 -g
+else
+CXXFLAGS = -O3
+endif
+CXXFLAGS += -fopenmp
 
 INCPATH = -I. $(if $(ARMA), -I$(ARMA)/include)
 

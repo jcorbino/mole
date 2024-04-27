@@ -52,12 +52,6 @@ Now go to `mole/` and build MOLE via:
 
 `ARMA=PATH_TO_ARMADILLO_FOLDER make`
 
-or simply:
-
-`make`
-
-if _Armadillo_ was installed via `sudo apt install libarmadillo-dev` or `sudo yum install armadillo-devel`.
-
 A static library named `libmole.a` will get created after the previous step. From this point you just need to include `mole.h` 
 in your projects and specify the location of `libmole.a` to the linker. For the users that are interested in building MOLE as a _shared library_, you just need to specify `make SHARED_LIB=1`. Make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
 

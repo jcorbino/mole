@@ -7,7 +7,9 @@ CXXFLAGS = -O3 -fopenmp -DARMA_DONT_USE_WRAPPER
 ifdef ARMA
 INCPATH = -I. -I$(ARMA)/include -I$(MOLE)
 else
+ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(error ARMA is not defined. Please define ARMA with the path to the Armadillo library.)
+endif
 endif
 
 LIBS = -L$(MOLE) -lmole -lopenblas

@@ -8,7 +8,7 @@ ifdef ARMA
 INCPATH = -I. -I$(ARMA)/include -I$(MOLE)
 else
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library.)
+$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library)
 endif
 endif
 

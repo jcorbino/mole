@@ -17,7 +17,7 @@ ifdef ARMA
 LIBS += -L$(ARMA) -Wl,-rpath,$(ARMA) -larmadillo -lopenblas
 else
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library.)
+$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library)
 endif
 endif
 

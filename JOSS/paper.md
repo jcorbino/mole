@@ -92,7 +92,7 @@ xlabel('x')
 ylabel('u(x)')
 ```
 
-![Solution to the 1D Poisson problem using *k=4* and *m=9*.](fig1.png){width=80%}
+![Solution to the problem using *k=4* and *m=9*.](fig1.png){width=80%}
 
 # Concluding remarks
 

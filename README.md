@@ -73,7 +73,7 @@ this will create a folder called `doc_C++` containing a set of _html_ files. Ple
 to start browsing the documentation.
 
 **NOTE:**
-Performing non-unary operations involving operands constructed over different grids may lead to unexpected results. While MOLE currently allows such operations without throwing errors, users must exercise caution when manipulating operators across different grids. We advise users to ensure consistency in the grids associated with the operators being operated on.
+Performing non-unary operations involving operands constructed over different grids may lead to unexpected results. While MOLE currently allows such operations without throwing errors, users must exercise caution when manipulating operators across different grids.
 
 
 5: Citations

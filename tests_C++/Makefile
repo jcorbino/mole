@@ -2,13 +2,14 @@ MOLE = ../mole_C++
 
 CXX ?= g++
 
+INCPATH = -I$(MOLE)
 CXXFLAGS = -O3 -fopenmp -DARMA_DONT_USE_WRAPPER
 
 ifdef ARMA
-INCPATH = -I. -I$(ARMA)/include -I$(MOLE)
+INCPATH += -I. -I$(ARMA)/include
 else
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library)
+$(warning The path to Armadillo's library was not provided. Will look for it at the standard system directories.)
 endif
 endif
 

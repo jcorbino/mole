@@ -11,13 +11,13 @@ CXXFLAGS += -fopenmp -DARMA_DONT_USE_WRAPPER
 
 INCPATH = -I. $(if $(ARMA), -I$(ARMA)/include) -I$(MOLE)
 
-LIBS = -L$(MOLE) -lmole
+LIBS = -L$(MOLE) -lmole -lopenblas
 
 ifdef ARMA
-LIBS += -L$(ARMA) -Wl,-rpath,$(ARMA) -larmadillo -lopenblas
+LIBS += -L$(ARMA) -Wl,-rpath,$(ARMA) -larmadillo
 else
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(error ARMA is not defined. Please define ARMA with the path to the Armadillo library)
+$(warning The path to Armadillo's library was not provided. Will look for it at the standard system directories.)
 endif
 endif
 

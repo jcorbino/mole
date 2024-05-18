@@ -17,6 +17,6 @@ If you encounter any issues or bugs, please report them by following these steps
 
 ## 3. Seeking Support
 
-For support requests or general questions, please feel free to reach out to us via email at [johnnycorbino@gmail.com](mailto:johnnycorbino@gmail.com).
+For support requests or general questions, please feel free to reach out to us via email at [johnnycorbino@gmail.com](mailto:johnnycorbino@gmail.com), [angelboada2@gmail.com](mailto:angelboada2@gmail.com), and [jcastillo@sdsu.edu](mailto:jcastillo@sdsu.edu).
 
 Thank you for your contributions and support!

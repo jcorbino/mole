@@ -68,6 +68,7 @@ to build the C++ version if you are just interested in using MOLE from MATLAB/Oc
 
 4: Documentation
 ----------------
+
 The folder `doc_MATLAB` contains generated documentation about the MATLAB/Octave API.
 It was generated with a tool called [_m2html_](https://www.gllmflndn.com/software/matlab/m2html). However, for a quick start on MOLE's MATLAB/Octave version, we recommend to start with this short [guide](https://github.com/jcorbino/mole/blob/master/CSRC%20Report%20on%20MOLE.pdf).
 
@@ -82,7 +83,13 @@ to start browsing the documentation.
 Performing non-unary operations involving operands constructed over different grids may lead to unexpected results. While MOLE currently allows such operations without throwing errors, users must exercise caution when manipulating operators across different grids.
 
 
-5: Citations
+5: Community Guidelines
+-----------------------
+
+We warmly welcome contributions to MOLE, whether they involve adding new functionalities, providing examples, addressing existing issues, reporting bugs, or requesting new features. Please refer to our [Contribution Guidelines](https://github.com/jcorbino/mole/blob/master/CONTRIBUTING.md) for more details.
+
+
+6: Citations
 ------------
 
 Please cite our work if you use MOLE in your research and/or software. 

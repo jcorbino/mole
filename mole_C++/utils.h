@@ -1,3 +1,14 @@
+/**
+ * @file utils.h
+ * @author Johnny Corbino (johnnycorbino@gmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2024-05-26
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #pragma once
 
 #ifndef UTILS_H

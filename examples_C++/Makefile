@@ -17,7 +17,7 @@ ifdef ARMA
 LIBS += -L$(ARMA) -Wl,-rpath,$(ARMA) -larmadillo
 else
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(warning The path to Armadillo's library was not provided. Will look for it at the standard system directories.)
+$(warning The path to Armadillo's library was not provided. I will look for it in the standard system directories.)
 endif
 endif
 

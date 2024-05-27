@@ -66,7 +66,25 @@ The two implementations of MOLE (C++ & MATLAB/Octave) are independent, that is, 
 to build the C++ version if you are just interested in using MOLE from MATLAB/Octave.
 
 
-4: Documentation
+4: Running Examples & Tests
+---------------------------
+
+To help you quickly get started with MOLE, here are instructions on how to run the provided examples and tests for both the C++ and MATLAB versions of the library.
+
+* **tests_C++:**
+These tests, automatically executed upon construction of the library's C++ version, play a crucial role in verifying the correct installation of MOLE and its dependencies. There are four tests in total.
+
+* **tests_MATLAB:**
+We encourage MATLAB users to execute these tests before using MOLE by entering the `tests_MATLAB` directory and executing `run_tests.m` from MATLAB. These are analogs to the tests contained in `tests_C++`.
+
+* **examples_C++:**
+These will be automatically built after calling `make`. We encourage C++ users to make this their entry point to familiarize themselves with this library version. The four examples are self-contained, properly documented, and they solve typical PDEs.
+
+* **examples_MATLAB:**
+Most of our examples are provided in the MATLAB scripting language. There are over 30 examples, ranging from linear one-dimensional PDEs to highly nonlinear multidimensional PDEs.
+
+
+5: Documentation
 ----------------
 
 The folder `doc_MATLAB` contains generated documentation about the MATLAB/Octave API.
@@ -83,13 +101,13 @@ to start browsing the documentation.
 Performing non-unary operations involving operands constructed over different grids may lead to unexpected results. While MOLE currently allows such operations without throwing errors, users must exercise caution when manipulating operators across different grids.
 
 
-5: Community Guidelines
+6: Community Guidelines
 -----------------------
 
 We warmly welcome contributions to MOLE, whether they involve adding new functionalities, providing examples, addressing existing issues, reporting bugs, or requesting new features. Please refer to our [Contribution Guidelines](https://github.com/jcorbino/mole/blob/master/CONTRIBUTING.md) for more details.
 
 
-6: Citations
+7: Citations
 ------------
 
 Please cite our work if you use MOLE in your research and/or software. 

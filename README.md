@@ -90,6 +90,8 @@ Most of our examples are provided in the MATLAB scripting language. There are ov
 The folder `doc_MATLAB` contains generated documentation about the MATLAB/Octave API.
 It was generated with a tool called [_m2html_](https://www.gllmflndn.com/software/matlab/m2html). However, for a quick start on MOLE's MATLAB/Octave version, we recommend to start with this short [guide](https://github.com/jcorbino/mole/blob/master/CSRC%20Report%20on%20MOLE.pdf).
 
+For C++ users, we provide a short [guide](https://github.com/jcorbino/mole/blob/master/MOLE_C%2B%2B_Quick_Guide.pdf) to MOLE's C++ flavor. However, for those in need of more details to interact with the library, we suggest to follow these instructions:
+
 To generate the C++ documentation, just execute:
 
 `doxygen Doxyfile` (requires _Doxygen_ and _Graphviz_)

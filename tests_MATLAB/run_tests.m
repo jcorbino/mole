@@ -15,3 +15,6 @@ run('test3.m');
 
 disp('Running: Energy test (Schrödinger equation)...');
 run('test4.m');
+
+disp('Running: Elliptic test (Poisson equation)...');
+run('test5.m');

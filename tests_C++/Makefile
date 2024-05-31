@@ -42,7 +42,7 @@ test4: test4.cpp
 test5: test5.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o test5 test5.cpp $(LIBS)
 
-run: test1 test2 test3 test4
+run: test1 test2 test3 test4 test5
 	LD_LIBRARY_PATH=../mole_C++ ./test1
 	LD_LIBRARY_PATH=../mole_C++ ./test2
 	LD_LIBRARY_PATH=../mole_C++ ./test3

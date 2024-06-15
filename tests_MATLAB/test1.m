@@ -2,19 +2,22 @@
 
 addpath('../mole_MATLAB')
 
-k = 2;
-m = 2 * k + 1;
-dx = 1;
+ks = [2, 4, 6, 8];  % Different orders of accuracy
 tol = 1e-12;
 
-D = div(k, m, dx);
+for k = ks
+    m = 2 * k + 1;
+    dx = 1 / m;
 
-field = ones(m + 1, 1);
-
-sol = D * field;
-
-if (norm(sol) < tol)
-    fprintf("Test PASSED!\n");
-else
-    fprintf("Test FAILED!");
+    D = div(k, m, dx);
+    
+    field = ones(m + 1, 1);
+    
+    sol = D * field;
+    
+    if (norm(sol) > tol)
+        fprintf("Test FAILED!\n");
+    end
 end
+
+fprintf("Test PASSED!\n");

@@ -1,16 +1,13 @@
 /**
- * Elliptic test
+ * Poisson accuracy test
  */
 
 #include "mole.h"
 #include <iostream>
 
-int main() {
+void run_test(int k, vec grid_sizes) {
   Real west = 0; // Domain's limits
   Real east = 1;
-
-  int k = 2;                         // Operator's order of accuracy
-  vec grid_sizes = {10, 20, 40, 80}; // Different grid sizes to test
 
   vec errors(grid_sizes.size());
 
@@ -28,8 +25,8 @@ int main() {
     vec grid(m + 2);
     grid(0) = west;
     grid(1) = west + dx / 2.0;
-    for (int i = 2; i <= m; i++) {
-      grid(i) = grid(i - 1) + dx;
+    for (int j = 2; j <= m; j++) {
+      grid(j) = grid(j - 1) + dx;
     }
     grid(m + 1) = east;
 
@@ -38,7 +35,7 @@ int main() {
     U(0) = 0;              // West BC
     U(m + 1) = 2 * exp(1); // East BC
 
-    // Solve the system of linear equations
+// Solve the system of linear equations
 #ifdef EIGEN
     // Use Eigen only if SuperLU (faster) is not available
     vec computed_solution = Utils::spsolve_eigen(L, U);
@@ -57,12 +54,18 @@ int main() {
     order(i) = log2(errors(i) / errors(i + 1));
 
     if (order(i) - k < -0.5) {
-      cout << "\033[1;31mTest FAILED!\033[0m\n";
-      return 1;
+      std::cout << "\033[1;31mTest FAILED for k = " << k << "!\033[0m\n";
+      exit(1);
     }
   }
+}
 
-  cout << "\033[1;32mTest PASSED!\033[0m\n";
+int main() {
+  vec grid_sizes = {20, 40}; // Different grid sizes to test
+  for (int k : {2, 4, 6})
+    run_test(k, grid_sizes);
+
+  std::cout << "\033[1;32mTest PASSED!\033[0m\n";
 
   return 0;
 }

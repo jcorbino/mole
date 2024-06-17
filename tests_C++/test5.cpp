@@ -54,7 +54,7 @@ void run_test(int k, vec grid_sizes) {
     order(i) = log2(errors(i) / errors(i + 1));
 
     if (order(i) - k < -0.5) {
-      std::cout << "\033[1;31mTest FAILED for k = " << k << "!\033[0m\n";
+      cout << "\033[1;31mTest FAILED for k = " << k << "!\033[0m\n";
       exit(1);
     }
   }
@@ -65,7 +65,7 @@ int main() {
   for (int k : {2, 4, 6})
     run_test(k, grid_sizes);
 
-  std::cout << "\033[1;32mTest PASSED!\033[0m\n";
+  cout << "\033[1;32mTest PASSED!\033[0m\n";
 
   return 0;
 }

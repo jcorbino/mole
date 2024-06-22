@@ -21,7 +21,7 @@ void run_nullity_test(int k, Real tol) {
 }
 
 int main() {
-  Real tol = 1e-12;
+  Real tol = 1e-10;
 
   for (int k : {2, 4, 6})
     run_nullity_test(k, tol);

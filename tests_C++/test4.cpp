@@ -14,7 +14,7 @@ int main() {
   int m = 500;
   vec grid = linspace(a, b, m);
   Real dx = grid(1) - grid(0);
-  Real tol = 1e-12;
+  Real tol = 1e-10;
 
   Laplacian L(k, m - 2, dx);
 

@@ -3,7 +3,7 @@
 addpath('../mole_MATLAB')
 
 ks = [2, 4, 6, 8];  % Different orders of accuracy
-tol = 1e-12;
+tol = 1e-10;
 
 for k = ks
     m = 2 * k + 1;

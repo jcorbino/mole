@@ -15,11 +15,11 @@ authors:
   - name: Jose E. Castillo
     affiliation: 2
 affiliations:
- - name: Computational Research Division, Lawrence Berkeley National Laboratory, Berkeley, California, 94720.
+ - name: Computational Research Division, Lawrence Berkeley National Laboratory, Berkeley, California, 94720, USA.
    index: 1
- - name: Computational Science Research Center, San Diego State University, 5500 Campanile Dr, San Diego, California, 92182.
+ - name: Computational Science Research Center, San Diego State University, 5500 Campanile Dr, San Diego, California, 92182, USA.
    index: 2
-date: 29 December 2020
+date: 17 July 2024
 bibliography: paper.bib
 ---
 
@@ -31,9 +31,9 @@ The mathematics are based on the work of @Corbino. In addition, the user may fin
 
 # Mimetic operators
 
-Mimetic operators, divergence (**D**), gradient (**G**), curl (**C**), and Laplacian (**L**) are discrete analogs of their corresponding continuum operators. These operators satisfy in the discrete sense the vector identities that the continuum ones do [@R202301], making them more faithful to the physics in specific contexts.
+Mimetic operators, divergence (**D**), gradient (**G**), curl (**C**), and Laplacian (**L**), are discrete analogs of their corresponding continuum operators. These operators satisfy in the discrete sense the vector identities that the continuum ones do [@R202301], making them more faithful to the physics in specific contexts.
 
-The basis of higher-dimensional operators, as well as more sophisticated operators such as the Laplacian or the biharmonic operator are the one-dimensional mimetic **G** and **D** operators, together with high-order mimetic interpolation operators [@R202202], which are also contained in the library. These finite-dimensional operators can be reused throughout the mathematical model and they provide a higher level of abstraction at the time of solving PDEs.
+The basis of higher-dimensional operators, as well as more sophisticated operators such as the Laplacian or the biharmonic operator, are the one-dimensional mimetic **G** and **D** operators, together with high-order mimetic interpolation operators [@R202202], which are also contained in the library. These finite-dimensional operators can be reused throughout the mathematical model and they provide a higher level of abstraction at the time of solving PDEs.
 
 These operators have been used to write codes to solve PDEs of different types [@Jared; @Bazan; @Boada; @Boada2; @Rojas; @Jorge; @Josep; @Abouali]. For an overview of mimetic methods of different types see the book by Castillo and Miranda and the references therein [@Miranda].
 

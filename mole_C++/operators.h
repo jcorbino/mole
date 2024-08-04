@@ -14,7 +14,7 @@
 
 #include "interpol.h"
 #include "laplacian.h"
-#include "mixedbc.h
+#include "mixedbc.h"
 #include "robinbc.h"
 
 inline sp_mat operator*(const Divergence &div, const Gradient &grad) {

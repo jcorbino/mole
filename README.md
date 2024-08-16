@@ -118,6 +118,15 @@ the library [![DOI](https://joss.theoj.org/papers/10.21105/joss.06288/status.svg
 
 [![View mole on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/124870-mole)
 
+
+## Important Notice
+
+For the latest updates and ongoing development, please refer to the [MOLE repository maintained by the Computational Science Research Center at San Diego State University](https://github.com/csrc-sdsu/mole). The content here is mirrored, but the university's repository will receive priority for new features and improvements.
+
+Thank you for your understanding and support!
+
+Now, some cool pics just because!
+
 ![Obtained with curvilinear operators](images/4thOrder.png)
 ![Obtained with curvilinear operators](images/4thOrder2.png)
 ![Obtained with curvilinear operators](images/4thOrder3.png)

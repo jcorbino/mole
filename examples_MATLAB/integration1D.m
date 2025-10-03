@@ -2,7 +2,7 @@
 
 clc; close all;
 
-addpath('../mole_MATLAB');
+addpath('../mole_MATLAB')
 
 % Domain limits
 west = -5;
@@ -20,7 +20,7 @@ grid = [west west+dx/2 : dx : east-dx/2 east];
 fun = @(x) (1-x.^2).*exp(-x.^2/2);  % Ricker wavelet
 f = fun(grid);
 
-% Compute numerical integral using mimetic quadrature
+% Approximate the integral using Q's weights
 w = weightsQ(k, m, dx);
 w(1) = 0; w(end) = 0;
 F = f*w;

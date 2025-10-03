@@ -11,19 +11,19 @@ east = 5;
 % Discretization parameters
 k = 2;      % Order of mimetic quadrature
 m = 10;     % Number of cells
-dx = (east - west) / m;
+dx = (east-west)/m;
 
 % 1D staggered grid (cell centers)
-grid = [west west + dx/2 : dx : east - dx/2 east];
+grid = [west west+dx/2 : dx : east-dx/2 east];
 
 % Function to integrate
-fun = @(x) (1 - x.^2) .* exp(-x.^2 / 2);  % Ricker wavelet
+fun = @(x) (1-x.^2).*exp(-x.^2/2);  % Ricker wavelet
 f = fun(grid);
 
 % Compute numerical integral using mimetic quadrature
 w = weightsQ(k, m, dx);
 w(1) = 0; w(end) = 0;
-F = f * w;
+F = f*w;
 
 % Exact integral for comparison
 exact = integral(fun, west, east);

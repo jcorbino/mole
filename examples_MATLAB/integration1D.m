@@ -2,7 +2,7 @@
 
 clc; close all;
 
-addpath('../mole_MATLAB')
+addpath('../mole_MATLAB');
 
 % Domain limits
 west = -5;

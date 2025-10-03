@@ -10,7 +10,7 @@ east = 5;
 
 % Discretization parameters
 k = 2;      % Order of mimetic quadrature
-m = 10;     % Number of cells
+m = 50;     % Number of cells
 dx = (east-west)/m;
 
 % 1D staggered grid (cell centers)

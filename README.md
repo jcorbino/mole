@@ -125,7 +125,7 @@ For the latest updates and ongoing development, please look at the [MOLE reposit
 
 Thank you for your understanding and support!
 
-Now, some cool pics just because!
+Now, some cool pics obtained with MOLE 👇
 
 ![Obtained with curvilinear operators](images/4thOrder.png)
 ![Obtained with curvilinear operators](images/4thOrder2.png)

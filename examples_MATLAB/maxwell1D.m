@@ -5,13 +5,13 @@ addpath("../mole_MATLAB");
 
 nt = 150;         % number of time steps
 m = 100;          % number of cells
-east = 1;         % Domain's limits
+east = 1;         % domain's limits
 west = 0;
 dx = (east - west)/m;
 dt = 0.5*dx;      % time step based on CFL
 
 % Grids
-xE = [west west+dx/2: dx :east-dx/2 east];
+xE = [west west+dx/2 : dx : east-dx/2 east];
 xB = west : dx : east;
 
 % Mimetic operators
@@ -33,13 +33,14 @@ figure;
 % Time-stepping
 for n = 1:nt
     % Update B (edges)
-    B = B - G*E;          % B at n+1/2
+    B = B - G*E;
 
+    % Store bdry values
     El = E(2);
     Er = E(end-1);
     
     % Update E (centers)
-    E = E - D*B;          % E at n+1
+    E = E - D*B;
 
     % Absorbing boundary condition
     E(1)   = El;    % left boundary

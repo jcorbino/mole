@@ -32,13 +32,16 @@ LIBS += -lsuperlu
 endif
 endif
 
-all: transport1D schrodinger1D elliptic1D elliptic2D
+all: transport1D schrodinger1D maxwell1D elliptic1D elliptic2D
 
 transport1D: transport1D.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o transport1D transport1D.cpp $(LIBS)
 
 schrodinger1D: schrodinger1D.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o schrodinger1D schrodinger1D.cpp $(LIBS)
+
+maxwell1D: maxwell1D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o maxwell1D maxwell1D.cpp $(LIBS)
 
 elliptic1D: elliptic1D.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o elliptic1D elliptic1D.cpp $(LIBS)
@@ -47,4 +50,4 @@ elliptic2D: elliptic2D.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o elliptic2D elliptic2D.cpp $(LIBS)
 
 clean:
-	rm -f transport1D schrodinger1D elliptic1D elliptic2D
+	rm -f transport1D schrodinger1D maxwell1D elliptic1D elliptic2D

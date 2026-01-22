@@ -133,5 +133,5 @@ Now, some cool pics obtained with MOLE 👇
 ![Obtained with curvilinear operators](images/grid2.png)
 ![Obtained with curvilinear operators](images/grid.png)
 ![Obtained with curvilinear operators](images/WavyGrid.png)
-![Obtained with curvilinear operators](images/wave2D.png)
+![Obtained with curvilinear operators](images/Ez_simulation.gif)
 ![Obtained with curvilinear operators](images/burgers.png)

@@ -31,7 +31,7 @@ NBy = (mx+1)*my;
 NB  = NBx + NBy;
 
 % Initial condition for E_z
-E = exp(-100*((XE-0.5).^2 + (YE-0.5).^2));
+E = exp(-400*((XE-0.5).^2 + (YE-0.5).^2));
 E = E(:);
 
 % Magnetic field (B = [Bx; By])

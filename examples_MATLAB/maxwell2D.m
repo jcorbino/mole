@@ -31,7 +31,7 @@ NBx = mx*(my+1);
 NBy = (mx+1)*my;
 
 % Initial condition
-E = exp(-100*((XE-0.5).^2 + (YE-0.5).^2));
+E = exp(-100*((XE-0.5).^2 + (YE-0.5).^2)); % Gaussian pulse
 E = E(:);
 
 % Magnetic field

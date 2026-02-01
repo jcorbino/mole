@@ -67,7 +67,7 @@ lighting phong; material shiny; camlight('headlight');
 
 xlabel x; ylabel y; zlabel('E_z');
 zlim([-1 1]); clim([-1 1]);
-titleHandle = title('Sinusoidal Pulse with UPML. Step: 0');
+titleHandle = title('Sinusoidal pulse with UPML. Step: 0');
 
 % Sinusoidal source setup
 f = 10;   % Frequency
@@ -90,7 +90,7 @@ for n = 1:nt
 
     % Update plot
     set(hSurf,'ZData',reshape(E,my+2,mx+2));
-    set(titleHandle,'String',['Sinusoidal Pulse with UPML. Step: ' num2str(n)]);
+    set(titleHandle,'String',['Sinusoidal pulse with UPML. Step: ' num2str(n)]);
     drawnow;
     pause(0.01);
 end

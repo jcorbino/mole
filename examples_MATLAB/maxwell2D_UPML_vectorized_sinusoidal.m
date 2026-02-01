@@ -26,10 +26,7 @@ E = zeros((mx+2)*(my+2),1);   % Sinusoidal source
 NBx = mx*(my+1);  NBy = (mx+1)*my;
 B = zeros(NBx+NBy,1);
 
-% ============================
-%   Vectorized UPML parameters
-% ============================
-
+% Vectorized UPML parameters
 pml = 30;          
 sigma_max = 100;   
 m = 4;             
@@ -72,19 +69,13 @@ xlabel x; ylabel y; zlabel('E_z');
 zlim([-1 1]); clim([-1 1]);
 titleHandle = title('Sinusoidal Pulse with UPML. Step: 0');
 
-% ============================
-%   Sinusoidal Source Setup
-% ============================
-
+% Sinusoidal source setup
 f = 10;   % Frequency
 ix0 = round((mx+2)/2);
 iy0 = round((my+2)/2);
 src_index = sub2ind([my+2, mx+2], iy0, ix0);
 
-% ============================
-%   Time stepping
-% ============================
-
+% Time stepping
 for n = 1:nt
 
     % Magnetic update
@@ -93,7 +84,7 @@ for n = 1:nt
     % Electric update
     E = aE .* (E - D*B);
 
-    % Inject sinusoidal source
+    % Inject source
     src = sin(2*pi*f*n*dt);
     E(src_index) = E(src_index) + src;
 

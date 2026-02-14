@@ -1,4 +1,4 @@
-%% 1D Maxwell with mimetic operators (Sinusoidal wave, dielectric, ABC)
+% 1D Maxwell with mimetic operators (Sinusoidal wave, dielectric, ABC)
 clear;
 clc;
 close all;

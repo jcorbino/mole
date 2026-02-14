@@ -1,4 +1,4 @@
-%% 2D TMz Maxwell Solver using Mimetic Operators and Leapfrog
+% 2D TMz Maxwell Solver using Mimetic Operators and Leapfrog
 clear; clc; close all;
 
 addpath("../mole_MATLAB");
@@ -40,7 +40,7 @@ B = zeros(NBx + NBy, 1);
 % Leapfrog start (half step for B)
 B = B - 0.5 * G * E;
 
-% Pre-plot
+% Plotting
 E2D = reshape(E, my+2, mx+2);
 figure('Color','w');
 hSurf = surf(xE, yE, E2D);

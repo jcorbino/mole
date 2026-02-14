@@ -1,4 +1,4 @@
-%% 2D TMz Maxwell Solver with Mimetic Operators + Vectorized UPML
+% 2D TMz Maxwell Solver with Mimetic Operators + Vectorized UPML
 clear; clc; close all;
 addpath("../mole_MATLAB");
 

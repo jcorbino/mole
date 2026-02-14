@@ -1,4 +1,4 @@
-%% 1D Maxwell with mimetic operators (Gaussian pulse, free space, ABC)
+% 1D Maxwell with mimetic operators (Gaussian pulse, free space, ABC)
 clear;
 clc;
 close all;

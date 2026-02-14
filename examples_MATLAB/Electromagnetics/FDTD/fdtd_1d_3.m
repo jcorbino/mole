@@ -1,4 +1,4 @@
-%% 3rd example from Sullivan's book
+% 3rd example from Sullivan's book
 clear; clc; close all;
 
 KE = 200; % Number of cells

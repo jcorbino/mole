@@ -1,6 +1,6 @@
 % Solves the 1D Inviscid Burgers' equation.
 % Upwind scheme is used and the equation is written in conservative form.
-% Initial Condition: exp(-x^2/50)
+% Initial condition: exp(-x^2/50)
 
 clc
 close all

@@ -12,6 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install dependencies
-      run: sudo apt-get install libarmadillo-dev libopenblas-dev libsuperlu-dev -y
+      run: |
+           sudo apt-get update
+           sudo apt-get install libarmadillo-dev libopenblas-dev libsuperlu-dev -y
     - name: Build library
       run: make

@@ -61,7 +61,8 @@ sigmaBy = sigma_y(2:my+1) + sigma_x(1:mx+1).';
 
 aB = exp(-[sigmaBx(:); sigmaBy(:)] * dt); % Damping profile for B
 
-% Leapfrog start
+% Half-step for B. E is zero here, so this is a no-op;
+% kept for consistency with the other examples.
 B = aB .* (B - 0.5 * G * E);
 
 % Fancy plotting

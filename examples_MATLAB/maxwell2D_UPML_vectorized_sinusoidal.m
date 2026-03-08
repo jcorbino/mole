@@ -21,7 +21,7 @@ yE = [south, south+dy/2:dy:north-dy/2, north];
 [XE,YE] = meshgrid(xE,yE);
 
 % Mimetic operators
-k = 4;
+k = 2;
 G = dt * grad2D(k,mx,dx,my,dy);
 D = dt * div2D(k,mx,dx,my,dy);
 

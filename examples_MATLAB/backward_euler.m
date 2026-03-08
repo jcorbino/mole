@@ -4,7 +4,7 @@ clc;
 clear;
 close all;
 
-h = .1;                                     % Step-size
+h = 0.1;                                    % Step-size
 t = 0 : h : 5;                              % Calculates up to y(5)
 y = zeros(1, length(t));
 y(1) = 2;                                   % Initial condition

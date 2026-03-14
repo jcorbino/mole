@@ -12,16 +12,16 @@ addpath('../mole_MATLAB')
 west = -50;
 east = 50;
 
-k = 2;              % Mimetic operator accuracy
-m = 300;            % Number of cells
-dx = (east - west)/m;
+k = 2;                 % Mimetic operator accuracy
+m = 300;               % Number of cells
+dx = (east - west)/m;  % Cells width
 
-CFL = 0.5;          % Safe CFL factor
-tfinal = 100;       % Simulation time
+CFL = 0.5;             % Safe CFL factor
+tfinal = 100;          % Simulation time
 
 % Mimetic operators
-D = div(k, m, dx);    % Divergence operator
-I = interpol(m, 1);   % Upwind interpolation operator
+D = div(k, m, dx);     % Divergence operator
+I = interpol(m, 1);    % Assumes u ≥ 0 everywhere
 
 % Premultiply out of the time loop
 DI = D * I;
@@ -42,6 +42,7 @@ hold on
 grid on
 xlabel('x')
 ylabel('u(x,t)')
+ylim([0 1])
 
 % Plot initial condition
 plot(xgrid, U, 'LineWidth', 1.2);

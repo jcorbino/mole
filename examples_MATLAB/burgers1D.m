@@ -16,7 +16,7 @@ k = 2;              % Mimetic operator accuracy
 m = 300;            % Number of cells
 dx = (east - west)/m;
 
-CFL = 0.5;          % Stable CFL factor
+CFL = 0.5;          % Safe CFL factor
 tfinal = 100;       % Simulation time
 
 % Mimetic operators
@@ -42,11 +42,9 @@ hold on
 grid on
 xlabel('x')
 ylabel('u(x,t)')
-xlim([west east])
-ylim([0 1])
 
 % Plot initial condition
-plot(xgrid, U);
+plot(xgrid, U, 'LineWidth', 1.2);
 
 % Time integration loop
 while t < tfinal
@@ -71,7 +69,7 @@ while t < tfinal
 
     % Plot every 10 steps
     if mod(step, 10) == 0 || t >= tfinal
-        plot(xgrid, U);
+        plot(xgrid, U, 'LineWidth', 1.2);
         title(sprintf('t = %.2f', t));
         drawnow;
 

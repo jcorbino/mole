@@ -114,7 +114,7 @@ We welcome contributions to MOLE, whether they involve adding new functionalitie
 
 Please cite our work if you use MOLE in your research or software. 
 Citations are useful for the continued development and maintenance of 
-the library [![DOI](https://joss.theoj.org/papers/10.21105/joss.06288/status.svg)](https://doi.org/10.21105/joss.06288) [![View mole on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/124870-mole)
+the library [![DOI](https://joss.theoj.org/papers/10.21105/joss.06288/status.svg)](https://doi.org/10.21105/joss.06288)
 
 Now, some cool pics obtained with MOLE 👇
 

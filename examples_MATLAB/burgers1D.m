@@ -20,14 +20,14 @@ CFL = 0.5;          % Stable CFL factor
 tfinal = 10;        % Simulation time
 
 % Mimetic operators
-D = div(k, m, dx);      % Divergence operator
-I = interpol(m,1);      % Upwind interpolation operator
+D = div(k, m, dx);    % Divergence operator
+I = interpol(m, 1);   % Upwind interpolation operator
 
 % Premultiply out of the time loop
 DI = D * I;
 
 % Staggered grid
-xgrid = [west west+dx/2:dx:east-dx/2 east]';
+xgrid = [west west+dx/2 : dx : east-dx/2 east]';
 
 % Initial condition
 U = exp(-(xgrid.^2)/50);
@@ -38,7 +38,7 @@ step = 0;
 
 % Plot setup
 figure
-h = plot(xgrid,U,'LineWidth',2);
+h = plot(xgrid, U, 'LineWidth', 2);
 grid on
 xlabel('x')
 ylabel('u(x,t)')
@@ -49,7 +49,7 @@ while t < tfinal
     umax = max(abs(U));
 
     % Adaptive CFL timestep
-    dt = CFL * dx / max(umax,1e-10);
+    dt = CFL * dx / max(umax, 1e-10);
 
     % Prevent overshoot of final time
     if t + dt > tfinal
@@ -64,14 +64,14 @@ while t < tfinal
     t = t + dt;
     step = step + 1;
 
-    if mod(step,10)==0 || t>=tfinal
+    if mod(step, 10) == 0 || t >= tfinal
         % Update plot
         set(h, 'YData', U);
         title(sprintf('t = %.2f', t));
         drawnow;
 
         % Conservation check
-        area = trapz(xgrid,U);
-        fprintf('area = %.4f\n',area)
+        area = trapz(xgrid, U);
+        fprintf('area = %.4f\n', area)
     end
 end

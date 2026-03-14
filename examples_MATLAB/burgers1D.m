@@ -9,15 +9,15 @@ close all
 addpath('../mole_MATLAB')
 
 % Domain's limits
-west = -15;
-east = 15;
+west = -50;
+east = 50;
 
 k = 2;              % Mimetic operator accuracy
 m = 300;            % Number of cells
 dx = (east - west)/m;
 
 CFL = 0.5;          % Stable CFL factor
-tfinal = 10;        % Simulation time
+tfinal = 100;       % Simulation time
 
 % Mimetic operators
 D = div(k, m, dx);    % Divergence operator
@@ -38,10 +38,15 @@ step = 0;
 
 % Plot setup
 figure
-h = plot(xgrid, U, 'LineWidth', 2);
+hold on
 grid on
 xlabel('x')
 ylabel('u(x,t)')
+xlim([west east])
+ylim([0 1])
+
+% Plot initial condition
+plot(xgrid, U);
 
 % Time integration loop
 while t < tfinal
@@ -64,9 +69,9 @@ while t < tfinal
     t = t + dt;
     step = step + 1;
 
+    % Plot every 10 steps
     if mod(step, 10) == 0 || t >= tfinal
-        % Update plot
-        set(h, 'YData', U);
+        plot(xgrid, U);
         title(sprintf('t = %.2f', t));
         drawnow;
 

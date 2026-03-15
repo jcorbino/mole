@@ -3,7 +3,7 @@ clear;
 clc;
 close all;
 
-addpath("../../mole_MATLAB");
+addpath("../../../mole_MATLAB");
 
 m = 200; % Number of cells
 

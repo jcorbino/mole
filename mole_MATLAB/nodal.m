@@ -1,11 +1,27 @@
-function N = nodal(k, m, dx)
-% Returns a m+1 by m+1 one-dimensional operator that approximates the 
-% first-order derivatives on a uniform nodal grid
+function N = nodal(k, m, dx, nu)
+% Returns a m+1 by m+1 one-dimensional operator that approximates the
+% nu-th order derivative on a uniform nodal grid
 %
 % Parameters:
 %                k : Order of accuracy
 %                m : Number of nodes
 %               dx : Step size
+%               nu : (Optional) Order of the derivative (default = 1)
+
+    if nargin < 4
+        nu = 1;
+    end
+
+    % Validate inputs
+    assert(mod(k, 2) == 0, ...
+        'k must be a positive even integer (got k=%d).', k);
+    assert(nu >= 1 && mod(nu, 1) == 0, ...
+        'nu must be a positive integer (got nu=%d).', nu);
+    assert(k >= nu, ...
+        'Derivative order nu=%d cannot exceed order of accuracy k=%d.', nu, k);
+    assert(k + 1 <= m, ...
+        'Not enough cells for desired order of accuracy k=%d and derivative order nu=%d (got %d cells).', ...
+        k, nu, m-1);
 
     m = m-1;
     n_rows = m+1;
@@ -25,9 +41,9 @@ function N = nodal(k, m, dx)
     % Create a k by k Vandermonde matrix based on the neighbors:
     A = vander(neighbors)';
 
-    % First-order derivative
+    % nu-th order derivative
     b = zeros(len, 1);
-    b(len-1) = 1;
+    b(len-nu) = 1;
 
     % Solve the linear system to get the coefficients
     coeffs = A\b;
@@ -51,7 +67,7 @@ function N = nodal(k, m, dx)
 
         V = vander(neighbors)';
         b = zeros(q, 1);
-        b(q-1) = 1;
+        b(q-nu) = 1;
         coeffs = V\b;
         A(i, 1:q) = coeffs;
     end
@@ -62,12 +78,16 @@ function N = nodal(k, m, dx)
     % Permutation matrices
     Pp = fliplr(speye(p));
     Pq = fliplr(speye(q));
-    % Construct A' (lower-right corner of N)
-    A = -Pp*A*Pq;
+    % Construct boundary operator for lower-right corner of N.
+    % Sign depends on derivative order: odd → antisymmetric, even → symmetric
+    A = (-1)^nu * Pp*A*Pq;
 
     % Insert A' into N
     N(n_rows-p+1:n_rows, n_cols-q+1:n_cols) = A;
 
-    % Scale N
-    N = 1/dx*N;
+    % Scale N: nu-th derivative requires factorial(nu)/dx^nu.
+    % Effective order of accuracy for the nu-th derivative (centered symmetric stencil):
+    %   nu odd  -> order = (k+1) - nu          (leading error term at power k+1 is odd; does not cancel)
+    %   nu even -> order = (k+2) - nu          (leading error term at power k+1 is odd; cancels by symmetry)
+    N = factorial(nu)/dx^nu * N;
 end

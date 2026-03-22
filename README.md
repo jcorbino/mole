@@ -5,122 +5,124 @@ MOLE: Mimetic Operators Library Enhanced
 1: Description
 --------------
 
-MOLE is a high quality (C++ & MATLAB) library that implements 
+MOLE is a high-quality (C++ & MATLAB/Octave) library that implements 
 high-order mimetic operators to solve partial differential equations. 
 It provides discrete analogs of the most common vector calculus operators: 
-Gradient, Divergence, Laplacian, Bilaplacian and Curl. These operators (matrices) act 
-on staggered grids (uniform and nonuniform) and they satisfy local and 
+Gradient, Divergence, Laplacian, Bilaplacian, and Curl. These operators (highly sparse matrices) act 
+on staggered grids (uniform, non-uniform, curvilinear) and satisfy local and 
 global conservation laws.
 
-The mathematics is based on the work of [Corbino and Castillo, 2020]. 
-However, the user may find useful previous publications such as [Castillo and Grone, 2003],
-in which similar operators are derived using a matrix analysis approach.
+Mathematics is based on the work of [Corbino and Castillo, 2020](https://doi.org/10.1016/j.cam.2019.06.042). 
+However, the user may find helpful previous publications, such as [Castillo and Grone, 2003](https://doi.org/10.1137/S0895479801398025),
+in which similar operators were derived using a matrix analysis approach.
 
 
 2: Licensing
 ------------
 
-MOLE is distributed under a GNU General Public License, please refer to the _LICENSE_ 
+MOLE is distributed under a GNU General Public License; please refer to the _LICENSE_ 
 file for more details.
 
 
-3.1: Installation (Linux)
--------------------------
+3: Installation (Linux)
+-----------------------
 
-To use MOLE (C++ version), you need to have _Armadillo C++_ <http://arma.sourceforge.net> and _SuperLU_ 
-<https://portal.nersc.gov/project/sparse/superlu> installed on your computer.
+To use MOLE (C++ version), you need to have _Armadillo C++_ <http://arma.sourceforge.net>, _SuperLU_ 
+<https://portal.nersc.gov/project/sparse/superlu>, and _OpenBLAS_ <https://www.openblas.net> installed on your computer.
 
-Assuming a working installation of _SuperLU_ (`sudo apt install libsuperlu-dev` or `sudo yum install SuperLU-devel`), follow these steps:
+Assuming a working installation of _SuperLU_ (`sudo apt install libsuperlu-dev` or `sudo yum install SuperLU-devel`), and _OpenBLAS_ (`sudo apt install libopenblas-dev` or `sudo yum install openblas-devel`), follow these steps:
 
-`wget http://sourceforge.net/projects/arma/files/armadillo-10.2.1.tar.xz`
+`wget https://sourceforge.net/projects/arma/files/armadillo-12.6.6.tar.xz`
 
-`tar xvf armadillo-10.2.1.tar.xz`
+`tar xvf armadillo-12.6.6.tar.xz`
 
-`cd armadillo-10.2.1`
+`cd armadillo-12.6.6`
 
-**NOTE:** We suggest to use the latest stable version that is available.
+**NOTE:** We suggest to use the latest stable version.
 
-Undefine `ARMA_USE_LAPACK` and `ARMA_USE_BLAS` (in case you don't have them installed), then define `ARMA_USE_SUPERLU` and `ARMA_USE_OPENMP` in `include/armadillo_bits/config.hpp`. Make sure that you have `cmake` and `g++` installed before executing:
+Define `ARMA_USE_SUPERLU` and `ARMA_USE_OPENMP` in `include/armadillo_bits/config.hpp`. Make sure that you have `cmake` and `g++` installed before executing:
 
 `./configure`
 
 `make`
 
-this will create `libarmadillo.so`.
+This will create `libarmadillo.so`.
 
-Now go to `mole/` and set the path to _Armadillo_ in the `Makefile`, e.g. `ARMA = /home/johnny/armadillo-10.2.1`.
+Now go to `mole/` and build MOLE via:
 
-Lastly, build MOLE by executing:
+`ARMA=PATH_TO_ARMADILLO_FOLDER make`
+
+Or simply:
 
 `make`
 
-a static library named `libmole.a` will get created. From this point you just need to include `mole.h` 
-in your projects and specify the location of `libmole.a` to the linker.
+if _Armadillo_ was installed via `sudo apt install libarmadillo-dev` or `sudo yum install armadillo-devel`.
 
-**For the MATLAB version of our library, the only dependency is to have MATLAB installed**.
-The two implementations of MOLE (C++ & MATLAB) are independent, that is, you don't need
-to build the C++ version if you are just interested in using MOLE from MATLAB.
+A static library named `libmole.a` will be created after the previous step. From this point, you need to include `mole.h` 
+in your projects, specify the location of `libmole.a` to the linker. For the users interested in building MOLE as a _shared library_, specify `make SHARED_LIB=1`. Make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
 
-
-3.2: Installation (MacOS)
--------------------------
-
-First, download _Eigen_ from <https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz>, and _Armadillo C++_ from <http://arma.sourceforge.net>.
-
-Extract _Eigen_ and _Armadillo_, you can use the following command for each compressed file:
-
-`tar xvf name_of_the_file_including_extension --directory target_directory`
-
-Now, proceed to download MOLE <https://github.com/jcorbino/mole/archive/refs/heads/master.zip> and extract the file:
-
-`unzip master.zip –d mole`
-
-after that, enter MOLE's directory `cd mole` and edit the following files:
-
-`mole_C++/utils.cpp` (line 4) to be simply `#include <Eigen/SparseLU>`
-
-`mole_C++/Makefile` (line 18) should be `CXXFLAGS = -O3 -std=c++11`
-
-same for (line 19) of `examples_C++/Makefile`.
-
-Lastly, (line 25) of `examples_C++/Makefile` should not include `-larmadillo`.
-
-At this point, you just need to edit the `Makefile` located in MOLE's root directory by setting the correct path to each dependency (_Eigen_ and _Armadillo_), that is:
-
-(Line 2) of that `Makefile` should look like: `ARMA = ../../armadillo-10.7.0` and (line 7) should be `EIGEN = ../../eigen-3.4.0`.
-
-Now, just build the library and its examples by simply executing `make` from MOLE's root folder.
-
-**IMPORTANT**: In order to build any of the aforementioned packages, the operating system needs to have `g++` (_GNU Compiler_) and `make` (utility) installed. Those two packages will get installed when you set up _Xcode_ on your Mac: `xcode-select --install`.
+**For our library's MATLAB/Octave version, the only dependency is to have MATLAB/Octave installed**.
+The two implementations of MOLE (C++ & MATLAB/Octave) are independent; you don't need
+to build the C++ version if you are just interested in using MOLE from MATLAB/Octave.
 
 
-4: Documentation
+4: Running Examples & Tests
+---------------------------
+
+Here are instructions on how to run the provided examples and tests for both the C++ and MATLAB versions of the library to help you quickly get started with MOLE.
+
+* **tests_C++:**
+These tests, which are automatically executed upon constructing the library's C++ version, play a crucial role in verifying the correct installation of MOLE and its dependencies. There are four tests in total.
+
+* **tests_MATLAB:**
+We encourage MATLAB users to execute these tests before using MOLE by entering the `tests_MATLAB` directory and executing `run_tests.m` from MATLAB. These tests are analogous to those contained in `tests_C++`.
+
+* **examples_C++:**
+These will be automatically built after calling `make`. We encourage C++ users to make this their entry point to familiarize themselves with this library version. The four examples are self-contained and properly documented, and they solve typical PDEs.
+
+* **examples_MATLAB:**
+Most of our examples are provided in the MATLAB scripting language. There are over 30 examples, ranging from linear one-dimensional PDEs to highly nonlinear multidimensional PDEs.
+
+
+5: Documentation
 ----------------
-The folder `doc_MATLAB` contains generated documentation about the MATLAB version.
-It was generated with a tool called _m2html_ which can be found here: <https://www.artefact.tk/software/matlab/m2html>.
 
-To generate the C++ documentation, just execute:
+The folder `doc_MATLAB` contains generated documentation about the MATLAB/Octave API.
+It was generated with a tool called [_m2html_](https://www.gllmflndn.com/software/matlab/m2html). However, for a quick start on MOLE's MATLAB/Octave version, we recommend starting with this short [guide](https://github.com/jcorbino/mole/blob/master/CSRC%20Report%20on%20MOLE.pdf).
+
+For C++ users, we provide a short [guide](https://github.com/jcorbino/mole/blob/master/MOLE_C%2B%2B_Quick_Guide.pdf) to MOLE's C++ flavor. However, for those in need of more details to interact with the library, we suggest to follow these instructions:
+
+To generate the C++ documentation, execute:
 
 `doxygen Doxyfile` (requires _Doxygen_ and _Graphviz_)
 
 this will create a folder called `doc_C++` containing a set of _html_ files. Please refer to the _index.html_ file 
 to start browsing the documentation.
 
+**NOTE:**
+Performing non-unary operations involving operands constructed over different grids may lead to unexpected results. While MOLE allows such operations without throwing errors, users must exercise caution when manipulating operators across different grids.
 
-5: Citations
+
+6: Community Guidelines
+-----------------------
+
+We welcome contributions to MOLE, whether they involve adding new functionalities, providing examples, addressing existing issues, reporting bugs, or requesting new features. For more details, please refer to our [Contribution Guidelines](https://github.com/jcorbino/mole/blob/master/CONTRIBUTING.md).
+
+
+7: Citations
 ------------
 
-Please cite our work if you use MOLE in your research and/or software. 
+Please cite our work if you use MOLE in your research or software. 
 Citations are useful for the continued development and maintenance of 
-the library https://www.sciencedirect.com/science/article/abs/pii/S0377042719303231
+the library [![DOI](https://joss.theoj.org/papers/10.21105/joss.06288/status.svg)](https://doi.org/10.21105/joss.06288)
 
+Now, some cool pics obtained with MOLE 👇
 
-[![View mole on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/124870-mole)
-
+![Obtained with curvilinear operators](images/Ez_simulation.gif)
 ![Obtained with curvilinear operators](images/4thOrder.png)
 ![Obtained with curvilinear operators](images/4thOrder2.png)
 ![Obtained with curvilinear operators](images/4thOrder3.png)
 ![Obtained with curvilinear operators](images/grid2.png)
 ![Obtained with curvilinear operators](images/grid.png)
 ![Obtained with curvilinear operators](images/WavyGrid.png)
-![Obtained with curvilinear operators](images/wave2D.png)
+![Obtained with curvilinear operators](images/burgers.png)

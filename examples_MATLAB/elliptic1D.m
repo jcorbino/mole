@@ -8,7 +8,7 @@ addpath('../mole_MATLAB')
 west = 0;  % Domain's limits
 east = 1;
 
-k = 6;  % Operator's order of accuracy
+k = 4;  % Operator's order of accuracy
 m = 2*k+1;  % Minimum number of cells to attain the desired accuracy
 dx = (east-west)/m;  % Step length
 

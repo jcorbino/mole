@@ -35,7 +35,7 @@ function [Nx, Ny, Nz] = nodal3DCurv(k, X, Y, Z, nu)
     len = n*m*o;
     
     % Convert metrics to diagonal matrices
-    J = spdiags(1./J, 0, numel(len), numel(len));
+    J = spdiags(1./J, 0, len, len);
     A = spdiags(Yn.*Zc-Zn.*Yc, 0, len, len);
     B = spdiags(Zn.*Xc-Xn.*Zc, 0, len, len);
     C = spdiags(Xn.*Yc-Yn.*Xc, 0, len, len);

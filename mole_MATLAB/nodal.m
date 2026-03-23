@@ -1,5 +1,5 @@
 function N = nodal(k, m, dx, nu)
-% Returns a m+1 by m+1 one-dimensional operator that approximates the
+% Returns a m by m one-dimensional operator that approximates the
 % nu-th order derivative on a uniform nodal grid
 %
 % Parameters:

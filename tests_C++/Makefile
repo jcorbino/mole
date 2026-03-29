@@ -25,7 +25,7 @@ LIBS += -lsuperlu
 endif
 endif
 
-all: test1 test2 test3 test4 test5 run
+all: test1 test2 test3 test4 test5 test6 run
 
 test1: test1.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o test1 test1.cpp $(LIBS)
@@ -42,12 +42,16 @@ test4: test4.cpp
 test5: test5.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o test5 test5.cpp $(LIBS)
 
-run: test1 test2 test3 test4 test5
+test6: test6.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o test6 test6.cpp $(LIBS)
+
+run: test1 test2 test3 test4 test5 test6
 	LD_LIBRARY_PATH=../mole_C++ ./test1
 	LD_LIBRARY_PATH=../mole_C++ ./test2
 	LD_LIBRARY_PATH=../mole_C++ ./test3
 	LD_LIBRARY_PATH=../mole_C++ ./test4
 	LD_LIBRARY_PATH=../mole_C++ ./test5
+	LD_LIBRARY_PATH=../mole_C++ ./test6
 
 clean:
-	rm -f test1 test2 test3 test4 test5
+	rm -f test1 test2 test3 test4 test5 test6

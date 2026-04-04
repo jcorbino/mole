@@ -12,6 +12,7 @@
 #ifndef OPERATORS_H
 #define OPERATORS_H
 
+#include "curl.h"
 #include "interpol.h"
 #include "laplacian.h"
 #include "mixedbc.h"
@@ -40,6 +41,8 @@ inline vec operator*(const Gradient &grad, const vec &v) {
 inline vec operator*(const Laplacian &lap, const vec &v) {
   return (sp_mat)lap * v;
 }
+
+inline vec operator*(const Curl &C, const vec &v) { return (sp_mat)C * v; }
 
 inline vec operator*(const Interpol &I, const vec &v) { return (sp_mat)I * v; }
 

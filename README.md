@@ -119,6 +119,7 @@ the library [![DOI](https://joss.theoj.org/papers/10.21105/joss.06288/status.svg
 Now, some cool pics obtained with MOLE 👇
 
 ![Obtained with curvilinear operators](images/Ez_simulation.gif)
+![Obtained with curvilinear operators](images/amr.png)
 ![Obtained with curvilinear operators](images/4thOrder.png)
 ![Obtained with curvilinear operators](images/4thOrder2.png)
 ![Obtained with curvilinear operators](images/4thOrder3.png)

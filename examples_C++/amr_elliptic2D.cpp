@@ -165,7 +165,6 @@ int main() {
   if (tagged == 0) {
     cout << "\nNo cells flagged — skipping refinement.\n";
     write_solution("amr_coarse.dat", U_c, xc, yc);
-    cout << "  Output: amr_coarse.dat\n";
     return 0;
   }
 

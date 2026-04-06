@@ -1,3 +1,4 @@
+// clang-format off
 /**
  * Two-level Adaptive Mesh Refinement (AMR) for 2D Poisson using MOLE
  *
@@ -23,6 +24,7 @@
  *   set pm3d border lc rgb "black" lw 0.5
  *   splot 'amr_coarse.dat' w pm3d title 'Coarse', 'amr_fine.dat' w pm3d title 'Fine patch'
  */
+// clang-format on
 
 #include "mole.h"
 #include <algorithm>
@@ -36,9 +38,8 @@ using namespace std;
 // Localized Gaussian source — drives refinement near (0.75, 0.75)
 static double source_term(double x, double y) {
   const double x0 = 0.75, y0 = 0.75, sigma = 0.03;
-  return 200.0 *
-         exp(-((x - x0) * (x - x0) + (y - y0) * (y - y0)) /
-              (2 * sigma * sigma));
+  return 200.0 * exp(-((x - x0) * (x - x0) + (y - y0) * (y - y0)) /
+                     (2 * sigma * sigma));
 }
 
 // Build staggered-grid coordinates: [boundary, cell-centers, boundary]
@@ -137,10 +138,10 @@ int main() {
   mat grad_err(mc + 2, nc + 2, fill::zeros);
   for (int i = 1; i <= mc; i++) {
     for (int j = 1; j <= nc; j++) {
-      double ux = (U_c(min(i + 1, mc + 1), j) - U_c(max(i - 1, 0), j)) /
-                  (2 * dx_c);
-      double uy = (U_c(i, min(j + 1, nc + 1)) - U_c(i, max(j - 1, 0))) /
-                  (2 * dy_c);
+      double ux =
+          (U_c(min(i + 1, mc + 1), j) - U_c(max(i - 1, 0), j)) / (2 * dx_c);
+      double uy =
+          (U_c(i, min(j + 1, nc + 1)) - U_c(i, max(j - 1, 0))) / (2 * dy_c);
       grad_err(i, j) = sqrt(ux * ux + uy * uy);
     }
   }
@@ -180,8 +181,8 @@ int main() {
   double ylo = yc(j_lo) - 0.5 * dy_c;
   double yhi = yc(j_hi) + 0.5 * dy_c;
 
-  cout << "\n[Tagging] " << tagged << " cells flagged (threshold = " << threshold
-       << ")\n"
+  cout << "\n[Tagging] " << tagged
+       << " cells flagged (threshold = " << threshold << ")\n"
        << "          Patch region: [" << xlo << ", " << xhi << "] x [" << ylo
        << ", " << yhi << "]\n";
 
@@ -247,4 +248,3 @@ int main() {
 
   return 0;
 }
-

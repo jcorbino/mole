@@ -102,7 +102,7 @@ int main() {
        << " f = sharp Gaussian at (0.75, 0.75)\n"
        << "============================================\n\n";
 
-  int k = 2;  // Mimetic operator order of accuracy
+  int k = 2; // Mimetic operator order of accuracy
 
   // ==========================================================
   // LEVEL 0 (Coarse): uniform grid over [0,1]^2
@@ -113,7 +113,7 @@ int main() {
   vec yc = build_coords(nc, 0.0, 1.0);
 
   Laplacian L_c(k, mc, nc, dx_c, dy_c);
-  RobinBC BC_c(k, mc, dx_c, nc, dy_c, 1, 0);  // Dirichlet
+  RobinBC BC_c(k, mc, dx_c, nc, dy_c, 1, 0); // Dirichlet
   L_c = L_c + BC_c;
 
   mat rhs_c(mc + 2, nc + 2, fill::zeros);
@@ -198,7 +198,7 @@ int main() {
   vec yf = build_coords(nf, ylo, yhi);
 
   Laplacian L_f(k, mf, nf, dx_f, dy_f);
-  RobinBC BC_f(k, mf, dx_f, nf, dy_f, 1, 0);  // Dirichlet
+  RobinBC BC_f(k, mf, dx_f, nf, dy_f, 1, 0); // Dirichlet
   L_f = L_f + BC_f;
 
   // RHS: source in interior, interpolated coarse values on boundary

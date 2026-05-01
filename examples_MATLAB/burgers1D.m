@@ -15,7 +15,7 @@ m = 300; % Number of cells
 dx = (east-west)/m;
 
 t = 10; % Simulation time
-dt = dx; % CFL condition for explicit schemes
+dt = dx; % CFL condition with max(|u|) <= 1
 
 D = div(k, m, dx); % 1D Mimetic divergence operator
 I = interpol(m, 1); % 1D interpolator
@@ -27,22 +27,27 @@ xgrid = [west west+dx/2: dx :east-dx/2 east];
 % Impose IC
 U = exp(-(xgrid.^2)/50)';
 
-% Premultiply out of the time loop (since it doesn't change)
+% Premultiply out of the time loop since it does not change
 D = -dt/2*D*I;
+
+% Set up plot
+figure
+h = plot(xgrid, U, 'LineWidth', 2);
+title(sprintf('t = %.2f', 0))
+xlabel('x')
+ylabel('u(x, t)')
+grid on
 
 % Time integration loop
 for i = 0 : t/dt
-    
+
     trapz(U) % Check for conservation
-    
-    plot(xgrid, U, 'LineWidth', 2)
-    str = sprintf('t = %.2f', i*dt);
-    title(str)
-    xlabel('x')
-    ylabel('u(x, t)')
-    grid on
+
+    % Update plot
+    set(h, 'YData', U)
+    title(sprintf('t = %.2f', i*dt))
     drawnow
-    
-    U2 = U + D*U.^2;
-    U = U2;
+
+    % Advance solution
+    U = U + D*U.^2;
 end

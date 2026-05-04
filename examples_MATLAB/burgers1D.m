@@ -41,7 +41,7 @@ grid on
 % Time integration loop
 for i = 0 : t/dt
 
-    trapz(U) % Check for conservation
+    trapz(xgrid, U) % Check for conservation
 
     % Update plot
     set(h, 'YData', U)

@@ -59,7 +59,7 @@ Or simply:
 if _Armadillo_ was installed via `sudo apt install libarmadillo-dev` or `sudo yum install armadillo-devel`.
 
 A static library named `libmole.a` will be created after the previous step. From this point, you need to include `mole.h` 
-in your projects, specify the location of `libmole.a` to the linker. For the users interested in building MOLE as a _shared library_, specify `make SHARED_LIB=1`. Make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
+in your projects and specify the location of `libmole.a` to the linker. For the users interested in building MOLE as a _shared library_, specify `make SHARED_LIB=1`. Make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
 
 **For our library's MATLAB/Octave version, the only dependency is to have MATLAB/Octave installed**.
 The two implementations of MOLE (C++ & MATLAB/Octave) are independent; you don't need

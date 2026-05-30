@@ -38,7 +38,7 @@ Assuming a working installation of _SuperLU_ (`sudo apt install libsuperlu-dev` 
 
 `cd armadillo-12.6.6`
 
-**NOTE:** We suggest to use the latest stable version.
+**NOTE:** We suggest using the latest stable version.
 
 Define `ARMA_USE_SUPERLU` and `ARMA_USE_OPENMP` in `include/armadillo_bits/config.hpp`. Make sure that you have `cmake` and `g++` installed before executing:
 
@@ -90,7 +90,7 @@ Most of our examples are provided in the MATLAB scripting language. There are ov
 The folder `doc_MATLAB` contains generated documentation about the MATLAB/Octave API.
 It was generated with a tool called [_m2html_](https://www.gllmflndn.com/software/matlab/m2html). However, for a quick start on MOLE's MATLAB/Octave version, we recommend starting with this short [guide](https://github.com/jcorbino/mole/blob/master/docs/CSRC%20Report%20on%20MOLE.pdf).
 
-For C++ users, we provide a short [guide](https://github.com/jcorbino/mole/blob/master/docs/MOLE%20C%2B%2B%20Quick%20Guide.pdf) to MOLE's C++ flavor. However, for those in need of more details to interact with the library, we suggest to follow these instructions:
+For C++ users, we provide a short [guide](https://github.com/jcorbino/mole/blob/master/docs/MOLE%20C%2B%2B%20Quick%20Guide.pdf) to MOLE's C++ flavor. However, for those in need of more details to interact with the library, we suggest following these instructions:
 
 To generate the C++ documentation, execute:
 

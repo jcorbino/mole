@@ -1,7 +1,7 @@
 /**
  * @file utils.h
  * @author Johnny Corbino (johnnycorbino@gmail.com)
- * @brief
+ * @brief Sparse-matrix utility helpers
  * @version 0.1
  * @date 2024-05-26
  *

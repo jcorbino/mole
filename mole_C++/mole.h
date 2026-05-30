@@ -1,7 +1,7 @@
 /**
  * @file mole.h
  * @author Johnny Corbino (johnnycorbino@gmail.com)
- * @brief 
+ * @brief Umbrella header including all MOLE operators
  * @version 0.1
  * @date 2024-05-25
  * 

@@ -1,15 +1,13 @@
 /**
  * @file utils.h
  * @author Johnny Corbino (johnnycorbino@gmail.com)
- * @brief
+ * @brief Sparse-matrix utility helpers
  * @version 0.1
  * @date 2024-05-26
  *
  * @copyright Copyright (c) 2024
  *
  */
-
-#pragma once
 
 #ifndef UTILS_H
 #define UTILS_H

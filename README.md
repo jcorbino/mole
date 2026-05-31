@@ -38,7 +38,7 @@ Assuming a working installation of _SuperLU_ (`sudo apt install libsuperlu-dev` 
 
 `cd armadillo-12.6.6`
 
-**NOTE:** We suggest to use the latest stable version.
+**NOTE:** We suggest using the latest stable version.
 
 Define `ARMA_USE_SUPERLU` and `ARMA_USE_OPENMP` in `include/armadillo_bits/config.hpp`. Make sure that you have `cmake` and `g++` installed before executing:
 
@@ -59,7 +59,7 @@ Or simply:
 if _Armadillo_ was installed via `sudo apt install libarmadillo-dev` or `sudo yum install armadillo-devel`.
 
 A static library named `libmole.a` will be created after the previous step. From this point, you need to include `mole.h` 
-in your projects, specify the location of `libmole.a` to the linker. For the users interested in building MOLE as a _shared library_, specify `make SHARED_LIB=1`. Make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
+in your projects and specify the location of `libmole.a` to the linker. For the users interested in building MOLE as a _shared library_, specify `make SHARED_LIB=1`. Make sure to include `mole_C++` directory in `LD_LIBRARY_PATH` (`export LD_LIBRARY_PATH=/full/path/to/mole_C++`) so the loader can find the library at runtime.
 
 **For our library's MATLAB/Octave version, the only dependency is to have MATLAB/Octave installed**.
 The two implementations of MOLE (C++ & MATLAB/Octave) are independent; you don't need
@@ -90,7 +90,7 @@ Most of our examples are provided in the MATLAB scripting language. There are ov
 The folder `doc_MATLAB` contains generated documentation about the MATLAB/Octave API.
 It was generated with a tool called [_m2html_](https://www.gllmflndn.com/software/matlab/m2html). However, for a quick start on MOLE's MATLAB/Octave version, we recommend starting with this short [guide](https://github.com/jcorbino/mole/blob/master/docs/CSRC%20Report%20on%20MOLE.pdf).
 
-For C++ users, we provide a short [guide](https://github.com/jcorbino/mole/blob/master/docs/MOLE%20C%2B%2B%20Quick%20Guide.pdf) to MOLE's C++ flavor. However, for those in need of more details to interact with the library, we suggest to follow these instructions:
+For C++ users, we provide a short [guide](https://github.com/jcorbino/mole/blob/master/docs/MOLE%20C%2B%2B%20Quick%20Guide.pdf) to MOLE's C++ flavor. However, for those in need of more details to interact with the library, we suggest following these instructions:
 
 To generate the C++ documentation, execute:
 
@@ -114,7 +114,7 @@ We welcome contributions to MOLE, whether they involve adding new functionalitie
 
 Please cite our work if you use MOLE in your research or software. 
 Citations are useful for the continued development and maintenance of 
-the library [![DOI](https://joss.theoj.org/papers/10.21105/joss.06288/status.svg)](https://doi.org/10.21105/joss.06288)
+the library [![DOI](https://joss.theoj.org/papers/10.21105/joss.06288/status.svg)](https://doi.org/10.21105/joss.06288) [![View Mimetic Operators Library Enhanced on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/183579-mimetic-operators-library-enhanced)
 
 Now, some cool pics obtained with MOLE 👇
 

@@ -1,3 +1,4 @@
+// clang-format off
 /**
  * This example uses MOLE to compute the mimetic curl of a 2D vector field
  *
@@ -17,6 +18,7 @@
  *   gnuplot> splot 'solution' index 2 title "Error"
  *   gnuplot> unset multiplot
  */
+// clang-format on
 
 #include "mole.h"
 #include <iostream>

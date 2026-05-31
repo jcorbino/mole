@@ -15,7 +15,7 @@ west = -5;
 east = 5;
 
 % Discretization parameters
-k = 2;      % Order of mimetic quadrature
+k = 6;      % Order of mimetic quadrature
 m = 50;     % Number of cells
 dx = (east-west)/m;
 

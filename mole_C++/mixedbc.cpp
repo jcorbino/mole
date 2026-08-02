@@ -9,17 +9,15 @@ namespace {
 // Rejects unknown boundary-condition types and calls that supply too few
 // coefficients: Robin reads two (Dirichlet and Neumann parts), the others read
 // one. Checked up front so an ill-formed call throws before anything is built.
-void check_bc(const std::string &type, const std::vector<Real> &coeffs,
-              const char *side) {
+void check_bc(const std::string &type, const std::vector<Real> &coeffs) {
   if (type != "Dirichlet" && type != "Neumann" && type != "Robin")
     throw std::invalid_argument("Unknown boundary condition type '" + type +
-                                "' for the " + side + " boundary");
+                                "'");
 
   const std::vector<Real>::size_type needed = (type == "Robin") ? 2 : 1;
   if (coeffs.size() < needed)
     throw std::invalid_argument(
-        std::string("The ") + side + " " + type +
-        " boundary condition needs " + std::to_string(needed) +
+        "The " + type + " boundary condition needs " + std::to_string(needed) +
         " coefficient(s), got " + std::to_string(coeffs.size()));
 }
 
@@ -29,8 +27,8 @@ void check_bc(const std::string &type, const std::vector<Real> &coeffs,
 MixedBC::MixedBC(u16 k, u32 m, Real dx, const std::string &left,
                  const std::vector<Real> &coeffs_left, const std::string &right,
                  const std::vector<Real> &coeffs_right) {
-  check_bc(left, coeffs_left, "left");
-  check_bc(right, coeffs_right, "right");
+  check_bc(left, coeffs_left);
+  check_bc(right, coeffs_right);
 
   sp_mat A(m + 2, m + 2);
   sp_mat BG(m + 2, m + 2);

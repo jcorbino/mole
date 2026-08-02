@@ -31,7 +31,7 @@ public:
    * @param m Number of cells
    * @param dx Spacing between cells
    */
-  Gradient(u16 k, u32 m, Real dx);
+  Gradient(u16 k, u32 m, Real dx, bool periodic = false);
   
   /**
    * @brief 2-D Constructor

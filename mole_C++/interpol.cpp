@@ -1,12 +1,23 @@
 #include "interpol.h"
 
 // 1-D Constructor
-Interpol::Interpol(u32 m, Real c) : sp_mat(m + 1, m + 2) {
+Interpol::Interpol(u32 m, Real c, bool periodic) : sp_mat(m + 1, m + 2) {
   assert(m >= 4);
   assert(c >= 0 && c <= 1);
 
-  at(0, 0) = 1;
-  at(m, m + 1) = 1;
+  if (periodic) {
+    // Nodes 0 and m coincide, halfway between the last cell (column m) and the
+    // first one (column 1), so both rows get the interior stencil wrapped
+    // around the seam. Columns 0 and m+1 are left empty: a periodic problem
+    // carries no independent boundary unknowns.
+    at(0, m) = c;
+    at(0, 1) = 1 - c;
+    at(m, m) = c;
+    at(m, 1) = 1 - c;
+  } else {
+    at(0, 0) = 1;
+    at(m, m + 1) = 1;
+  }
 
   for (u32 i = 1; i < m; i++) {
     at(i, i) = c;

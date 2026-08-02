@@ -30,8 +30,14 @@ public:
    * @param k Order of accuracy
    * @param m Number of cells
    * @param dx Spacing between cells
+   * @param periodic Pass true to build the PERIODIC operator, in which every
+   *        cell row uses the interior (staggered) stencil wrapped around the
+   *        domain, and the two boundary node rows use the order-k nodal
+   *        centered difference wrapped around the seam. Defaults to false,
+   *        giving the standard operator with one-sided boundary closures.
+   *        Pair it with Interpol(m, c, true).
    */
-  Divergence(u16 k, u32 m, Real dx);
+  Divergence(u16 k, u32 m, Real dx, bool periodic = false);
 
   /**
    * @brief 2-D Constructor

@@ -87,7 +87,7 @@ Interpol::Interpol(u32 m, u32 n, u32 o, Real c1, Real c2, Real c3) {
 }
 
 // 1-D Constructor for second type
-Interpol::Interpol(bool type, u32 m, Real c) : sp_mat(m + 2, m + 1) {
+Interpol::Interpol(bool /* type */, u32 m, Real c) : sp_mat(m + 2, m + 1) {
   assert(m >= 4 && "m >= 4");
   assert(c >= 0 && c <= 1 && "0 <= c <= 1");
 
@@ -96,8 +96,8 @@ Interpol::Interpol(bool type, u32 m, Real c) : sp_mat(m + 2, m + 1) {
 
   vec avg = {c, 1 - c};
 
-  int j = 0;
-  for (int i = 1; i < m + 1; ++i) {
+  u32 j = 0;
+  for (u32 i = 1; i < m + 1; ++i) {
     at(i, j) = avg(0);
     at(i, j + 1) = avg(1);
     j++;
@@ -105,7 +105,7 @@ Interpol::Interpol(bool type, u32 m, Real c) : sp_mat(m + 2, m + 1) {
 }
 
 // 2-D Constructor for second type
-Interpol::Interpol(bool type, u32 m, u32 n, Real c1, Real c2) {
+Interpol::Interpol(bool /* type */, u32 m, u32 n, Real c1, Real c2) {
   Interpol Ix(true, m, c1);
   Interpol Iy(true, n, c2);
 
@@ -122,7 +122,8 @@ Interpol::Interpol(bool type, u32 m, u32 n, Real c1, Real c2) {
 }
 
 // 3-D Constructor for second type
-Interpol::Interpol(bool type, u32 m, u32 n, u32 o, Real c1, Real c2, Real c3) {
+Interpol::Interpol(bool /* type */, u32 m, u32 n, u32 o, Real c1, Real c2,
+                   Real c3) {
   Interpol Ix(true, m, c1);
   Interpol Iy(true, n, c2);
   Interpol Iz(true, o, c3);

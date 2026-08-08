@@ -29,8 +29,20 @@ public:
    *
    * @param m Number of cells
    * @param c Interpolation coefficient
+   * @param periodic Pass true to build the PERIODIC interpolator, in which the
+   *        two boundary nodes -- the same physical point -- both carry the
+   *        wrapped average of the last and first cells. Columns 0 and m+1 are
+   *        then left empty, since a periodic problem carries no independent
+   *        boundary unknowns. Defaults to false, giving the standard
+   *        interpolator, which copies the boundary values verbatim.
+   *
+   *        Use together with Divergence(k, m, dx, true). The default
+   *        interpolator reads the two boundary unknowns instead of wrapping,
+   *        which leaves eigenvalues of D*I off the imaginary axis;
+   *        non-dissipative time integrators such as leapfrog are then weakly
+   *        unstable no matter how small the time step is.
    */
-  Interpol(u32 m, Real c);
+  Interpol(u32 m, Real c, bool periodic = false);
   
   /**
    * @brief 2-D Constructor

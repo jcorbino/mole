@@ -1,10 +1,74 @@
 #include "gradient.h"
+#include <vector>
+
+namespace {
+
+// Interior (staggered) mimetic stencil S, with cell offsets offS relative to
+// the face (row) index. Face i lies between cells i-1 and i, so offset 0 is
+// cell i. These are the same coefficients the standard operator uses on its
+// interior rows, just expressed as offsets so they can be wrapped.
+void periodicGradStencil(u16 k, std::vector<Real> &S, std::vector<int> &offS) {
+  switch (k) {
+  case 2:
+    S = {-1.0, 1.0};
+    offS = {-1, 0};
+    break;
+  case 4:
+    S = {1.0 / 24.0, -9.0 / 8.0, 9.0 / 8.0, -1.0 / 24.0};
+    offS = {-2, -1, 0, 1};
+    break;
+  case 6:
+    S = {-3.0 / 640.0, 25.0 / 384.0, -75.0 / 64.0,
+         75.0 / 64.0,  -25.0 / 384.0, 3.0 / 640.0};
+    offS = {-3, -2, -1, 0, 1, 2};
+    break;
+  case 8:
+    S = {5.0 / 7168.0,    -49.0 / 5120.0,  245.0 / 3072.0, -1225.0 / 1024.0,
+         1225.0 / 1024.0, -245.0 / 3072.0, 49.0 / 5120.0,  -5.0 / 7168.0};
+    offS = {-4, -3, -2, -1, 0, 1, 2, 3};
+    break;
+  }
+}
+
+// Wrap a cell index into [0, m-1] with period m.
+u32 wrapCell(int p, u32 m) {
+  const int mm = static_cast<int>(m);
+  while (p < 0)
+    p += mm;
+  while (p >= mm)
+    p -= mm;
+  return static_cast<u32>(p);
+}
+
+} // namespace
 
 // 1-D Constructor
-Gradient::Gradient(u16 k, u32 m, Real dx) : sp_mat(m + 1, m + 2) {
+Gradient::Gradient(u16 k, u32 m, Real dx, bool periodic)
+    : sp_mat(m + 1, m + 2) {
   assert(!(k % 2));
   assert(k > 1 && k < 9);
   assert(m >= 2 * k);
+
+  if (periodic) {
+    std::vector<Real> S;
+    std::vector<int> offS;
+    periodicGradStencil(k, S, offS);
+
+    // Every face row uses the interior stencil, wrapped across the seam. The
+    // first and last rows come out identical (same physical point), and
+    // columns 0 and m+1 are never touched: a periodic problem carries no
+    // independent boundary unknowns.
+    for (u32 i = 0; i < m + 1; i++)
+      for (size_t t = 0; t < S.size(); t++)
+        at(i, wrapCell(static_cast<int>(i) + offS[t], m) + 1) += S[t];
+
+    // No one-sided closures, so the mimetic weights are uniform.
+    P = ones<vec>(2 * k + 1);
+
+    // Scaling
+    *this /= dx;
+    return;
+  }
 
   switch (k) {
   case 2:

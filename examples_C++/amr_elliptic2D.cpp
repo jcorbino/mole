@@ -116,10 +116,14 @@ int main() {
   RobinBC BC_c(k, mc, dx_c, nc, dy_c, 1, 0); // Dirichlet
   L_c = L_c + BC_c;
 
+  // The mimetic operator discretises nabla^2, and the problem is
+  // -nabla^2 u = f, so the right-hand side is -f. Without the sign the solve
+  // returns -u, whose maximum is the zero Dirichlet boundary rather than the
+  // peak of the solution.
   mat rhs_c(mc + 2, nc + 2, fill::zeros);
   for (int i = 1; i <= mc; ++i)
     for (int j = 1; j <= nc; ++j)
-      rhs_c(i, j) = source_term(xc(i), yc(j));
+      rhs_c(i, j) = -source_term(xc(i), yc(j));
 
 #ifdef EIGEN
   vec sol_c = Utils::spsolve_eigen(L_c, vectorise(rhs_c));
@@ -205,7 +209,7 @@ int main() {
   mat rhs_f(mf + 2, nf + 2, fill::zeros);
   for (int i = 1; i <= mf; ++i)
     for (int j = 1; j <= nf; ++j)
-      rhs_f(i, j) = source_term(xf(i), yf(j));
+      rhs_f(i, j) = -source_term(xf(i), yf(j));
 
   // Dirichlet BCs from coarse solution (coarse-to-fine coupling)
   for (int j = 0; j <= nf + 1; ++j) {

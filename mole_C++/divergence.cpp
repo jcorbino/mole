@@ -1,10 +1,81 @@
 #include "divergence.h"
+#include <vector>
+
+namespace {
+
+// Interior (staggered) mimetic stencil S with its face offsets offS, relative
+// to the cell row index, plus the order-k nodal centered first difference C
+// (offsets offC) used on the two boundary node rows of the periodic operator.
+void periodicStencils(u16 k, std::vector<Real> &S, std::vector<int> &offS,
+                      std::vector<Real> &C, std::vector<int> &offC) {
+  switch (k) {
+  case 2:
+    S = {-1.0, 1.0};
+    offS = {-1, 0};
+    C = {-1.0 / 2.0, 0.0, 1.0 / 2.0};
+    offC = {-1, 0, 1};
+    break;
+  case 4:
+    S = {1.0 / 24.0, -9.0 / 8.0, 9.0 / 8.0, -1.0 / 24.0};
+    offS = {-2, -1, 0, 1};
+    C = {1.0 / 12.0, -2.0 / 3.0, 0.0, 2.0 / 3.0, -1.0 / 12.0};
+    offC = {-2, -1, 0, 1, 2};
+    break;
+  case 6:
+    S = {-3.0 / 640.0, 25.0 / 384.0, -75.0 / 64.0,
+         75.0 / 64.0,  -25.0 / 384.0, 3.0 / 640.0};
+    offS = {-3, -2, -1, 0, 1, 2};
+    C = {-1.0 / 60.0, 3.0 / 20.0, -3.0 / 4.0, 0.0,
+         3.0 / 4.0,   -3.0 / 20.0, 1.0 / 60.0};
+    offC = {-3, -2, -1, 0, 1, 2, 3};
+    break;
+  }
+}
+
+// Wrap a face index into [0, m] with period m (face m aliases face 0), leaving
+// in-range indices untouched so interior rows keep their native columns.
+u32 wrapFace(int p, u32 m) {
+  const int mm = static_cast<int>(m);
+  while (p < 0)
+    p += mm;
+  while (p > mm)
+    p -= mm;
+  return static_cast<u32>(p);
+}
+
+} // namespace
 
 // 1-D Constructor
-Divergence::Divergence(u16 k, u32 m, Real dx) : sp_mat(m + 2, m + 1) {
+Divergence::Divergence(u16 k, u32 m, Real dx, bool periodic)
+    : sp_mat(m + 2, m + 1) {
   assert(!(k % 2));
   assert(k > 1 && k < 7);
   assert(m > 2 * k);
+
+  if (periodic) {
+    std::vector<Real> S, C;
+    std::vector<int> offS, offC;
+    periodicStencils(k, S, offS, C, offC);
+
+    // Interior cell rows: staggered stencil, wrapped across the seam.
+    for (u32 i = 1; i < m + 1; i++)
+      for (size_t t = 0; t < S.size(); t++)
+        at(i, wrapFace(static_cast<int>(i) + offS[t], m)) += S[t];
+
+    // Boundary node rows: west node = row 0, east node = row m+1. They come
+    // out identical, as they must: both are the same physical point.
+    for (size_t t = 0; t < C.size(); t++) {
+      at(0, wrapFace(offC[t], m)) += C[t];
+      at(m + 1, wrapFace(static_cast<int>(m) + offC[t], m)) += C[t];
+    }
+
+    // No one-sided closures, so the mimetic weights are uniform.
+    Q = ones<vec>(2 * k + 1);
+
+    // Scaling
+    *this /= dx;
+    return;
+  }
 
   switch (k) {
   case 2:

@@ -30,8 +30,15 @@ public:
    * @param k Order of accuracy
    * @param m Number of cells
    * @param dx Spacing between cells
+   * @param periodic Pass true to build the PERIODIC operator, in which every
+   *        face row uses the interior (staggered) stencil wrapped around the
+   *        domain, replacing the one-sided boundary closures. Defaults to
+   *        false, giving the standard operator. In the periodic operator the
+   *        first and last face rows come out identical -- west and east are
+   *        the same physical point -- and columns 0 and m+1 are left empty,
+   *        since a periodic problem carries no independent boundary unknowns.
    */
-  Gradient(u16 k, u32 m, Real dx);
+  Gradient(u16 k, u32 m, Real dx, bool periodic = false);
   
   /**
    * @brief 2-D Constructor

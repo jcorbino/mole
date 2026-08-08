@@ -14,22 +14,29 @@ m = 50; % Number of cells
 dx = (east-west)/m;
 
 t = 1; % Simulation time
-dt = dx/abs(a); % CFL condition for explicit schemes
 
-D = div(k, m, dx); % 1D Mimetic divergence operator
-I = interpol(m, 0.5); % 1D 2nd order interpolator
+D = div(k, m, dx, 'periodic'); % 1D Mimetic divergence operator
+I = interpol(m, 0.5, 'periodic'); % 1D 2nd order interpolator
+
+rho = max(abs(eig(full(D*I))));   % Spectral radius of the spatial operator
+
+% CFL condition for explicit schemes. Leapfrog is stable only while every
+% dt*eig(-a*D*I) stays on the OPEN segment (-i, i) of the imaginary axis, so
+% dt < 1/(|a|*rho). The 0.9 keeps us inside it: at dt = 1/(|a|*rho) exactly the
+% two characteristic roots coalesce at +-i, and that defective double root
+% makes the solution grow linearly with the step count.
+dt = 0.9/(abs(a)*rho);
+
+% Shrink dt so the last iteration lands exactly on t. Rounding the step count
+% up can only make dt smaller, so this never violates the CFL bound above.
+n_steps = ceil(t/dt);
+dt = t/n_steps;
 
 % 1D Staggered grid
 grid = [west west+dx/2: dx :east-dx/2 east];
 
 % IC
 U = sin(2*pi*grid)';
-
-% Periodic BC imposed on the divergence operator
-D(1,2) = 1/(2*dx);
-D(1,end-1) = -1/(2*dx);
-D(end,2) = 1/(2*dx);
-D(end,end-1) = -1/(2*dx);
 
 % Premultiply out of the time loop (since it doesn't change)
 D = -a*dt*2*D*I;
@@ -39,7 +46,7 @@ D = -a*dt*2*D*I;
 U2 = U + D/2*U; % Compute one step using Euler's method
 
 % Time integration loop
-for i = 1 : t/dt
+for i = 1 : n_steps
     plot(grid, U2, 'o-') % Plot approximation
     hold on
     plot(grid, sin(2*pi*(grid - a*i*dt))) % Plot exact solution

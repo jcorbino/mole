@@ -30,8 +30,15 @@ public:
    * @param k Order of accuracy
    * @param m Number of cells
    * @param dx Spacing between cells
+   * @param periodic Pass true to build the PERIODIC Laplacian, forwarded to
+   *        Divergence and Gradient: the interior staggered stencils wrap around
+   *        the domain instead of using one-sided boundary closures. The default
+   *        operator's boundary rows are placeholders meant to be overwritten by
+   *        a BC operator such as RobinBC; a periodic problem has no such
+   *        operator, so every row of the periodic Laplacian is a real
+   *        Laplacian. Defaults to false.
    */
-  Laplacian(u16 k, u32 m, Real dx);
+  Laplacian(u16 k, u32 m, Real dx, bool periodic = false);
   
   /**
    * @brief 2-D Constructor
@@ -41,8 +48,10 @@ public:
    * @param n Number of cells along y-axis
    * @param dx Spacing between cells along x-axis
    * @param dy Spacing between cells along y-axis
+   * @param periodic Pass true to build the PERIODIC Laplacian; see the 1-D
+   *        constructor. Defaults to false.
    */
-  Laplacian(u16 k, u32 m, u32 n, Real dx, Real dy);
+  Laplacian(u16 k, u32 m, u32 n, Real dx, Real dy, bool periodic = false);
   
   /**
    * @brief 3-D Constructor
@@ -54,8 +63,11 @@ public:
    * @param dx Spacing between cells along x-axis
    * @param dy Spacing between cells along y-axis
    * @param dz Spacing between cells along z-axis
+   * @param periodic Pass true to build the PERIODIC Laplacian; see the 1-D
+   *        constructor. Defaults to false.
    */
-  Laplacian(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz);
+  Laplacian(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz,
+            bool periodic = false);
 };
 
 #endif // LAPLACIAN_H

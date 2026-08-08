@@ -43,6 +43,52 @@ u32 wrapFace(int p, u32 m) {
   return static_cast<u32>(p);
 }
 
+// The (m+2) x m matrix that lifts the m interior cell values of a transverse
+// index into the (m+2)-long cell-space layout of the 2-D/3-D divergence output:
+// the interior lands in rows 1..m, and rows 0 and m+1 are the two boundary
+// nodes. Those two rows are empty in the default operator -- a BC operator
+// overwrites them later -- but a periodic problem has no such operator, so they
+// carry the order-k staggered midpoint interpolation of the cells straddling
+// the seam. A plain [1/2 1/2] average would cap the whole boundary shell at
+// second order however large k is, while the interior stayed order k.
+sp_mat transverseLift(u32 m, u16 k, bool periodic) {
+  sp_mat P = speye(m + 2, m + 2);
+  P.shed_col(0);
+  P.shed_col(m);
+
+  if (!periodic)
+    return P;
+
+  std::vector<Real> w;
+  switch (k) {
+  case 2:
+    w = {1.0 / 2.0, 1.0 / 2.0};
+    break;
+  case 4:
+    w = {-1.0 / 16.0, 9.0 / 16.0, 9.0 / 16.0, -1.0 / 16.0};
+    break;
+  case 6:
+    w = {3.0 / 256.0,   -25.0 / 256.0, 150.0 / 256.0,
+         150.0 / 256.0, -25.0 / 256.0, 3.0 / 256.0};
+    break;
+  }
+
+  // Cells m-p+1..m then 1..p in 1-based terms, straddling the seam. The 1-D
+  // constructor already asserts m > 2k, so the stencil never wraps onto itself.
+  const int mm = static_cast<int>(m);
+  const int p = static_cast<int>(w.size()) / 2;
+  for (int t = 0; t < 2 * p; t++) {
+    const int off = t - p + 1;
+    int col = (mm + off - 1) % mm;
+    if (col < 0)
+      col += mm;
+    P(0, static_cast<u32>(col)) += w[static_cast<size_t>(t)];
+    P(m + 1, static_cast<u32>(col)) += w[static_cast<size_t>(t)];
+  }
+
+  return P;
+}
+
 } // namespace
 
 // 1-D Constructor
@@ -164,17 +210,12 @@ Divergence::Divergence(u16 k, u32 m, Real dx, bool periodic)
 }
 
 // 2-D Constructor
-Divergence::Divergence(u16 k, u32 m, u32 n, Real dx, Real dy) {
-  Divergence Dx(k, m, dx);
-  Divergence Dy(k, n, dy);
+Divergence::Divergence(u16 k, u32 m, u32 n, Real dx, Real dy, bool periodic) {
+  Divergence Dx(k, m, dx, periodic);
+  Divergence Dy(k, n, dy, periodic);
 
-  sp_mat Im = speye(m + 2, m + 2);
-  sp_mat In = speye(n + 2, n + 2);
-
-  Im.shed_col(0);
-  Im.shed_col(m);
-  In.shed_col(0);
-  In.shed_col(n);
+  sp_mat Im = transverseLift(m, k, periodic);
+  sp_mat In = transverseLift(n, k, periodic);
 
   sp_mat D1 = Utils::spkron(In, Dx);
   sp_mat D2 = Utils::spkron(Dy, Im);
@@ -191,21 +232,15 @@ Divergence::Divergence(u16 k, u32 m, u32 n, Real dx, Real dy) {
 }
 
 // 3-D Constructor
-Divergence::Divergence(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz) {
-  Divergence Dx(k, m, dx);
-  Divergence Dy(k, n, dy);
-  Divergence Dz(k, o, dz);
+Divergence::Divergence(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz,
+                       bool periodic) {
+  Divergence Dx(k, m, dx, periodic);
+  Divergence Dy(k, n, dy, periodic);
+  Divergence Dz(k, o, dz, periodic);
 
-  sp_mat Im = speye(m + 2, m + 2);
-  sp_mat In = speye(n + 2, n + 2);
-  sp_mat Io = speye(o + 2, o + 2);
-
-  Im.shed_col(0);
-  Im.shed_col(m);
-  In.shed_col(0);
-  In.shed_col(n);
-  Io.shed_col(0);
-  Io.shed_col(o);
+  sp_mat Im = transverseLift(m, k, periodic);
+  sp_mat In = transverseLift(n, k, periodic);
+  sp_mat Io = transverseLift(o, k, periodic);
 
   sp_mat D1 = Utils::spkron(Utils::spkron(Io, In), Dx);
   sp_mat D2 = Utils::spkron(Utils::spkron(Io, Dy), Im);

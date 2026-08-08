@@ -51,8 +51,13 @@ public:
    * @param n Number of cells along y-axis
    * @param c1 Interpolation coefficient along x-axis
    * @param c2 Interpolation coefficient along y-axis
+   * @param periodic Pass true to build the PERIODIC interpolator, in which the
+   *        boundary faces of each axis take the wrapped average of the last
+   *        and the first cell instead of copying the boundary entries of the
+   *        scalar field, which a periodic problem does not carry. Defaults to
+   *        false. Use together with Divergence(k, m, n, dx, dy, true).
    */
-  Interpol(u32 m, u32 n, Real c1, Real c2);
+  Interpol(u32 m, u32 n, Real c1, Real c2, bool periodic = false);
   
   /**
    * @brief 3-D Constructor
@@ -63,8 +68,11 @@ public:
    * @param c1 Interpolation coefficient along x-axis
    * @param c2 Interpolation coefficient along y-axis
    * @param c3 Interpolation coefficient along z-axis
+   * @param periodic Pass true to build the PERIODIC interpolator; see the 2-D
+   *        constructor. Defaults to false.
    */
-  Interpol(u32 m, u32 n, u32 o, Real c1, Real c2, Real c3);
+  Interpol(u32 m, u32 n, u32 o, Real c1, Real c2, Real c3,
+           bool periodic = false);
   
   // 1-D Constructor for second type
   Interpol(bool type, u32 m, Real c);

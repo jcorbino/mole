@@ -26,9 +26,9 @@ Interpol::Interpol(u32 m, Real c, bool periodic) : sp_mat(m + 1, m + 2) {
 }
 
 // 2-D Constructor
-Interpol::Interpol(u32 m, u32 n, Real c1, Real c2) {
-  Interpol Ix(m, c1);
-  Interpol Iy(n, c2);
+Interpol::Interpol(u32 m, u32 n, Real c1, Real c2, bool periodic) {
+  Interpol Ix(m, c1, periodic);
+  Interpol Iy(n, c2, periodic);
 
   sp_mat Im = speye(m + 2, m + 2);
   sp_mat In = speye(n + 2, n + 2);
@@ -53,10 +53,11 @@ Interpol::Interpol(u32 m, u32 n, Real c1, Real c2) {
 }
 
 // 3-D Constructor
-Interpol::Interpol(u32 m, u32 n, u32 o, Real c1, Real c2, Real c3) {
-  Interpol Ix(m, c1);
-  Interpol Iy(n, c2);
-  Interpol Iz(o, c3);
+Interpol::Interpol(u32 m, u32 n, u32 o, Real c1, Real c2, Real c3,
+                   bool periodic) {
+  Interpol Ix(m, c1, periodic);
+  Interpol Iy(n, c2, periodic);
+  Interpol Iz(o, c3, periodic);
 
   sp_mat Im = speye(m + 2, m + 2);
   sp_mat In = speye(n + 2, n + 2);

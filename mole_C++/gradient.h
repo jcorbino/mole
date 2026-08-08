@@ -48,8 +48,14 @@ public:
    * @param n Number of cells along y-axis
    * @param dx Spacing between cells along x-axis
    * @param dy Spacing between cells along y-axis
+   * @param periodic Pass true to build the PERIODIC operator, wrapping the
+   *        interior staggered stencil around the domain on every axis instead
+   *        of using one-sided boundary closures. G then ignores the boundary
+   *        entries of the scalar field -- those columns come out empty --
+   *        since a periodic problem carries no independent boundary unknowns.
+   *        Defaults to false. Pair it with Divergence(k, m, n, dx, dy, true).
    */
-  Gradient(u16 k, u32 m, u32 n, Real dx, Real dy);
+  Gradient(u16 k, u32 m, u32 n, Real dx, Real dy, bool periodic = false);
   
   /**
    * @brief 3-D Constructor
@@ -61,8 +67,11 @@ public:
    * @param dx Spacing between cells along x-axis
    * @param dy Spacing between cells along y-axis
    * @param dz Spacing between cells along z-axis
+   * @param periodic Pass true to build the PERIODIC operator; see the 2-D
+   *        constructor. Defaults to false.
    */
-  Gradient(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz);
+  Gradient(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz,
+           bool periodic = false);
   
   /**
    * @brief P Vector for the weighted inner product

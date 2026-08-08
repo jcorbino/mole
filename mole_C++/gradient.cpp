@@ -285,9 +285,9 @@ Gradient::Gradient(u16 k, u32 m, Real dx, bool periodic)
 }
 
 // 2-D Constructor
-Gradient::Gradient(u16 k, u32 m, u32 n, Real dx, Real dy) {
-  Gradient Gx(k, m, dx);
-  Gradient Gy(k, n, dy);
+Gradient::Gradient(u16 k, u32 m, u32 n, Real dx, Real dy, bool periodic) {
+  Gradient Gx(k, m, dx, periodic);
+  Gradient Gy(k, n, dy, periodic);
 
   sp_mat Im = speye(m + 2, m + 2);
   sp_mat In = speye(n + 2, n + 2);
@@ -312,10 +312,11 @@ Gradient::Gradient(u16 k, u32 m, u32 n, Real dx, Real dy) {
 }
 
 // 3-D Constructor
-Gradient::Gradient(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz) {
-  Gradient Gx(k, m, dx);
-  Gradient Gy(k, n, dy);
-  Gradient Gz(k, o, dz);
+Gradient::Gradient(u16 k, u32 m, u32 n, u32 o, Real dx, Real dy, Real dz,
+                   bool periodic) {
+  Gradient Gx(k, m, dx, periodic);
+  Gradient Gy(k, n, dy, periodic);
+  Gradient Gz(k, o, dz, periodic);
 
   sp_mat Im = speye(m + 2, m + 2);
   sp_mat In = speye(n + 2, n + 2);

@@ -1,4 +1,12 @@
-% Solves ODE using explicit RK2 method
+% Solves a scalar ODE with the explicit RK2 (midpoint) method, written out in full
+%
+% NOT a mimetic example. There is no PDE and no mimetic operator here: this
+% integrates y' = sin(t)^2*y on [0, 5] purely to show the two RK2 stages. MOLE
+% ships an RK4 integrator (mole_MATLAB/rk4.m) but no RK2, so there is no library
+% routine this could call.
+%
+% Kept as a minimal reference for the scheme itself. For time integration with
+% mimetic operators see taylor_green_vortex.m, which uses mole_MATLAB/rk4.m.
 
 h = .1;                                     % Step-size
 t = 0 : h : 5;                              % Calculates up to y(5)

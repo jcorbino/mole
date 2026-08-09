@@ -1,4 +1,13 @@
-% Solves ODE using explicit RK4 method
+% Solves a scalar ODE with the explicit RK4 method, written out in full
+%
+% NOT a mimetic example, and not the way to integrate in time with MOLE. There
+% is no PDE and no mimetic operator here: this integrates y' = sin(t)^2*y on
+% [0, 5] purely to show the four RK4 stages, and it hand-rolls the stepper
+% instead of calling the library's own integrator, mole_MATLAB/rk4.m.
+%
+% Kept as a minimal reference for the scheme itself. For the intended usage see
+%   van_der_pol.m          - calls mole_MATLAB/rk4.m on a system of ODEs
+%   taylor_green_vortex.m  - calls it on a PDE built from mimetic operators
 
 h = .1;                                     % Step-size
 t = 0 : h : 5;                              % Calculates up to y(5)

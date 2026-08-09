@@ -75,9 +75,12 @@ A_advection = Dm*spdiags(vel, 0, numel(vel), numel(vel))*I;
 A = A_diffusion - A_advection;
 
 % Time step
-% The absolute-stability region of classical RK4 contains the whole disk
-% |z| <= 2.6155, so dt*rho(A) <= 2.6155 guarantees |R(dt*lambda)| <= 1 for every
-% eigenvalue, whatever the mix of advection (imaginary) and diffusion (real).
+% The absolute-stability region of classical RK4 contains the whole left
+% half-disk |z| <= 2.6155, Re z <= 0 (it cannot contain a full disk, since
+% |R(eps)| > 1 for real eps > 0). A is dissipative, so its spectrum lies in
+% Re <= 0, and dt*rho(A) <= 2.6155 then guarantees |R(dt*lambda)| <= 1 for
+% every eigenvalue, whatever the mix of advection (imaginary) and diffusion
+% (real).
 % Any induced norm bounds the spectral radius, and the infinity-norm (largest
 % absolute row sum) is exact, instant, and lands within 0.3-6% of rho(A) for
 % these operators -- no knowledge of the velocity field or of the stencil

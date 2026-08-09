@@ -8,6 +8,10 @@ namespace {
 // ratio a hair under an integer, so absorb that rather than lose a step.
 u32 stepCount(const vec &tspan, Real dt) {
   const Real ratio = (tspan(1) - tspan(0)) / dt;
+
+  if (!(ratio > 0))
+    return 0;
+
   u32 n = static_cast<u32>(std::floor(ratio));
   if (ratio - static_cast<Real>(n) > 1.0 - 1e-8)
     n += 1;

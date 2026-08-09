@@ -71,10 +71,6 @@ interior. Discrete mass is conserved to roundoff.
   deep interior is order k. The periodic Laplacian is uniformly order k.
 - **C++ `Divergence` asserts `k < 7`** while `Gradient` goes to k = 8. MATLAB has
   no such gap.
-- **Known discrepancy:** the C++ `gradient.cpp` case-8 boundary closure uses
-  rationalised decimals where `grad.m` uses exact fractions, so non-periodic k = 8
-  gradients differ between the languages by ~4e-11. The periodic path is
-  unaffected (it never touches the closures).
 
 ## Building and testing
 

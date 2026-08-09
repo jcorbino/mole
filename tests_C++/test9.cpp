@@ -9,10 +9,11 @@
  * of a 1D Divergence are empty by construction, since a BC operator is meant to
  * fill them. The periodic operators are checked everywhere, having no such rows.
  *
- * k = 8 is exercised through the periodic Gradient only. The default k = 8
- * closures in gradient.cpp use rationalised decimals where the MATLAB version
- * uses exact fractions, which floors the error near 1e-10 and stops it
- * converging. That is a known, pre-existing discrepancy, not a regression.
+ * A convergence rate is a blunt instrument for the boundary closures: on a field
+ * whose truncation error is large, a closure coefficient wrong in the 11th digit
+ * changes nothing measurable. So the closures are checked separately, by
+ * polynomial exactness -- a k-th order operator must differentiate every
+ * polynomial up to degree k exactly, with no truncation error to hide behind.
  */
 
 #include "mole.h"
@@ -76,6 +77,124 @@ static Real grad_periodic_err(int k, int m) {
   return norm((sp_mat)G * f - ex, "inf");
 }
 
+// Polynomial exactness. Sampling x^p on the grid an operator expects, its output
+// must be the exact derivative at every point it writes -- closures included.
+static Real grad_poly_err(int k, int m) {
+  Real dx = 1.0 / m;
+  Gradient G(k, m, dx);
+  vec xc(m + 2), xf(m + 1);
+  xc(0) = 0;
+  for (int i = 1; i <= m; ++i)
+    xc(i) = (i - 0.5) * dx;
+  xc(m + 1) = 1;
+  for (int i = 0; i <= m; ++i)
+    xf(i) = i * dx;
+
+  Real worst = 0;
+  for (int p = 0; p <= k; ++p) {
+    vec f(m + 2), ex(m + 1);
+    for (int i = 0; i < m + 2; ++i)
+      f(i) = pow(xc(i), p);
+    for (int i = 0; i <= m; ++i)
+      ex(i) = (p == 0) ? 0.0 : p * pow(xf(i), p - 1);
+    worst = std::max(worst, norm((sp_mat)G * f - ex, "inf"));
+  }
+  return worst;
+}
+
+static Real div_poly_err(int k, int m) {
+  Real dx = 1.0 / m;
+  Divergence D(k, m, dx);
+  vec xc(m + 2), xf(m + 1);
+  for (int i = 1; i <= m; ++i)
+    xc(i) = (i - 0.5) * dx;
+  for (int i = 0; i <= m; ++i)
+    xf(i) = i * dx;
+
+  Real worst = 0;
+  for (int p = 0; p <= k; ++p) {
+    vec f(m + 1), ex(m + 2, fill::zeros);
+    for (int i = 0; i <= m; ++i)
+      f(i) = pow(xf(i), p);
+    for (int i = 1; i <= m; ++i)
+      ex(i) = (p == 0) ? 0.0 : p * pow(xc(i), p - 1);
+    // The boundary rows of a default Divergence are empty by construction
+    vec r = (sp_mat)D * f;
+    worst = std::max(worst, norm(r.subvec(1, m) - ex.subvec(1, m), "inf"));
+  }
+  return worst;
+}
+
+// Curl and RobinBC build Gradients internally, so they inherit whatever the
+// closures are. Checking them directly pins that down: neither can drift from
+// the Gradient, but nothing else would notice if the Gradient itself changed.
+
+// RobinBC with (a, b) = (0, 1) is pure Neumann, so its two boundary rows must
+// return the OUTWARD normal derivative: -f'(west) and +f'(east).
+static Real robin_poly_err(int k, int m) {
+  Real dx = 1.0 / m;
+  RobinBC BC(k, m, dx, 0, 1);
+  vec xc(m + 2);
+  xc(0) = 0;
+  for (int i = 1; i <= m; ++i)
+    xc(i) = (i - 0.5) * dx;
+  xc(m + 1) = 1;
+
+  Real worst = 0;
+  for (int p = 0; p <= k; ++p) {
+    vec f(m + 2);
+    for (int i = 0; i < m + 2; ++i)
+      f(i) = pow(xc(i), p);
+    vec r = (sp_mat)BC * f;
+    Real dwest = (p == 0) ? 0.0 : p * pow(0.0, p - 1);
+    Real deast = (p == 0) ? 0.0 : p * pow(1.0, p - 1);
+    worst = std::max(worst, std::fabs(r(0) - (-dwest)));
+    worst = std::max(worst, std::fabs(r(m + 1) - deast));
+  }
+  return worst;
+}
+
+// curl of (Fx, Fy) = (y^p, x^p) is p*x^(p-1) - p*y^(p-1)
+static Real curl_poly_err(int k, int m) {
+  int n = m;
+  Real dx = 1.0 / m, dy = 1.0 / n;
+  Curl C(k, m, n, dx, dy);
+
+  vec xn(m + 1), yn(n + 1), xcb(m + 2), ycb(n + 2);
+  for (int i = 0; i <= m; ++i)
+    xn(i) = i * dx;
+  for (int j = 0; j <= n; ++j)
+    yn(j) = j * dy;
+  xcb(0) = 0;
+  for (int i = 1; i <= m; ++i)
+    xcb(i) = (i - 0.5) * dx;
+  xcb(m + 1) = 1;
+  ycb(0) = 0;
+  for (int j = 1; j <= n; ++j)
+    ycb(j) = (j - 0.5) * dy;
+  ycb(n + 1) = 1;
+
+  Real worst = 0;
+  for (int p = 0; p <= k; ++p) {
+    vec Fx((m + 1) * (n + 2)), Fy((m + 2) * (n + 1));
+    for (int j = 0; j < n + 2; ++j)
+      for (int i = 0; i < m + 1; ++i)
+        Fx(j * (m + 1) + i) = pow(ycb(j), p);
+    for (int j = 0; j < n + 1; ++j)
+      for (int i = 0; i < m + 2; ++i)
+        Fy(j * (m + 2) + i) = pow(xcb(i), p);
+
+    vec r = (sp_mat)C * join_vert(Fx, Fy);
+    for (int j = 0; j <= n; ++j)
+      for (int i = 0; i <= m; ++i) {
+        Real ex =
+            (p == 0) ? 0.0 : p * pow(xn(i), p - 1) - p * pow(yn(j), p - 1);
+        worst = std::max(worst, std::fabs(r(j * (m + 1) + i) - ex));
+      }
+  }
+  return worst;
+}
+
 // Observed rate must reach 90% of the nominal order
 static void check(Real coarse, Real fine, int k) {
   Real rate = std::log2(coarse / fine);
@@ -99,6 +218,21 @@ int main() {
 
   // Gradient reaches k = 8; Divergence asserts k < 7, so it is not exercised here
   check(grad_periodic_err(8, 32), grad_periodic_err(8, 64), 8);
+
+  // Polynomial exactness of the boundary closures, at every supported order.
+  // This is what catches a closure coefficient that is merely close.
+  for (int k : {2, 4, 6, 8})
+    if (grad_poly_err(k, 2 * k + 4) > 1e-12)
+      fail();
+  for (int k : {2, 4, 6})
+    if (div_poly_err(k, 2 * k + 4) > 1e-12)
+      fail();
+  for (int k : {2, 4, 6, 8}) {
+    if (robin_poly_err(k, 2 * k + 4) > 1e-12)
+      fail();
+    if (curl_poly_err(k, 2 * k + 4) > 1e-12)
+      fail();
+  }
 
   cout << "\033[1;32mTest PASSED!\033[0m\n";
 

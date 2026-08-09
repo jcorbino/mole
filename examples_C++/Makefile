@@ -32,7 +32,8 @@ LIBS += -lsuperlu
 endif
 endif
 
-all: transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D taylor_green_vortex
+all: transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D taylor_green_vortex \
+     parabolic1D wave1D burgers1D hyperbolic1D elliptic3D wave2D maxwell2D
 
 transport1D: transport1D.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o transport1D transport1D.cpp $(LIBS)
@@ -58,5 +59,27 @@ amr_elliptic2D: amr_elliptic2D.cpp
 taylor_green_vortex: taylor_green_vortex.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o taylor_green_vortex taylor_green_vortex.cpp $(LIBS)
 
+parabolic1D: parabolic1D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o parabolic1D parabolic1D.cpp $(LIBS)
+
+wave1D: wave1D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o wave1D wave1D.cpp $(LIBS)
+
+burgers1D: burgers1D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o burgers1D burgers1D.cpp $(LIBS)
+
+hyperbolic1D: hyperbolic1D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o hyperbolic1D hyperbolic1D.cpp $(LIBS)
+
+elliptic3D: elliptic3D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o elliptic3D elliptic3D.cpp $(LIBS)
+
+wave2D: wave2D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o wave2D wave2D.cpp $(LIBS)
+
+maxwell2D: maxwell2D.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o maxwell2D maxwell2D.cpp $(LIBS)
+
 clean:
-	rm -f transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D taylor_green_vortex
+	rm -f transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D taylor_green_vortex \
+	      parabolic1D wave1D burgers1D hyperbolic1D elliptic3D wave2D maxwell2D

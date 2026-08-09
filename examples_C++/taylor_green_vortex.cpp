@@ -164,18 +164,18 @@ int main() {
 
   dump(s); // index 0: the initial condition
 
-  // Time loop: classical RK4
-  for (int step = 1; step <= steps; ++step) {
-    vec k1 = A * s;
-    vec k2 = A * (s + (dt / 2) * k1);
-    vec k3 = A * (s + (dt / 2) * k2);
-    vec k4 = A * (s + dt * k3);
-    s = s + (dt / 6) * (k1 + 2 * k2 + 2 * k3 + k4);
-
+  // Time loop: classical RK4, from mole_C++/rk4.h
+  // Only the operator is handed over -- rk4 needs nothing but A*s, so the same
+  // call works for any problem, and a function would work too if A were
+  // nonlinear or never assembled:
+  //   [&](Real, const vec &y) { return vec(Dsp*(D_coeff*(Gsp*y)) -
+  //                                        Dsp*(vel % (Isp*y))); }
+  // The callback fires after every step, so only the current state is held.
+  s = rk4(A, {0.0, TIME}, dt, s, [&](Real, const vec &y, u32 step) {
     // Dump every few steps
-    if (step % 5 == 0 || step == steps)
-      dump(s);
-  }
+    if (step % 5 == 0 || step == (u32)steps)
+      dump(y);
+  });
 
   // Last index: the static velocity field, subsampled so the arrows stay
   // readable. gnuplot draws vectors in data units and never auto-scales them

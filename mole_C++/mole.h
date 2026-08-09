@@ -19,6 +19,7 @@
 #include "laplacian.h"
 #include "mixedbc.h"
 #include "operators.h"
+#include "rk4.h"
 #include "robinbc.h"
 #include "utils.h"
 

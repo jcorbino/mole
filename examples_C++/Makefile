@@ -32,7 +32,7 @@ LIBS += -lsuperlu
 endif
 endif
 
-all: transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D
+all: transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D taylor_green_vortex
 
 transport1D: transport1D.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o transport1D transport1D.cpp $(LIBS)
@@ -55,5 +55,8 @@ vorticity2D: vorticity2D.cpp
 amr_elliptic2D: amr_elliptic2D.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) -o amr_elliptic2D amr_elliptic2D.cpp $(LIBS)
 
+taylor_green_vortex: taylor_green_vortex.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) -o taylor_green_vortex taylor_green_vortex.cpp $(LIBS)
+
 clean:
-	rm -f transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D
+	rm -f transport1D schrodinger1D maxwell1D elliptic1D elliptic2D vorticity2D amr_elliptic2D taylor_green_vortex

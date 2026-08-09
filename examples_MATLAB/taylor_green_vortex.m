@@ -118,29 +118,12 @@ colorbar
 colormap jet
 set(gcf, 'color', 'w')
 
-% Time loop: classical RK4
+% Time loop: classical RK4, from mole_MATLAB/rk4.m
+% Only the operator is handed over -- rk4 needs nothing but A*s, so the same
+% call works for any problem, and a handle would work too if A were nonlinear
+% or never assembled:  @(t, s) D_coeff*(Dm*(G*s)) - Dm*(vel.*(I*s))
+% The callback fires after every step. It keeps the memory flat: without it rk4
+% returns the whole trajectory, which here would be (m+2)*(n+2) by steps.
 figure('Name', 'Advection-diffusion of a passive scalar')
-for step = 1 : steps
-    k1 = A*s;
-    k2 = A*(s + (dt/2)*k1);
-    k3 = A*(s + (dt/2)*k2);
-    k4 = A*(s + dt*k3);
-    s  = s + (dt/6)*(k1 + 2*k2 + 2*k3 + k4);
-
-    % Plot every few steps
-    if mod(step, 5) == 0 || step == steps
-        pcolor(X', Y', reshape(s, m+2, n+2)')
-        shading interp
-        axis equal
-        axis([a b c d])
-        clim([0 max(s)])   % rescaled every frame; diffusion drops the peak ~4x
-        ttl = sprintf('t = %1.2f s', step*dt);
-        title(ttl)
-        xlabel('x')
-        ylabel('y')
-        colormap jet
-        colorbar
-        set(gcf, 'color', 'w')
-        drawnow
-    end
-end
+[~, s] = rk4(A, [0 TIME], dt, s, ...
+             @(t, s, step) tgvPlotFrame(t, s, step, steps, X, Y, m, n, a, b, c, d));

@@ -121,6 +121,7 @@ Now, some cool pics obtained with MOLE 👇
 ![Electromagnetics 2D example](images/Ez_simulation.gif)
 ![2D Advection-Diffusion example](images/2D-adv-diff-taylor-green.gif)
 ![AMR Poisson example](images/amr.png)
+![2D Bousinessq example](images/Bousinessq.png)
 ![Obtained with curvilinear operators](images/4thOrder3.png)
 ![Obtained with curvilinear operators](images/grid2.png)
 ![Obtained with curvilinear operators](images/grid.png)
